@@ -1,0 +1,936 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using System.Collections.ObjectModel;
+using System.Data.SqlClient;
+using System.Windows.Navigation;
+using WpfMedecine.Data;
+using System.Data;
+using System.Text.RegularExpressions;
+
+namespace WpfMedecine
+{
+    /// <summary>
+    /// Interaction logic for OwnerPanel.xaml
+    /// </summary>
+    public partial class OwnerPanel : Window
+    {
+        
+        public OwnerPanel()
+        {
+            InitializeComponent();
+
+           
+        }
+
+      
+
+     
+       
+
+        private void LoginWindow_Click(object sender, RoutedEventArgs e)
+        {
+            var backtoLogin = new MainWindow();
+            backtoLogin.Show();
+            this.Close();
+        }
+
+        /// دکمه های مالک و امکانت آن
+        private void btnOwnersList_Click(object sender, RoutedEventArgs e)
+        {
+            OwnersListPanel.Visibility = Visibility.Visible;
+            Main.Visibility = Visibility.Collapsed;
+            HerbalDB herbalDB = new HerbalDB();
+            DataTable originalTable;
+            string filterText = txtSearchOwners.Text.Trim();
+            originalTable = herbalDB.SelectPerson("Owner");
+            OwnersListGrid.ItemsSource = originalTable.DefaultView;
+
+
+        }
+        private void OwnersListBack_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Visibility = Visibility.Visible;
+            OwnersListPanel.Visibility = Visibility.Collapsed;
+        }
+        private void btnAddOwner_Click(object sender, RoutedEventArgs e)
+        {
+            var registeration = new Registeration();
+            registeration.ShowDialog();
+            RefreshGridOwner();
+        }
+
+        private void btnEditOwner_Click(object sender, RoutedEventArgs e)
+        {
+            if (OwnersListGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Please select an item.");
+                return;
+            }
+            else
+            { 
+                var edite = new Registeration();
+                HerbalDB herbal = new HerbalDB();
+               edite.RegistertionOrEdite.Text = "Edite";
+                edite.btnRegister.Content = "Save Change";
+                var selectedRow = (DataRowView)OwnersListGrid.SelectedItem;
+                edite.txtNationalCode.Text = selectedRow["NationalCode"].ToString();
+                edite.txtFirstName.Text = selectedRow["FirstName"].ToString();
+                edite.txtLastName.Text = selectedRow["LastName"].ToString();
+                edite.txtPhoneNumber.Text = selectedRow["PhoneNumber"].ToString();
+                edite.txtaddress.Text = selectedRow["Address"].ToString();
+                edite.ShowDialog();
+               
+                RefreshGridOwner();
+
+            
+            }
+
+        }
+
+        private void btnDeleteOwner_Click(object sender, RoutedEventArgs e)
+        {
+            if (OwnersListGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Please select an item.");
+                return;
+            }
+            else
+            {
+                var selectedRow = (DataRowView) OwnersListGrid.SelectedItem;
+                string id =selectedRow["NationalCode"].ToString();
+                string firstName = selectedRow["FirstName"].ToString();
+                string lastName = selectedRow["LastName"].ToString();
+                if(MessageBox.Show($"Are you sure you want to delete?{firstName+' '+lastName}", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    HerbalDB herbal = new HerbalDB();
+                    herbal.DeletePeson(id, "Person_DB_Table");
+                    MessageBox.Show($"{firstName + ' ' + lastName} has been delete!");
+                    herbal.SelectPerson("Owner");
+                    RefreshGridOwner();
+                }
+            }
+           
+
+        }
+        //سرچ مالک ها
+        private void txtSearchOwners_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string filter = txtSearchOwners.Text.Trim();
+            HerbalDB herbal = new HerbalDB();
+            DataTable originalTable;
+            if (txtSearchOwners.Text == "")
+            {
+                RefreshGridOwner();
+            }
+            else
+            {
+                originalTable = herbal.SearchPerson(filter,"Person_DB_Table", "Owner");
+                OwnersListGrid.ItemsSource = originalTable.DefaultView;
+            }
+        }
+        public void RefreshGridOwner()
+        {
+            HerbalDB herbal = new HerbalDB();
+            DataTable originalTable;
+            originalTable = herbal.SelectPerson("Owner");
+            OwnersListGrid.ItemsSource = originalTable.DefaultView;
+        }
+
+
+
+        //صفحه مربوط به seller
+      
+        private void btnSellersList_Click(object sender, RoutedEventArgs e)
+        {
+            SellersListPanel.Visibility = Visibility.Visible;
+            Main.Visibility = Visibility.Collapsed;
+            HerbalDB herbalDB = new HerbalDB();
+            DataTable originalTable;
+            string filterText = txtSearchSeller.Text.Trim();
+            originalTable = herbalDB.SelectPerson("Seller");
+            SellersListGrid.ItemsSource = originalTable.DefaultView;
+
+        }
+        private void SellersListBack_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Visibility = Visibility.Visible;
+            SellersListPanel.Visibility = Visibility.Collapsed;
+        }
+
+
+
+        private void txtSearchSeller_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string filter = txtSearchSeller.Text.Trim();
+            HerbalDB herbalDB = new HerbalDB();
+            DataTable originalTable;
+            if (txtSearchSeller.Text == "")
+            {
+                RefreshGridSeller();
+            }
+            else
+            {
+               originalTable= herbalDB.SearchPerson(filter, "Person_DB_Table", "Seller");
+                SellersListGrid.ItemsSource = originalTable.DefaultView;
+            }
+
+
+        }
+        public void RefreshGridSeller()
+        {
+            HerbalDB herbal = new HerbalDB();
+            DataTable originalTable;
+            originalTable = herbal.SelectPerson("Seller");
+           SellersListGrid.ItemsSource = originalTable.DefaultView;
+        }
+
+
+        private void btnAddSeller_Click(object sender, RoutedEventArgs e)
+        {
+            var registeration = new Registeration();
+            registeration.ShowDialog();
+            RefreshGridSeller();
+        }
+
+        private void btnEditSeller_Click(object sender, RoutedEventArgs e)
+        {
+            if(SellersListGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Please select an item.");
+                return;
+            }
+            else
+            {
+                var edite = new Registeration();
+                HerbalDB herbal = new HerbalDB();
+                edite.RegistertionOrEdite.Text = "Edite";
+                edite.btnRegister.Content = "Save Change";
+                var selectedRow = (DataRowView)SellersListGrid.SelectedItem;
+                edite.txtNationalCode.Text = selectedRow["NationalCode"].ToString();
+                edite.txtFirstName.Text = selectedRow["FirstName"].ToString();
+                edite.txtLastName.Text = selectedRow["LastName"].ToString();
+                edite.txtPhoneNumber.Text = selectedRow["PhoneNumber"].ToString();
+                edite.txtaddress.Text = selectedRow["Address"].ToString();
+                edite.ShowDialog();
+
+                RefreshGridSeller();
+
+
+            }
+
+        }
+
+        private void btnDeleteSeller_Click(object sender, RoutedEventArgs e)
+        {
+            if (SellersListGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Please select an item.");
+                return;
+            }
+            else
+            {
+                var selectedRow = (DataRowView)SellersListGrid.SelectedItem;
+                string id = selectedRow["NationalCode"].ToString();
+                string firstName = selectedRow["FirstName"].ToString();
+                string lastName = selectedRow["LastName"].ToString();
+                if (MessageBox.Show($"Are you sure you want to delete?{firstName + ' ' + lastName}", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    HerbalDB herbal = new HerbalDB();
+                    herbal.DeletePeson(id, "Person_DB_Table");
+                    MessageBox.Show($"{firstName + ' ' + lastName} has been delete!");
+                    herbal.SelectPerson("Seller");
+                    RefreshGridSeller();
+                }
+            }
+        }
+        //صفحه مربوط به دارو ها
+
+        private void btnInventoryMedecines_Click(object sender, RoutedEventArgs e)
+        {
+            InventoryMedecinesPanel.Visibility = Visibility.Visible;
+            Main.Visibility = Visibility.Collapsed;
+            HerbalDB herbalDB = new HerbalDB();
+            DataTable originalTable;
+            string filterText = txtSearchInventoryMedecinesPanel.Text.Trim();
+            originalTable = herbalDB.SelectMedicine();
+            InventoryMedecinesPanelGrid.ItemsSource = originalTable.DefaultView;
+
+
+        }
+        private void txtSearchInventoryMedecinesPanel_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string filter = txtSearchInventoryMedecinesPanel.Text.Trim();
+            HerbalDB herbalDB = new HerbalDB();
+            DataTable originalTable;
+            if (txtSearchInventoryMedecinesPanel.Text == "")
+            {
+                RefershInventoryMedicineGrid(); 
+            }
+            else
+            {
+                originalTable = herbalDB.SearchMedicine(filter);
+                InventoryMedecinesPanelGrid.ItemsSource = originalTable.DefaultView;
+            }
+        }
+
+        private void InventoryMedecinesPanelBack_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Visibility = Visibility.Visible;
+            InventoryMedecinesPanel.Visibility = Visibility.Collapsed;
+        }
+        private void btnDeleteInventoryMedecinesPanel_Click(object sender, RoutedEventArgs e)
+        {
+            if (InventoryMedecinesPanelGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Please select an item.");
+                return;
+            }
+            else
+            {
+                var selectedRow = (DataRowView)InventoryMedecinesPanelGrid.SelectedItem;
+                string id = selectedRow["Id"].ToString();
+                string NameMedicinee = selectedRow["NameMedecines"].ToString();
+                
+                if (MessageBox.Show($"Are you sure you want to delete? Id: {id} and Medicine Name: {NameMedicinee}", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    HerbalDB herbal = new HerbalDB();
+                    herbal.DeleteMedicine(id);
+                    MessageBox.Show($" Id: {id} and Medicine Name: {NameMedicinee} has been delete!");
+                    herbal.SelectMedicine();
+                    RefershInventoryMedicineGrid();
+                }
+            }
+
+        }
+
+        private void btnEditInventoryMedecinesPanel_Click(object sender, RoutedEventArgs e)
+        {
+            if (InventoryMedecinesPanelGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Please select an item.");
+                return;
+            }
+            else
+            {
+                
+                HerbalDB herbal = new HerbalDB();
+                Medicine medicine = new Medicine();
+                InventoryMedecinesPanel.Visibility = Visibility.Collapsed;
+                BuyMedecinesPanel.Visibility = Visibility.Visible;
+                
+                BuyOrEditMedicine.Content = "Edit Medicine";
+                
+                var selectedRow = (DataRowView)InventoryMedecinesPanelGrid.SelectedItem;
+                 
+               txtMedicineID.Text = selectedRow["Id"].ToString();
+                txtMedicineName.Text = selectedRow["NameMedecines"].ToString();
+                dpMedicineBuyDate.Text = selectedRow["DateBuy"].ToString();
+                txtMedicineBuyPrice.Text = selectedRow["PriceBuy"].ToString();
+                txtMedicineQuantity.Text = selectedRow["Quantity"].ToString();
+                txtMedicineSellPrice.Text = selectedRow["PriceSell"].ToString();
+
+
+              
+
+
+            }
+        }
+
+        // بروزرسانی گرید موجوی دارو
+        public void RefershInventoryMedicineGrid()
+        {
+            HerbalDB herbal = new HerbalDB();
+            DataTable originalTable;
+            originalTable = herbal.SelectMedicine();
+            InventoryMedecinesPanelGrid.ItemsSource = originalTable.DefaultView;
+        }
+        private void btnMedecinesBuy_Click(object sender, RoutedEventArgs e)
+        {
+            BuyMedecinesPanel.Visibility = Visibility.Visible;
+            Main.Visibility = Visibility.Collapsed;
+             dpMedicineBuyDate.SelectedDate = DateTime.Today;
+        }
+
+        private void BuyMedecinesPanelBack_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Visibility = Visibility.Visible;
+            BuyMedecinesPanel.Visibility = Visibility.Collapsed;
+            RefreshBuyMedicine();
+            clearErrorsBuyMedicine();
+
+
+        }
+        
+        private void btnAddMedicine_Click(object sender, RoutedEventArgs e)
+        {
+            
+            HerbalDB herbalDB = new HerbalDB();
+            Medicine medicine = new Medicine();
+
+            medicine.Id = txtMedicineID.Text.ToString();
+            medicine.NameMedecines = txtMedicineName.Text.ToString();
+            medicine.DateBuy = dpMedicineBuyDate.SelectedDate.Value;
+            medicine.PriceBuy = Convert.ToSingle(txtMedicineBuyPrice.Text.ToString());
+            medicine.Quantity = Convert.ToSingle(txtMedicineQuantity.Text.ToString());
+            medicine.Unit = ((ComboBoxItem)comMedicineUnit.SelectedItem).Content.ToString();
+            medicine.PriceSell = Convert.ToSingle(txtMedicineSellPrice.Text.ToString());
+
+
+            if (ValidateInputMedicineBuy() && BuyOrEditMedicine.Content.ToString()== "Buy Medicines")
+            {
+               
+
+                if (herbalDB.AddMedicine(medicine))
+                {
+                    MessageBox.Show("✅ Add medicine was successful !", "Edite ", MessageBoxButton.OK);
+
+                    clearErrorsBuyMedicine();
+                    RefreshBuyMedicine();
+                }
+                else
+                {
+                    MessageBox.Show("Add medicine was unsuccessful !", "Edite ", MessageBoxButton.OK, MessageBoxImage.Error);
+                    clearErrorsBuyMedicine();
+                    RefreshBuyMedicine();
+                }
+            }
+            if (ValidateInputMedicineBuy() && BuyOrEditMedicine.Content.ToString() == "Edit Medicine")
+            {
+                
+
+                if (herbalDB.UpdateMedicine(medicine))
+                {
+                    MessageBox.Show("✅ Eidit medicine was successful !", "Edite ", MessageBoxButton.OK);
+
+                    clearErrorsBuyMedicine();
+                    RefreshBuyMedicine();
+                    InventoryMedecinesPanel.Visibility = Visibility.Visible;
+                    BuyMedecinesPanel.Visibility = Visibility.Collapsed;
+
+
+                }
+                else
+                {
+                    MessageBox.Show("Edit medicine was unsuccessful !", "Edite ", MessageBoxButton.OK, MessageBoxImage.Error);
+                    clearErrorsBuyMedicine();
+                    RefreshBuyMedicine();
+                    InventoryMedecinesPanel.Visibility = Visibility.Visible;
+                    BuyMedecinesPanel.Visibility = Visibility.Collapsed;
+                }
+
+            }
+
+
+            }
+        //پاک کردن ارور ها با کلیک روی فیلد
+        private void txtMedicineID_GotFocus(object sender, RoutedEventArgs e)
+        {
+            clearErrorsBuyMedicine();
+        }
+        private void txtMedicineName_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+            clearErrorsBuyMedicine();
+        }
+
+        private void dpMedicineBuyDate_GotFocus(object sender, RoutedEventArgs e)
+        {
+            clearErrorsBuyMedicine();
+
+        }
+
+        private void txtMedicineBuyPrice_GotFocus(object sender, RoutedEventArgs e)
+        {
+            clearErrorsBuyMedicine();
+
+        }
+
+        private void txtMedicineQuantity_GotFocus(object sender, RoutedEventArgs e)
+        {
+            clearErrorsBuyMedicine();
+
+        }
+        private void txtMedicineSellPrice_GotFocus(object sender, RoutedEventArgs e)
+        {
+            clearErrorsBuyMedicine();
+
+        }
+
+        ///پاک کردن اخطار های فرم خرید دارو
+        public void clearErrorsBuyMedicine()
+        {
+
+            MedicineIDError.Visibility = Visibility.Collapsed;
+            MedicineNameError.Visibility = Visibility.Collapsed;
+            MedicineBuyDateError.Visibility = Visibility.Collapsed;
+            MedicineBuyPriceError.Visibility = Visibility.Collapsed;
+            MedicineBuyPriceErrorDigit.Visibility = Visibility.Collapsed;
+            MedicineQuantityError.Visibility = Visibility.Collapsed;
+            MedicineQuantityErrorDigit.Visibility = Visibility.Collapsed;
+            MedicineSellPriceError.Visibility = Visibility.Collapsed;
+            MedicineSellPriceErrorDigit.Visibility = Visibility.Collapsed;
+
+        }
+        //بروزرسانی فرم خرید دارو 
+        public void RefreshBuyMedicine()
+        {
+            txtMedicineID.Text= "";
+            txtMedicineName.Text = "";
+            dpMedicineBuyDate.SelectedDate = DateTime.Today;
+            txtMedicineBuyPrice.Text = "";
+            txtMedicineQuantity.Text= "";
+            txtMedicineSellPrice.Text = "";
+        }
+        private void txtInventoryMedecinesPanel_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+       
+
+        private void btnSearchCustomers_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnAddCustomers_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnDeleteCustomers_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnSearchMedecines_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnRequestedMedecines_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        
+
+        private void btnDeleteMedecines_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+       
+
+        private void btnPurchaseReports_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+       
+        
+
+        private void btnSalesReports_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnPersonalSettings_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CustomerBack_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void txtSearchCustomer_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void btnAddCustomer_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnEditCustomer_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnDeleteCustomer_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        //اعتبار سنجی فیلد های ثبت  خرید دارو
+        public bool ValidateInputMedicineBuy()
+        {
+            if(txtMedicineID.Text=="") {
+                MedicineIDError.Visibility = Visibility.Visible;
+                return false;
+            }
+            if (txtMedicineName.Text == "")
+            {
+                MedicineNameError.Visibility = Visibility.Visible;
+                return false;
+            }
+            if (dpMedicineBuyDate.SelectedDate == null)
+            {
+                MedicineBuyDateError.Visibility = Visibility.Visible;
+                return false;
+            }
+            if (txtMedicineBuyPrice.Text == "")
+            {
+                MedicineBuyPriceError.Visibility = Visibility.Visible;
+                return false;
+
+            }
+            if (!IsNumberInput(txtMedicineBuyPrice.Text))
+            {
+                MedicineBuyPriceErrorDigit.Visibility = Visibility.Visible;
+                return false;
+
+            }
+            if (txtMedicineQuantity.Text == "")
+            {
+                MedicineQuantityError.Visibility = Visibility.Visible;
+                return false;
+            }
+           
+            if (!IsNumberInput(txtMedicineQuantity.Text))
+            {
+                MedicineQuantityErrorDigit.Visibility = Visibility.Visible;
+                return false;
+
+            }
+            if (txtMedicineSellPrice.Text == "")
+            {
+                MedicineSellPriceError.Visibility = Visibility.Visible;
+                return false;
+            }
+            if (!IsNumberInput(txtMedicineSellPrice.Text))
+            {
+                MedicineSellPriceErrorDigit.Visibility = Visibility.Visible;
+                return false;
+            }
+
+            return true;
+        }
+        ///بررسی رقم بودن فید ها  در خرید دارو  
+        public bool IsNumberInput(string input)
+        {
+            if(double.TryParse(input,out _))
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+        ///صفحه مربوط به فروش دارو
+
+        private void btnMedecinesSell_Click(object sender, RoutedEventArgs e)
+        {
+
+            Main.Visibility = Visibility.Collapsed;
+            CustomerSearch.Visibility = Visibility.Visible;
+            
+        }
+        private void CustomerSearchBack_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Visibility = Visibility.Visible;
+            CustomerSearch.Visibility = Visibility.Collapsed;
+        }
+
+        private void btnCustomerSearch_Click(object sender, RoutedEventArgs e)
+        {
+            HerbalDB herbalDB = new HerbalDB();
+            string idCustomer = txtCustomerSearchID.Text.ToString();
+            
+
+            if (herbalDB.CustomerSearch(idCustomer) && ValidateInputCustomerSearch())
+            {
+                
+            }
+            else
+            {
+                CustomerSearch.Visibility = Visibility.Collapsed;
+                AddCustomer.Visibility = Visibility.Visible;
+                txtCustomerID.Text =txtCustomerSearchID.Text;
+               
+                
+            }
+
+        }
+        private void btnNexSell_Click(object sender, RoutedEventArgs e)
+        {
+            HerbalDB herbalDB = new HerbalDB();
+            Customer customer = new Customer();
+            customer.CustomerId = txtCustomerID.Text.ToString();
+            customer.CustomerFirstName = txtCustomerFirstName.Text.ToString();
+            customer.CustomerLastName = txtCustomerLastName.Text.ToString();
+            customer.CustomerPhoneNumber = txtCustomrPhoneNumber.Text.ToString();
+            if (ValidateInputAddCustomer())
+            {
+                AddCustomer.Visibility = Visibility.Collapsed;
+                AddOrder.Visibility = Visibility.Visible;
+                DataTable originalTable = new DataTable();
+                originalTable = herbalDB.SelectMedicine();
+                MedicineSellListGrid.ItemsSource = originalTable.DefaultView;
+
+
+
+
+            }
+        }
+        private void AddCustomerBack_Click(object sender, RoutedEventArgs e)
+        {
+            AddCustomer.Visibility = Visibility.Collapsed;
+            CustomerSearch.Visibility = Visibility.Visible;
+           
+        }
+        //رویداد انتخاب دارو و نمایش آن روی فاکتور
+
+        private void MedicineSellListGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Medicine medicine = new Medicine();
+            HerbalDB herbal = new HerbalDB();
+            if (MedicineSellListGrid.SelectedItem != null)
+            {
+               
+                Order order = new Order();
+                var selectedRow = (DataRowView)MedicineSellListGrid.SelectedItem;
+                medicine.Id = selectedRow["Id"].ToString();
+                medicine.NameMedecines = selectedRow["NameMedecines"].ToString();
+               medicine.Quantity = 1;
+                medicine.Unit = selectedRow["Unit"].ToString();
+                float price;
+                
+                if (float.TryParse(selectedRow["PriceSell"].ToString(), out price)) {
+                    medicine.PriceSell = price;
+                
+                }
+                
+
+
+                MedicineSellQuantity quantity = new MedicineSellQuantity();
+                quantity.ShowDialog();
+                
+                if (IsMedicineInFactorGrid(medicine.NameMedecines))
+                {
+                    MessageBox.Show("This item is already selected.");
+
+                }
+                
+                else
+                {
+                    medicine.Quantity = quantity.Quantiry;
+                    Customer customer = new Customer();
+                   
+                    Order order1 = new Order();
+                    customer.CustomerId = txtCustomerID.Text;
+                    customer.CustomerFirstName = txtCustomerFirstName.Text;
+                    customer.CustomerLastName = txtCustomerLastName.Text;
+                    customer.CustomerPhoneNumber = txtCustomrPhoneNumber.Text;
+                    order.CustomerId = txtCustomerID.Text;
+                    order.MedincineId = selectedRow["Id"].ToString();
+                    order.Quntity = medicine.Quantity;
+                    order.TotalAmunt = medicine.Price;
+                    order.orderTime = DateTime.Today;
+                   
+                    if (herbal.AddCustomer(customer) )
+                    {
+                        if (herbal.AddOrder(order))
+                        {
+                            MessageBox.Show("Your orderhas been successfully.");
+                            if (herbal.UpdateSellQuantity(order.Quntity, medicine.Id))
+                            {
+                                DataTable originalTable = new DataTable();
+                                originalTable = herbal.SelectMedicine();
+                                MedicineSellListGrid.ItemsSource = originalTable.DefaultView;
+
+
+                            }
+                        }
+                    }
+
+                   
+                    Factor.Items.Add(medicine);
+                }
+
+               
+
+                UpdateTotalPrice(); // محاسبه جمع کل پس از اضافه‌شدن دارو
+
+            }
+        }
+        private void SubmitOrderButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        //بررسی می کند ایا ایتم انختاب شده برای فروش در فاکتور است یا نه
+        public bool IsMedicineInFactorGrid(string MedicineName)
+        {
+            foreach(Medicine item in Factor.Items)
+            {
+                if(item.NameMedecines== MedicineName)
+                {
+                    return true;
+                }
+               
+            }
+            return false;
+        }
+
+       
+      
+        private void UpdateTotalPrice()
+        {
+            float total = 0;
+            foreach (Medicine item in Factor.Items)
+            {
+                total += item.Price; // جمع کل = تعداد × قیمت هر واحد
+            }
+            TotalAmountLabel.Content = total;
+        }
+       
+        public bool ValidateInputCustomerSearch()
+        {
+            if (txtCustomerSearchID.Text == "")
+            {
+                CustomerSearchIDError.Visibility = Visibility.Visible;
+                return false;
+            }
+            return true;
+        }
+        private void txtCustomerSearchID_GotFocus(object sender, RoutedEventArgs e)
+        {
+            CustomerSearchIDError.Visibility = Visibility.Collapsed;
+        }
+        public bool ValidateInputAddCustomer()
+        {
+            if (txtCustomerID.Text == "")
+            {
+                CustomerIDError.Visibility = Visibility.Visible;
+                return false;
+            }
+            if (!Regex.IsMatch(txtCustomerID.Text, @"^\d+$"))
+            {
+                CustomerIDErrorDigit.Visibility = Visibility.Visible;
+                return false;
+            }
+
+            if (txtCustomerID.Text.Length != 10 && txtCustomerID.Text.Length > 0)
+            {
+                CustomerIDLengthError.Visibility = Visibility.Visible;
+                return false;
+            }
+            if (txtCustomerFirstName.Text == "")
+            {
+                CustomerFirstNameError.Visibility = Visibility.Visible;
+                return false;
+            }
+            if (txtCustomerLastName.Text == "")
+            {
+                CustomerLastNameError.Visibility = Visibility.Visible;
+                return false;
+            }
+            if (txtCustomrPhoneNumber.Text == "")
+            {
+                CustomerPhoneNumberError.Visibility = Visibility.Visible;
+                return false;
+            }
+            if (!Regex.IsMatch(txtCustomrPhoneNumber.Text, @"^\d+$") && txtCustomrPhoneNumber.Text.Length > 0)
+            {
+                CustomerPhoneNumberErrorErrorDigit.Visibility = Visibility.Visible;
+                return false;
+            }
+
+            if (txtCustomrPhoneNumber.Text.Length != 11 && txtCustomrPhoneNumber.Text.Length > 0)
+            {
+                LengthCustomerPhoneNumberError.Visibility = Visibility.Visible;
+                return false;
+            }
+            return true;
+        }
+        //پاک کردن ارور های صفحه اد کردن مشتری
+
+        public void clearErrorsAddCustomer()
+        {
+            CustomerIDError.Visibility = Visibility.Collapsed;
+            CustomerIDErrorDigit.Visibility = Visibility.Collapsed;
+            CustomerIDLengthError.Visibility = Visibility.Collapsed;
+            CustomerFirstNameError.Visibility = Visibility.Collapsed;
+            CustomerLastNameError.Visibility = Visibility.Collapsed;
+           CustomerPhoneNumberError.Visibility = Visibility.Collapsed;
+            CustomerPhoneNumberErrorErrorDigit.Visibility = Visibility.Collapsed;
+            LengthCustomerPhoneNumberError.Visibility = Visibility.Collapsed;
+        }
+        private void txtCustomerID_GotFocus(object sender, RoutedEventArgs e)
+        {
+            clearErrorsAddCustomer();
+
+        }
+        private void txtCustomerFirstName_GotFocus(object sender, RoutedEventArgs e)
+        {
+            clearErrorsAddCustomer();
+        }
+
+        private void txtCustomerLastName_GotFocus(object sender, RoutedEventArgs e)
+        {
+            clearErrorsAddCustomer();
+        }
+        private void txtCustomrPhoneNumber_GotFocus(object sender, RoutedEventArgs e)
+        {
+            clearErrorsAddCustomer();
+        }
+
+        private void AddCustomer_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
+
+        private void txtMedicineID_TextChanged(object sender, TextChangedEventArgs e)
+        {
+           
+
+        }
+
+        private void AddOrderBack_Click(object sender, RoutedEventArgs e)
+        {
+            
+                AddCustomer.Visibility = Visibility.Visible;
+                AddOrder.Visibility = Visibility.Collapsed;
+        }
+
+       
+
+        private void MedicineSellListGrid_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+    }
+   
+    }
+

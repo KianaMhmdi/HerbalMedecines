@@ -1,0 +1,343 @@
+﻿<Window x:Class="WpfMedecine.SellerPanel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfMedecine"
+        mc:Ignorable="d"
+        Title="SellerPanel" Height="600" Width="1050"
+        WindowState="Maximized">
+    <Grid>
+        <Image Stretch="Fill" Source="Image/Gol2.jpg"/>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <!-- هدر -->
+                <RowDefinition Height="auto"/>
+                <!-- بادی -->
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- هدر -->
+            <Border Grid.Row="0" Height="80" Background="#8bbb79" CornerRadius="0 0 40 40">
+                <Grid>
+                    <Label FontSize="35" FontWeight="Medium" HorizontalAlignment="Center" Margin="0,9,0,0" Foreground="White">Seller</Label>
+                    <Button HorizontalAlignment="Right" Height="40" Width="50" Margin="10,10,25,15" FontSize="13" Name="LoginWindow" Click="LoginWindow_Click">Back</Button>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <!-- بادی -->
+                            <Border Grid.Row="0" Background="#80000000" Margin="15">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="210"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- منو -->
+                                    <Border Grid.Column="0"  Background="#8bbb79" Opacity=".8">
+                                        <StackPanel Orientation="Vertical"  HorizontalAlignment="Center"  VerticalAlignment="Stretch" Width="200">
+                                            <Button Height="50" Margin="5 8 5 5"  Name="CustomersManagement" Click="CustomersManagement_Click">Customers management</Button>
+                                            <Button Height="50" Margin="5"  Name="MedicationsManagement" Click="MedicationsManagement_Click">Medications management</Button>
+                                            <Button Height="50" Margin="5"  Name="SellingMedicine" Click="SellingMedicine_Click">Selling medicine</Button>
+                                            <Button Height="50" Margin="5"  Name="medicineRequest" Click="medicineRequest_Click">medicine request</Button>
+                                            <Button Height="50" Margin="5"  Name="Reports" Click="Reports_Click">Reports</Button>
+                                            <Button Height="50" Margin="5"  Name="PersonalSettings" Click="PersonalSettings_Click">Personal settings</Button>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- صفحه اصلی -->
+                                    <Border  Grid.Column="1" Visibility="Visible" Name="MainWindow">
+                                        <!-- <TextBlock TextAlignment="Right" Foreground="White" FontSize="55" Margin="0 15 160 0" FontWeight="Bold"  FontFamily="Monotype Corsiva" Opacity=".7">Welcome</TextBlock> -->
+                                    </Border>
+
+                                    <!-- صفحه CustomersManagement -->
+                                    <Border Grid.Column="1" Visibility="Collapsed" Name="CustomersManagementPanel">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Border Grid.Row="0" Background="#8bbb79">
+                                                <Grid>
+                                                    <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 10 0 10" Foreground="White">Customers Managment</Label>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Grid.Row="1">
+                                                <Grid Margin="10,15,15,0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Label Grid.Column="0" Content="Search:" VerticalAlignment="Center" Margin="5,0" FontSize="16" Foreground="White"/>
+                                                    <TextBox Grid.Column="1" Name="txtSearchCustomer"  Margin="5,0" Height="30" VerticalAlignment="Center" TextChanged="txtSearchCustomer_TextChanged"/>
+                                                    <Button Grid.Column="2" Name="btnAddCustomer" Content="Add" Margin="5,0" Width="80" Height="30" Click="btnAddCustomer_Click"/>
+                                                    <Button Grid.Column="3" Name="btnEditCustomer" Content="Edit" Margin="5,0" Width="80" Height="30" Click="btnEditCustomer_Click"/>
+                                                    <Button Grid.Column="4" Name="btnDeleteCustomer" Content="Delete" Margin="5,0" Width="80" Height="30" Click="btnDeleteCustomer_Click"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Grid.Row="2">
+                                                <Grid>
+                                                    <DataGrid Name="CustomersListGrid" AutoGenerateColumns="False" Margin="20,10,20,20" IsReadOnly="True" SelectionMode="Single">
+                                                        <DataGrid.Columns>
+                                                            <DataGridTextColumn Header="Name" Binding="{Binding FirstName}" Width="*"/>
+                                                            <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*"/>
+                                                            <DataGridTextColumn Header="National Code" Binding="{Binding NationalCode}" Width="*"/>
+                                                            <DataGridTextColumn Header="Phone Number" Binding="{Binding PhoneNumber}" Width="*"/>
+                                                        </DataGrid.Columns>
+                                                    </DataGrid>
+                                                </Grid>
+                                            </Border>
+
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- صفحه AddCustomers -->
+                                    <Border Grid.Column="1" Name="AddCustomersPanel" Visibility="Collapsed">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Border Grid.Row="0" Background="#8bbb79">
+                                                <Grid>
+                                                    <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 10 0 10" Foreground="White">Add Customer</Label>
+                                                    <Button HorizontalAlignment="Right" Height="35" Width="45" Margin="10,10,25,15" FontSize="12" Name="AddCustomerBack" Click="AddCustomerBack_Click">Back</Button>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Grid.Row="1">
+                                                <StackPanel Margin="40,50,20,20" Width="400" HorizontalAlignment="Center">
+                                                    <TextBlock Text="First Name:" FontWeight="Bold" Margin="5,5,0,0" Foreground="White"/>
+                                                    <TextBox x:Name="txtFirstName" Margin="5,0,0,0"/>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="FnameError">*Inter your firstname.</TextBlock>
+
+                                                    <TextBlock Text="Last Name:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBox x:Name="txtLastName" Margin="5,0,0,0"/>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="LnameError">*Inter your lastname.</TextBlock>
+
+                                                    <TextBlock Text="National Code:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBox x:Name="txtNationalCode" Margin="5,0,0,0"/>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="NationalCodeError">*.</TextBlock>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitNationalCodeError">*National Code must containonly digits!</TextBlock>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="LengthNationalCodeError">*National Code must be 10 digits!</TextBlock>
+
+                                                    <TextBlock Text="Phone Number:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBox x:Name="txtPhoneNumber" Margin="5,0,0,0"/>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="PhonrnumberError">*Enter your phone Number.</TextBlock>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitPhoneNumberError">*Phone Number must containonly digits!</TextBlock>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="LengthPhoneNumberError">*Phone Number must be 11 digits!</TextBlock>
+
+                                                    <TextBlock Text="Address :" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBox Name="txtaddress" AcceptsReturn="True" TextWrapping="Wrap" Height="50" Margin="5,0,0,0" ></TextBox>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="AddressError">*Enter your Address.</TextBlock>
+
+                                                    <TextBlock Text="Postal Code:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBox x:Name="txtPostalCode" Margin="5,0,0,0"/>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="PostalCodeError">*.</TextBlock>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitPostalCodeError">*National Code must containonly digits!</TextBlock>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="LengthPostalCodeError">*National Code must be 10 digits!</TextBlock>
+
+                                                    <Button Height="40" Width="75" Margin="30" Name="btnOkAddCustomer" Click="btnOkAddCustomer_Click">Add</Button>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+
+
+                                    <!-- صفحه EditCustomers -->
+                                    <Border Grid.Column="1" Name="EditCustomersPanel" Visibility="Collapsed">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Border Grid.Row="0" Background="#8bbb79">
+                                                <Grid>
+                                                    <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 10 0 10" Foreground="White">Edit Customer</Label>
+                                                    <Button HorizontalAlignment="Right" Height="35" Width="45" Margin="10,10,25,15" FontSize="12" Name="EditCustomerBack" Click="EditCustomerBack_Click">Back</Button>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Grid.Row="1">
+                                                <StackPanel Margin="40,50,20,20" Width="400" HorizontalAlignment="Center">
+                                                    <TextBlock Text="First Name:" FontWeight="Bold" Margin="5,5,0,0" Foreground="White"/>
+                                                    <TextBox x:Name="txtFirstNameEdit" Margin="5,0,0,0"/>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="FnameErrorEdit">*Inter your firstname.</TextBlock>
+
+                                                    <TextBlock Text="Last Name:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBox x:Name="txtLastNameEdit" Margin="5,0,0,0"/>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="LnameErrorEdit">*Inter your lastname.</TextBlock>
+
+                                                    <TextBlock Text="National Code:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBox x:Name="txtNationalCodeEdit" Margin="5,0,0,0"/>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="NationalCodeErrorEdit">*.</TextBlock>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitNationalCodeErrorEdit">*National Code must containonly digits!</TextBlock>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="LengthNationalCodeErrorEdit">*National Code must be 10 digits!</TextBlock>
+
+                                                    <TextBlock Text="Phone Number:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBox x:Name="txtPhoneNumberEdit" Margin="5,0,0,0"/>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="PhonrnumberErrorEdit">*Enter your phone Number.</TextBlock>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitPhoneNumberErrorEdit">*Phone Number must containonly digits!</TextBlock>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="LengthPhoneNumberErrorEdit">*Phone Number must be 11 digits!</TextBlock>
+
+                                                    <TextBlock Text="Address :" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBox Name="txtaddressEdit" AcceptsReturn="True" TextWrapping="Wrap" Height="50" Margin="5,0,0,0" ></TextBox>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="AddressErrorEdit">*Enter your Address.</TextBlock>
+
+                                                    <TextBlock Text="Postal Code:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBox x:Name="txtPostalCodeEdit" Margin="5,0,0,0"/>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="PostalCodeErrorEdit">*.</TextBlock>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitPostalCodeErrorEdit">*National Code must containonly digits!</TextBlock>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="LengthPostalCodeErrorEdit">*National Code must be 10 digits!</TextBlock>
+
+                                                    <Button Height="40" Width="75" Margin="30" Name="btnOkEditCustomer" Click="btnOkEditCustomer_Click">Edit</Button>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+
+                                    <!--صفحه MedicationsManagment  -->
+                                    <Border Grid.Column="1" Visibility="Collapsed" Name="MedicationsManagment">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Border Grid.Row="0" Background="#8bbb79">
+                                                <Grid>
+                                                    <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 10 0 10" Foreground="White">Medications Managment</Label>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Grid.Row="1">
+                                                <Grid Margin="10,15,15,0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Label Grid.Column="0" Content="Search:" VerticalAlignment="Center" Margin="5,0" FontSize="16" Foreground="White"/>
+                                                    <TextBox Grid.Column="1" Name="txtSearchMedecine"  Margin="5,0" Height="30" VerticalAlignment="Center" TextChanged="txtSearchMedecine_TextChanged"/>
+                                                    <Button Grid.Column="2" Name="btnAddMedecine" Content="Add" Margin="5,0" Width="80" Height="30" Click="btnAddMedecine_Click"/>
+                                                    <Button Grid.Column="3" Name="btnEditMedecine" Content="Edit" Margin="5,0" Width="80" Height="30" Click="btnEditMedecine_Click"/>
+                                                    <Button Grid.Column="4" Name="btnDeleteMedecine" Content="Delete" Margin="5,0" Width="80" Height="30" Click="btnDeleteMedecine_Click"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Grid.Row="2">
+                                                <Grid>
+                                                    <DataGrid Name="MedecinesListGrid" AutoGenerateColumns="False" Margin="20,10,20,20" IsReadOnly="True" SelectionMode="Single">
+                                                        <DataGrid.Columns>
+                                                            <DataGridTextColumn Header="Code" Binding="{Binding Id}" Width="*"/>
+                                                            <DataGridTextColumn Header="Name" Binding="{Binding NameMedecines}" Width="*"/>
+                                                            <DataGridTextColumn Header="Data buy" Binding="{Binding DateBuy}" Width="*"/>
+                                                            <DataGridTextColumn Header="Price buy" Binding="{Binding PriceBuy}" Width="*"/>
+                                                            <DataGridTextColumn Header="Price sell" Binding="{Binding priceSell}" Width="*"/>
+                                                            <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
+                                                            <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="*"/>
+                                                        </DataGrid.Columns>
+                                                    </DataGrid>
+                                                </Grid>
+                                            </Border>
+
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- صفحه AddMedecinesPanel -->
+                                    <Border Grid.Column="1" Name="AddMedecinesPanel" Visibility="Collapsed">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Border Grid.Row="0" Background="#8bbb79">
+                                                <Grid>
+                                                    <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 10 0 10" Foreground="White">Add Medecine</Label>
+                                                    <Button HorizontalAlignment="Right" Height="35" Width="45" Margin="10,10,25,15" FontSize="12" Name="AddMedecineBack" Click="AddMedecineBack_Click">Back</Button>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Grid.Row="1">
+                                                <StackPanel Margin="40,50,20,20" Width="400" HorizontalAlignment="Center">
+                                                    <TextBlock Text="Id:" FontWeight="Bold" Margin="5,5,0,0" Foreground="White"/>
+                                                    <TextBox x:Name="txtId" Margin="5,0,0,0"/>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IdError">*Inter your firstname.</TextBlock>
+
+                                                    <TextBlock Text="Name:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBox x:Name="txtName" Margin="5,0,0,0"/>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="nameError">*Inter your lastname.</TextBlock>
+
+                                                    <TextBlock Text="Data buy:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBox x:Name="txtDataBuy" Margin="5,0,0,0"/>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="DataBuyError">*.</TextBlock>
+
+                                                    <TextBlock Text="Price buy:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBox x:Name="txtPriceBuy" Margin="5,0,0,0"/>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="PriceBuyError">*Enter your phone Number.</TextBlock>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitPriceBuyError">*Phone Number must containonly digits!</TextBlock>
+
+
+                                                    <TextBlock Text="Price sell:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBox x:Name="txtPriceSell" Margin="5,0,0,0"/>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="PriceSellError">*Enter your phone Number.</TextBlock>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitPriceSellError">*Phone Number must containonly digits!</TextBlock>
+
+                                                    <TextBlock Text="Quantity:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBox x:Name="txtQuantity" Margin="5,0,0,0"/>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="QuantityError">*.</TextBlock>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitQuantityError">*National Code must containonly digits!</TextBlock>
+
+
+                                                    <TextBlock Text="Unit:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBox x:Name="txtUnit" Margin="5,0,0,0"/>
+                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="UnitError">*.</TextBlock>
+
+                                                    <Button Height="40" Width="75" Margin="30" Name="btnOkAddMecedine" Click="btnOkAddMecedine_Click">Add</Button>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                </Grid>
+            </Border>
+        </Grid>
+
+    </Grid>
+</Window>
