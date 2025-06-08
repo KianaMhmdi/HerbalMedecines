@@ -52,7 +52,6 @@
                                             <Button Height="50" Margin="5 8 5 5"  Name="CustomersManagement" Click="CustomersManagement_Click">Customers management</Button>
                                             <Button Height="50" Margin="5"  Name="MedicationsManagement" Click="MedicationsManagement_Click">Medications management</Button>
                                             <Button Height="50" Margin="5"  Name="SellingMedicine" Click="SellingMedicine_Click">Selling medicine</Button>
-                                            <Button Height="50" Margin="5"  Name="medicineRequest" Click="medicineRequest_Click">medicine request</Button>
                                             <Button Height="50" Margin="5"  Name="Reports" Click="Reports_Click">Reports</Button>
                                             <Button Height="50" Margin="5"  Name="PersonalSettings" Click="PersonalSettings_Click">Personal settings</Button>
                                         </StackPanel>
@@ -103,7 +102,7 @@
                                                             <DataGridTextColumn Header="Name" Binding="{Binding CustomerFirstName}" Width="*"/>
                                                             <DataGridTextColumn Header="Last Name" Binding="{Binding CustomerLastName}" Width="*"/>
                                                             <DataGridTextColumn Header="National Code" Binding="{Binding CustomerId}" Width="*"/>
-                                                            <DataGridTextColumn Header="Phone Number" Binding="{Binding CustomerPhoneNumber}" Width="*"/>
+                                                            <DataGridTextColumn Header="Phone Number" Binding="{Binding PhoneNumber}" Width="*"/>
                                                         </DataGrid.Columns>
                                                     </DataGrid>
                                                 </Grid>
