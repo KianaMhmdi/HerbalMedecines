@@ -9,7 +9,7 @@ using System.Windows;
 namespace WpfMedecine
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    /// Interaction logic for App.xaml///////tina
     /// </summary>
     public partial class App : Application
     {
