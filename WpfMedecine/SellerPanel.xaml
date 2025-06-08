@@ -100,10 +100,10 @@
                                                 <Grid>
                                                     <DataGrid Name="CustomersListGrid" AutoGenerateColumns="False" Margin="20,10,20,20" IsReadOnly="True" SelectionMode="Single">
                                                         <DataGrid.Columns>
-                                                            <DataGridTextColumn Header="Name" Binding="{Binding FirstName}" Width="*"/>
-                                                            <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*"/>
-                                                            <DataGridTextColumn Header="National Code" Binding="{Binding NationalCode}" Width="*"/>
-                                                            <DataGridTextColumn Header="Phone Number" Binding="{Binding PhoneNumber}" Width="*"/>
+                                                            <DataGridTextColumn Header="Name" Binding="{Binding CustomerFirstName}" Width="*"/>
+                                                            <DataGridTextColumn Header="Last Name" Binding="{Binding CustomerLastName}" Width="*"/>
+                                                            <DataGridTextColumn Header="National Code" Binding="{Binding CustomerId}" Width="*"/>
+                                                            <DataGridTextColumn Header="Phone Number" Binding="{Binding CustomerPhoneNumber}" Width="*"/>
                                                         </DataGrid.Columns>
                                                     </DataGrid>
                                                 </Grid>
