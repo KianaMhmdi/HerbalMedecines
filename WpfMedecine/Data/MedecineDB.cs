@@ -23,7 +23,7 @@ namespace WpfMedecine.Data
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = "SELECT Id, NameMedecines, DateBuy, PriceBuy, priceSell, Quantity, Unit FROM Medecines_DB_Table";
+                string query = "SELECT Id, NameMedecines, DateBuy, PriceBuy, PriceSell, Quantity, Unit FROM Medecines_DB_Table";
                 SqlCommand command = new SqlCommand(query, connection);
                 SqlDataReader reader = command.ExecuteReader();
 
@@ -35,7 +35,7 @@ namespace WpfMedecine.Data
                         NameMedecines = reader["NameMedecines"].ToString(),
                         DateBuy = DateTime.Parse(reader["DateBuy"].ToString()),
                         PriceBuy = float.Parse(reader["PriceBuy"].ToString()),
-                        PriceSell = float.Parse(reader["priceSell"].ToString()),
+                        PriceSell = float.Parse(reader["PriceSell"].ToString()),
                         Quantity = float.Parse(reader["Quantity"].ToString()),
                         Unit = reader["Unit"].ToString()
                     });
@@ -53,7 +53,7 @@ namespace WpfMedecine.Data
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = "SELECT Id, NameMedecines, DateBuy, PriceBuy, priceSell, Quantity, Unit FROM Medecines_DB_Table WHERE Id LIKE @Filter OR NameMedecines LIKE @Filter";
+                string query = "SELECT Id, NameMedecines, DateBuy, PriceBuy, PriceSell, Quantity, Unit FROM Medecines_DB_Table WHERE Id LIKE @Filter OR NameMedecines LIKE @Filter";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@Filter", "%" + filter + "%"); // اضافه کردن پارامتر برای جلوگیری از SQL Injection
                 SqlDataReader reader = command.ExecuteReader();
@@ -66,7 +66,7 @@ namespace WpfMedecine.Data
                         NameMedecines = reader["NameMedecines"].ToString(),
                         DateBuy = DateTime.Parse(reader["DateBuy"].ToString()),
                         PriceBuy = float.Parse(reader["PriceBuy"].ToString()),
-                        PriceSell = float.Parse(reader["priceSell"].ToString()),
+                        PriceSell = float.Parse(reader["PriceSell"].ToString()),
                         Quantity = float.Parse(reader["Quantity"].ToString()),
                         Unit = reader["Unit"].ToString()
                     });
@@ -81,7 +81,7 @@ namespace WpfMedecine.Data
             try
             {
                 connection.Open();
-                string query = "INSERT INTO Medecines_DB_Table(Id, NameMedecines, DateBuy, PriceBuy, priceSell, Quantity, Unit) " +
+                string query = "INSERT INTO Medecines_DB_Table(Id, NameMedecines, DateBuy, PriceBuy, PriceSell, Quantity, Unit) " +
                "VALUES (@id, @nameMedecines, @dateBuy, @priceBuy, @priceSell, @quantity, @unit)";
 
                 SqlCommand command = new SqlCommand(query, connection);

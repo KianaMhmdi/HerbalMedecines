@@ -114,8 +114,8 @@ namespace WpfMedecine
             MainWindow.Visibility = Visibility.Collapsed;
             MedicationsManagment.Visibility = Visibility.Visible;
 
-         //   MedecineDB medecineDB = new MedecineDB();
-         //   MedecinesListGrid.ItemsSource = medecineDB.SelectMedecine();
+            MedecineDB medecineDB = new MedecineDB();
+            MedecinesListGrid.ItemsSource = medecineDB.SelectMedecine();
         }
 
         private void SellingMedicine_Click(object sender, RoutedEventArgs e)

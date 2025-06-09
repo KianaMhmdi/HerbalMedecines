@@ -261,7 +261,7 @@
                                                             <DataGridTextColumn Header="Name" Binding="{Binding NameMedecines}" Width="*"/>
                                                             <DataGridTextColumn Header="Data buy" Binding="{Binding DateBuy}" Width="*"/>
                                                             <DataGridTextColumn Header="Price buy" Binding="{Binding PriceBuy}" Width="*"/>
-                                                            <DataGridTextColumn Header="Price sell" Binding="{Binding priceSell}" Width="*"/>
+                                                            <DataGridTextColumn Header="Price sell" Binding="{Binding PriceSell}" Width="*"/>
                                                             <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
                                                             <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="*"/>
                                                         </DataGrid.Columns>
