@@ -475,6 +475,11 @@ namespace WpfMedecine
             EditMedecinePanel.Visibility = Visibility.Collapsed;
             MedicationsManagment.Visibility = Visibility.Visible;
         }
+
+        private void SellingMedicineBack_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
 }
