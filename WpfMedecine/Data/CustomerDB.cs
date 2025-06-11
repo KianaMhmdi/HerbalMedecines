@@ -77,7 +77,7 @@ namespace WpfMedecine.Data
             {
                 connection.Open();
                 string query = "INSERT INTO Customer(CustomerId, CustomerFirstName, CustomerLastName,  PhoneNumber) " +
-               "VALUES (@customerId, @customerFirstName, @customerLastName, @phoneNumber, @address, @postalCode)";
+               "VALUES (@customerId, @customerFirstName, @customerLastName, @phoneNumber)";
 
                 SqlCommand command = new SqlCommand(query, connection);
 
@@ -110,7 +110,7 @@ namespace WpfMedecine.Data
                 connection.Open();
                 string query = "update Customer set " +
                     " CustomerId=@nationalCode , CustomerFirstName=@firstName, CustomerLastName=@lastName, PhoneNumber=@phoneNumber" +
-                    "where NationalCode=@nationalCode";
+                    " where CustomerId=@nationalCode";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@firstName", CustomerEdite.CustomerFirstName);
                 command.Parameters.AddWithValue("@lastName", CustomerEdite.CustomerLastName);

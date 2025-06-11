@@ -269,7 +269,7 @@ namespace WpfMedecine
                 }
                 else
                 {
-                    //بررسی می کند که ایا ثبت نام وفقیت امیز بوده یا نه
+                    //بررسی می کند که ایا ثبت نام موفقیت امیز بوده یا نه
                     if (herbalDB.AddPerson(person))
                     {
                         MessageBox.Show("✅ Registration was successful !", "Registration ", MessageBoxButton.OK);

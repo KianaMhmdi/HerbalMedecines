@@ -31,17 +31,6 @@ namespace WpfMedecine
         int flag = 1;
         public bool ValidateInput()
         {
-            if (txtFirstName.Text == "")
-            {
-                FnameError.Visibility = Visibility.Visible;
-                flag = 0;
-            }
-
-            if (flag == 0)
-            {
-                return false;
-            }
-
 
             return true;
         }
@@ -52,23 +41,6 @@ namespace WpfMedecine
         int flag1 = 1;
         public bool Validate1Input()
         {
-            if (txtId.Text == "")
-            {
-                IdError.Visibility = Visibility.Visible;
-                flag1 = 0;
-            }
-
-            if (!(DateTime.TryParse(txtDataBuy.Text, out DateTime result)))
-            {
-                // متن یک تاریخ معتبر است و نتیجه در متغیر result ذخیره می‌شود
-
-            }
-
-            if (flag1 == 0)
-            {
-                return false;
-            }
-
 
             return true;
         }
@@ -112,6 +84,7 @@ namespace WpfMedecine
         private void MedicationsManagement_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.Visibility = Visibility.Collapsed;
+            CustomersManagementPanel.Visibility= Visibility.Collapsed;
             MedicationsManagment.Visibility = Visibility.Visible;
 
             MedecineDB medecineDB = new MedecineDB();
@@ -341,18 +314,103 @@ namespace WpfMedecine
 
         private void btnEditMedecine_Click(object sender, RoutedEventArgs e)
         {
+            if (MedecinesListGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Please select an item.");
+                return;
+            }
+
+            var selectedMedecine = MedecinesListGrid.SelectedItem as Medicine;
+
+            if (selectedMedecine == null)
+            {
+                MessageBox.Show("The selected item is not valid.");
+                return;
+            }
+            // مقداردهی TextBoxها
+            txtIdEdit.Text = selectedMedecine.Id;
+            txtNameEdit.Text = selectedMedecine.NameMedecines;
+            dpDateBuyEdit.Text = selectedMedecine.DateBuy.ToString();
+            txtPriceBuyEdit.Text = selectedMedecine.PriceBuy.ToString();
+            txtPriceSellEdit.Text = selectedMedecine.PriceSell.ToString();
+            txtQuantityEdit.Text = selectedMedecine.Quantity.ToString();
+            txtUnitEdit.Text = selectedMedecine.Unit;
+
+            // نمایش پنل ویرایش
+            MainWindow.Visibility = Visibility.Collapsed;
+            MedicationsManagment.Visibility = Visibility.Collapsed;
+            EditMedecinePanel.Visibility = Visibility.Visible;
+
+            RefreshGridMedecine();
+
 
         }
 
         private void btnDeleteMedecine_Click(object sender, RoutedEventArgs e)
         {
+            if (MedecinesListGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Please select an item.");
+                return;
+            }
+            else
+            {
+                Medicine selectedMedecine = (Medicine)MedecinesListGrid.SelectedItem;
 
+                // استفاده از ویژگی‌های Customer
+                string Id = selectedMedecine.Id;
+                string NameMedecines = selectedMedecine.NameMedecines;
+                string DateBuy = selectedMedecine.DateBuy.ToString();
+                string PriceBuy = selectedMedecine.PriceBuy.ToString();
+                string PriceSell = selectedMedecine.PriceSell.ToString();
+                string Quantity = selectedMedecine.Quantity.ToString();
+                string Unit = selectedMedecine.Unit;
+
+                if (MessageBox.Show($"Are you sure you want to delete? {NameMedecines + " with id " + Id}", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        MedecineDB medecineDB = new MedecineDB();
+                        // دریافت ObservableCollection از ItemsSource گرید
+                        ObservableCollection<Medicine> medecinesList = (ObservableCollection<Medicine>)MedecinesListGrid.ItemsSource;
+
+                        if (medecineDB.DeleteMedecine(Id))
+                        {
+                            MessageBox.Show($"{NameMedecines + ' ' + Id} has been deleted!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Failed to delete medecine.");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error deleting medecine: {ex.Message}");
+                    }
+                }
+                RefreshGridMedecine();
+            }
         }
 
         private void AddMedecineBack_Click(object sender, RoutedEventArgs e)
         {
             AddMedecinesPanel.Visibility = Visibility.Collapsed;
             MedicationsManagment.Visibility = Visibility.Visible;
+        }
+
+        private void dpBirthDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DateTime? selectedDate = dpBirthDate.SelectedDate;
+            if (selectedDate.HasValue)
+            {
+                DateTime birthDate = selectedDate.Value;
+                int age = DateTime.Now.Year - birthDate.Year;
+                if (birthDate > DateTime.Now.AddYears(-age))
+                {
+                    age--;
+                }
+  
+            }
         }
 
         private void btnOkAddMecedine_Click(object sender, RoutedEventArgs e)
@@ -363,13 +421,13 @@ namespace WpfMedecine
             if (ValidateInput())
             {
                 ///مقدار دهی پارمتر هایی که کاربر وارد می کند
-                medicine.Id = txtId.Text.ToString();
-                medicine.NameMedecines = txtName.Text.ToString();
-                medicine.DateBuy = DateTime.Parse(txtDataBuy.Text);
+                medicine.Id = txtId.Text;
+                medicine.NameMedecines = txtName.Text;
+                medicine.DateBuy = dpBirthDate.SelectedDate.Value;
                 medicine.PriceBuy = float.Parse(txtPriceBuy.Text);
                 medicine.PriceSell = float.Parse(txtPriceSell.Text);
                 medicine.Quantity = float.Parse(txtQuantity.Text);
-                medicine.Unit = txtUnit.Text.ToString();
+                medicine.Unit = txtUnit.Text;
 
                 //بررسی می کند که ایا ثبت نام وفقیت امیز بوده یا نه
                 if (medecineDB.AddMedecine(medicine))
@@ -382,6 +440,40 @@ namespace WpfMedecine
             {
                 MessageBox.Show("Adding was unsuccessful !", "Adding ", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void EditMedecinBack_Click(object sender, RoutedEventArgs e)
+        {
+            EditMedecinePanel.Visibility = Visibility.Collapsed;
+            MedicationsManagment.Visibility = Visibility.Visible; 
+        }
+
+        private void btnOkEditMedecine_Click(object sender, RoutedEventArgs e)
+        {
+            Medicine updatedMedecine = new Medicine()
+            {
+                Id = txtIdEdit.Text,
+                NameMedecines = txtNameEdit.Text,
+                DateBuy = DateTime.Parse(dpDateBuyEdit.Text),
+                PriceBuy = float.Parse(txtPriceBuyEdit.Text), 
+                PriceSell = float.Parse(txtPriceSellEdit.Text), 
+                Quantity = float.Parse(txtQuantityEdit.Text),
+                Unit = txtUnitEdit.Text
+            };
+
+            MedecineDB medecineDB = new MedecineDB();
+
+            if (medecineDB.UpdateMedecine(updatedMedecine))
+            {
+                MessageBox.Show("Information updated successfully.");
+            }
+            else
+            {
+                MessageBox.Show("The update operation failed.");
+            }
+            RefreshGridMedecine();
+            EditMedecinePanel.Visibility = Visibility.Collapsed;
+            MedicationsManagment.Visibility = Visibility.Visible;
         }
     }
 
