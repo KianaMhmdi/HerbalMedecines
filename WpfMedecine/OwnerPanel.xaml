@@ -95,9 +95,8 @@
 
                             <Border Grid.Row="1" >
                                 <StackPanel>
-                                    <Button Name="btnSearchCustomers" Margin="20 20 20 10" Height="50" FontWeight="Medium" Click="btnSearchCustomers_Click">Search</Button>
-                                    <Button Name="btnAddCustomers" Margin="20 20 20 10" Height="50" FontWeight="Medium" Click="btnAddCustomers_Click">Add</Button>
-                                    <Button Name="btnDeleteCustomers" Margin="20 20 20 10" Height="50" FontWeight="Medium" Click="btnDeleteCustomers_Click">Delete</Button>
+                                    <Button Name="btnCustomers" Margin="20 20 20 10" Height="50" FontWeight="Medium" Click="btnCustomers_Click">customer</Button>
+                                   
                                 </StackPanel>
                             </Border>
                         </Grid>
@@ -399,9 +398,8 @@
                 </Grid>
             </Border>
 
-            <!---صفحه جستجوی مشتری-->
-
-            <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="CustomerSearch">
+            <!-- صفحه مشتری-->
+            <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="CustomerPanel">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
@@ -411,43 +409,51 @@
 
                     <Border Grid.Row="0" Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
                         <Grid>
-                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0" >Customer Search</Label>
-                            <Button HorizontalAlignment="Right" Height="30" Width="30" Margin="15" Name="CustomerSearchBack" Click="CustomerSearchBack_Click">Back</Button>
+                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">Custumer</Label>
+                            <Button HorizontalAlignment="Right" Height="30" Width="30" Margin="15" Name="CustomerBack" Click="CustomerBack_Click">Back</Button>
+                        </Grid>
+                    </Border>
+                    <!-- Search and Action Buttons -->
+                    <Border Grid.Row="1" Padding="10" Background="#769C61" CornerRadius="10" Margin="20,10,20,10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" Content="Search:" VerticalAlignment="Center" Margin="5,0" FontSize="16"/>
+                            <TextBox Grid.Column="1" Name="txtSearchCustomer"  Margin="5,0" Height="30" VerticalAlignment="Center" TextChanged="txtSearchCustomer_TextChanged"/>
+                            <Button Grid.Column="2" Name="btnAddCustomerPanel" Content="Add" Margin="5,0" Width="80" Height="30" Click="btnAddCustomerPanel_Click"/>
+                            <Button Grid.Column="3" Name="btnEditCustomerPanel" Content="Edit" Margin="5,0" Width="80" Height="30" Click="btnEditCustomerPanel_Click"/>
+                            <Button Grid.Column="4" Name="btnDeleteCustomerPanel" Content="Delete" Margin="5,0" Width="80" Height="30" Click="btnDeleteCustomerPanel_Click"/>
 
                         </Grid>
                     </Border>
 
-                    <Border Grid.Row="1" Padding="20" Background="#769C61" CornerRadius="10" Margin="20,10,20,10">
+
+
+                    <Border Grid.Row="2">
                         <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
+                            <DataGrid Name="CustomerGrid" AutoGenerateColumns="False" Margin="20,10,20,20" IsReadOnly="True" SelectionMode="Single">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Name" Binding="{Binding CustomerFirstName}" Width="*"/>
+                                    <DataGridTextColumn Header="Last Name" Binding="{Binding CustomerLastName}" Width="*"/>
+                                    <DataGridTextColumn Header="National Code" Binding="{Binding  CustomerId }" Width="*"/>
+                                    <DataGridTextColumn Header="Phone Number" Binding="{Binding PhoneNumber}" Width="*"/>
 
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-
-
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Row="0" Grid.Column="0" Content="Customer ID:" VerticalAlignment="Center" Margin="5" FontSize="16"/>
-                            <TextBox Grid.Row="0" Grid.Column="1" Name="txtCustomerSearchID" Margin="5" Height="30" HorizontalAlignment="Left" Width="200" GotFocus="txtCustomerSearchID_GotFocus"/>
-                            <TextBlock Grid.Row="0" Grid.Column="2" Foreground="Red" Margin="5" Visibility="Collapsed" Name="CustomerSearchIDError" VerticalAlignment="Center">* Please enter Customer ID</TextBlock>
-                            <TextBlock Grid.Row="0" Grid.Column="3" Foreground="Red" Margin="5" Visibility="Collapsed" Name="CustomerSearchIDErrorDigit" VerticalAlignment="Center">* Only numeric values are allowed</TextBlock>
-                            
-                            <Button Grid.Row="2" Grid.Column="0"  Name="btnCustomerSearch" Content="Search" Width="100" Height="40" HorizontalAlignment="Center" FontSize="20" Margin="5" Click="btnCustomerSearch_Click"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
                         </Grid>
-                        </Border>
-                    
-                    
-                    
-                        </Grid>
-                </Border>
-                    <!-- صفحه ثبت مشتری-->
+                    </Border>
+                </Grid>
+            </Border>
+
+
+
+            <!-- صفحه ثبت مشتری-->
            
 
             <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="AddCustomer">
@@ -460,7 +466,7 @@
 
                     <Border Grid.Row="0" Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
                         <Grid>
-                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0" Name="SellOrEditMedicine">Sell Medicines</Label>
+                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0" Name="SellOrEditCustomer">Add Customer</Label>
                             <Button HorizontalAlignment="Right" Height="30" Width="30" Margin="15" Name="AddCustomerBack" Click="AddCustomerBack_Click">Back</Button>
 
                         </Grid>
@@ -517,7 +523,7 @@
                             <TextBlock  Grid.Row="4" Grid.Column="0" Foreground="Red" Margin="5" Visibility="Collapsed" Name="LengthCustomerPhoneNumberError">*Phone Number must be 11 digits!</TextBlock>
 
 
-                            <Button Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" Name="btnNexSell" Content="Nex" Width="100" Height="40" HorizontalAlignment="Center" FontSize="20" Margin="5" Click="btnNexSell_Click"/>
+                            <Button Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" Name="btnAddCustomer" Content="Add" Width="100" Height="40" HorizontalAlignment="Center" FontSize="20" Margin="5" Click="btnAddCustomer_Click"/>
                         </Grid>
                     </Border>
 
@@ -603,6 +609,10 @@
                    
                 </Grid>
             </Border>
+
+
+
+
 
 
         </Grid>

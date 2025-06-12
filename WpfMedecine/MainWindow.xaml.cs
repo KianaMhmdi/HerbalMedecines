@@ -61,7 +61,7 @@ namespace WpfMedecine
             }
             if (login && ValidateRole(UserName.Text) == "Seller")
             {
-                MessageBox.Show("selers");
+               
 
                 var SellerPanel = new SellerPanel();
                 SellerPanel.Show();

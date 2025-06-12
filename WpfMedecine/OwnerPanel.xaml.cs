@@ -393,14 +393,14 @@ namespace WpfMedecine
 
                 if (herbalDB.AddMedicine(medicine))
                 {
-                    MessageBox.Show("✅ Add medicine was successful !", "Edite ", MessageBoxButton.OK);
+                    MessageBox.Show("✅ Add medicine was successful !", "Add ", MessageBoxButton.OK);
 
                     clearErrorsBuyMedicine();
                     RefreshBuyMedicine();
                 }
                 else
                 {
-                    MessageBox.Show("Add medicine was unsuccessful !", "Edite ", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Add medicine was unsuccessful !", "Add ", MessageBoxButton.OK, MessageBoxImage.Error);
                     clearErrorsBuyMedicine();
                     RefreshBuyMedicine();
                 }
@@ -499,20 +499,7 @@ namespace WpfMedecine
 
        
 
-        private void btnSearchCustomers_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnAddCustomers_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnDeleteCustomers_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+     
 
         private void btnSearchMedecines_Click(object sender, RoutedEventArgs e)
         {
@@ -551,30 +538,8 @@ namespace WpfMedecine
 
         }
 
-        private void CustomerBack_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
-
-        private void txtSearchCustomer_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void btnAddCustomer_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnEditCustomer_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnDeleteCustomer_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+   
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -652,63 +617,12 @@ namespace WpfMedecine
         private void btnMedecinesSell_Click(object sender, RoutedEventArgs e)
         {
 
-            Main.Visibility = Visibility.Collapsed;
-            CustomerSearch.Visibility = Visibility.Visible;
+        
             
         }
-        private void CustomerSearchBack_Click(object sender, RoutedEventArgs e)
-        {
-            Main.Visibility = Visibility.Visible;
-            CustomerSearch.Visibility = Visibility.Collapsed;
-        }
-
-        private void btnCustomerSearch_Click(object sender, RoutedEventArgs e)
-        {
-            HerbalDB herbalDB = new HerbalDB();
-            string idCustomer = txtCustomerSearchID.Text.ToString();
-            
-
-            if (herbalDB.CustomerSearch(idCustomer) && ValidateInputCustomerSearch())
-            {
-                
-            }
-            else
-            {
-                CustomerSearch.Visibility = Visibility.Collapsed;
-                AddCustomer.Visibility = Visibility.Visible;
-                txtCustomerID.Text =txtCustomerSearchID.Text;
-               
-                
-            }
-
-        }
-        private void btnNexSell_Click(object sender, RoutedEventArgs e)
-        {
-            HerbalDB herbalDB = new HerbalDB();
-            Customer customer = new Customer();
-            customer.CustomerId = txtCustomerID.Text.ToString();
-            customer.CustomerFirstName = txtCustomerFirstName.Text.ToString();
-            customer.CustomerLastName = txtCustomerLastName.Text.ToString();
-            customer.CustomerPhoneNumber = txtCustomrPhoneNumber.Text.ToString();
-            if (ValidateInputAddCustomer())
-            {
-                AddCustomer.Visibility = Visibility.Collapsed;
-                AddOrder.Visibility = Visibility.Visible;
-                DataTable originalTable = new DataTable();
-                originalTable = herbalDB.SelectMedicine();
-                MedicineSellListGrid.ItemsSource = originalTable.DefaultView;
-
-
-
-
-            }
-        }
-        private void AddCustomerBack_Click(object sender, RoutedEventArgs e)
-        {
-            AddCustomer.Visibility = Visibility.Collapsed;
-            CustomerSearch.Visibility = Visibility.Visible;
-           
-        }
+    
+        
+      
         //رویداد انتخاب دارو و نمایش آن روی فاکتور
 
         private void MedicineSellListGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -814,21 +728,10 @@ namespace WpfMedecine
             TotalAmountLabel.Content = total;
         }
        
-        public bool ValidateInputCustomerSearch()
-        {
-            if (txtCustomerSearchID.Text == "")
-            {
-                CustomerSearchIDError.Visibility = Visibility.Visible;
-                return false;
-            }
-            return true;
-        }
-        private void txtCustomerSearchID_GotFocus(object sender, RoutedEventArgs e)
-        {
-            CustomerSearchIDError.Visibility = Visibility.Collapsed;
-        }
+       
         public bool ValidateInputAddCustomer()
         {
+           
             if (txtCustomerID.Text == "")
             {
                 CustomerIDError.Visibility = Visibility.Visible;
@@ -860,13 +763,14 @@ namespace WpfMedecine
                 CustomerPhoneNumberError.Visibility = Visibility.Visible;
                 return false;
             }
-            if (!Regex.IsMatch(txtCustomrPhoneNumber.Text, @"^\d+$") && txtCustomrPhoneNumber.Text.Length > 0)
+            if (!Regex.IsMatch(txtCustomrPhoneNumber.Text.Trim(), @"^\d+$") && txtCustomrPhoneNumber.Text.Length > 0)
             {
                 CustomerPhoneNumberErrorErrorDigit.Visibility = Visibility.Visible;
+               
                 return false;
             }
 
-            if (txtCustomrPhoneNumber.Text.Length != 11 && txtCustomrPhoneNumber.Text.Length > 0)
+            if (txtCustomrPhoneNumber.Text.Trim().Length != 11 && txtCustomrPhoneNumber.Text.Length > 0)
             {
                 LengthCustomerPhoneNumberError.Visibility = Visibility.Visible;
                 return false;
@@ -905,10 +809,7 @@ namespace WpfMedecine
             clearErrorsAddCustomer();
         }
 
-        private void AddCustomer_Click(object sender, RoutedEventArgs e)
-        {
-           
-        }
+       
 
 
         private void txtMedicineID_TextChanged(object sender, TextChangedEventArgs e)
@@ -929,6 +830,203 @@ namespace WpfMedecine
         private void MedicineSellListGrid_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void btnCustomers_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Visibility = Visibility.Collapsed;
+            CustomerPanel.Visibility = Visibility.Visible;
+            HerbalDB herbalDB = new HerbalDB();
+            DataTable originalTable;
+            string filterText = txtSearchCustomer.Text.Trim();
+            originalTable = herbalDB.SelectCustomer();
+            CustomerGrid.ItemsSource = originalTable.DefaultView;
+
+
+
+        }
+
+        private void CustomerBack_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Visibility = Visibility.Visible;
+            CustomerPanel.Visibility = Visibility.Collapsed;
+
+        }
+
+        private void txtSearchCustomer_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            string filter = txtSearchCustomer.Text.Trim();
+            HerbalDB herbal = new HerbalDB();
+            DataTable originalTable;
+            if (txtSearchCustomer.Text == "")
+            {
+                RefreshGridCustomer();
+            }
+            else
+            {
+                originalTable = herbal.SearchCustomer(filter);
+                CustomerGrid.ItemsSource = originalTable.DefaultView;
+            }
+        }
+
+        public void RefreshGridCustomer()
+        {
+            HerbalDB herbal = new HerbalDB();
+            DataTable originalTable;
+            originalTable = herbal.SelectCustomer();
+            CustomerGrid.ItemsSource = originalTable.DefaultView;
+        }
+        private void btnAddCustomerPanel_Click(object sender, RoutedEventArgs e)
+        {
+            CustomerPanel.Visibility = Visibility.Collapsed;
+            AddCustomer.Visibility = Visibility.Visible;
+        }
+
+
+        private void btnAddCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            HerbalDB herbalDB = new HerbalDB();
+            Customer customer = new Customer();
+            customer.CustomerId = txtCustomerID.Text.ToString();
+            customer.CustomerFirstName = txtCustomerFirstName.Text.ToString();
+            customer.CustomerLastName = txtCustomerLastName.Text.ToString();
+            customer.CustomerPhoneNumber = txtCustomrPhoneNumber.Text.ToString();
+            if (ValidateInputAddCustomer() && SellOrEditCustomer.Content.ToString() == "Add Customer")
+            {
+
+                if (herbalDB.AddCustomer(customer))
+                {
+
+                    MessageBox.Show("✅ Add customer was successful !", "Add ", MessageBoxButton.OK);
+                    clearErrorsAddCustomer();
+                    RefreshGridCustomer();
+                    ClearCustomerFields();
+                    AddCustomer.Visibility = Visibility.Collapsed;
+                    CustomerPanel.Visibility = Visibility.Visible;
+                }
+                else
+                {
+
+                    MessageBox.Show("Add medicine was unsuccessful !", "Add ", MessageBoxButton.OK, MessageBoxImage.Error);
+                    clearErrorsAddCustomer();
+                    RefreshGridCustomer();
+                    ClearCustomerFields();
+
+                    AddCustomer.Visibility = Visibility.Collapsed;
+                    CustomerPanel.Visibility = Visibility.Visible;
+                }
+
+            }
+            if (ValidateInputAddCustomer() && SellOrEditCustomer.Content.ToString() == "Edit Customer" )
+            {
+                if (  herbalDB.UpdateCustomer(customer))
+                {
+
+                  
+                    MessageBox.Show("✅ Edit customer was successful !", "Edit ", MessageBoxButton.OK);
+                    clearErrorsAddCustomer();
+                    RefreshGridCustomer();
+                    ClearCustomerFields();
+
+                    SellOrEditCustomer.Content = "Add Customer";
+                    btnAddCustomer.Content = "Add";
+                    CustomerGrid.SelectedItem = null;
+                    AddCustomer.Visibility = Visibility.Collapsed;
+                    CustomerPanel.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    
+                    MessageBox.Show("Edit medicine was unsuccessful !", "Edit ", MessageBoxButton.OK, MessageBoxImage.Error);
+                    clearErrorsAddCustomer();
+                    RefreshGridCustomer();
+                    ClearCustomerFields();
+
+
+                    SellOrEditCustomer.Content = "Add Customer";
+                    btnAddCustomer.Content = "Add";
+                    CustomerGrid.SelectedItem = null;
+                    AddCustomer.Visibility = Visibility.Collapsed;
+                    CustomerPanel.Visibility = Visibility.Visible;
+                }
+
+            }
+           
+
+
+        }
+
+        private void btnEditCustomerPanel_Click(object sender, RoutedEventArgs e)
+        {
+            if (CustomerGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Please select an item.");
+                return;
+            }
+            else
+            {
+
+                HerbalDB herbal = new HerbalDB();
+                Customer customer = new Customer();
+                CustomerPanel.Visibility = Visibility.Collapsed;
+                AddCustomer.Visibility = Visibility.Visible;
+
+                SellOrEditCustomer.Content = "Edit Customer";
+                btnAddCustomer.Content = "Edit";
+
+                var selectedRow = (DataRowView)CustomerGrid.SelectedItem;
+               txtCustomerID.Text = selectedRow["CustomerId"].ToString();
+               txtCustomerFirstName.Text= selectedRow["CustomerFirstName"].ToString();
+                txtCustomerLastName.Text= selectedRow["CustomerLastName"].ToString();
+                txtCustomrPhoneNumber.Text= selectedRow["PhoneNumber"].ToString();
+
+
+
+            }
+
+        }
+
+        private void btnDeleteCustomerPanel_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (CustomerGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Please select an item.");
+                return;
+            }
+            else
+            {
+                var selectedRow = (DataRowView)CustomerGrid.SelectedItem;
+                string id = selectedRow["CustomerId"].ToString();
+                string firstName = selectedRow["CustomerFirstName"].ToString();
+                string lastName = selectedRow["CustomerLastName"].ToString();
+                if (MessageBox.Show($"Are you sure you want to delete?{firstName + ' ' + lastName}", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    HerbalDB herbal = new HerbalDB();
+                    herbal.DeleteCustomer(id);
+                    MessageBox.Show($"{firstName + ' ' + lastName} has been delete!");
+                    herbal.SelectPerson("Seller");
+                    RefreshGridCustomer();
+                }
+            }
+        }
+
+        private void AddCustomerBack_Click(object sender, RoutedEventArgs e)
+        {
+            AddCustomer.Visibility = Visibility.Collapsed;
+            CustomerPanel.Visibility = Visibility.Visible;
+            CustomerGrid.SelectedItem = null;
+            clearErrorsAddCustomer();
+            RefreshBuyMedicine();
+            ClearCustomerFields();
+        }
+      public  void ClearCustomerFields()
+        {
+            txtCustomerID.Text = "";
+            txtCustomerFirstName.Text = "";
+            txtCustomerLastName.Text = "";
+            txtCustomrPhoneNumber.Text="";
         }
     }
    

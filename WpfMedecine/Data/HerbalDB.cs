@@ -347,33 +347,6 @@ namespace WpfMedecine.Data
 
 
 
-        //search customer
-        public bool CustomerSearch(string Id)
-        {
-            SqlConnection connection = new SqlConnection(connectionString);
-            try
-            {
-                connection.Open();
-                string query = $"select count(1) from Customer where CustomerId=@Id";
-
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@Id", Id);
-                int counnt = (int)command.ExecuteScalar();
-
-
-                return counnt > 0;
-
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-                return false;
-            }
-            finally
-            {
-                connection.Close();
-            }
-        }
         //add Customer
         public bool AddCustomer(Customer customer)
         {
@@ -402,6 +375,104 @@ namespace WpfMedecine.Data
                 connection.Close();
             }
         }
+
+        ///select customer
+        public DataTable SelectCustomer()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            DataTable data = new DataTable();
+            try
+            {
+                connection.Open();
+                string query = "select CustomerId,CustomerFirstName,CustomerLastName,PhoneNumber from Customer";
+                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+
+                adapter.Fill(data);
+                connection.Close();
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            return data;
+
+        }
+        ///Search Customer
+        public DataTable SearchCustomer(string filter)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            DataTable data = new DataTable();
+            try
+            {
+                connection.Open();
+                string query =$"select CustomerId,CustomerFirstName,CustomerLastName,PhoneNumber from Customer where CustomerFirstName like '{filter}%' or CustomerLastName like '{filter}%'";
+                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+
+                adapter.Fill(data);
+                connection.Close();
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            return data;
+
+        }
+        //Update Customer
+        public bool UpdateCustomer(Customer customer)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                connection.Open();
+                string query = "update  Customer set CustomerId=@id,CustomerFirstName=@fistName,CustomerLastName=@lastName,PhoneNumber=@phoneNumber  where  CustomerId=@id";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id", customer.CustomerId);
+                command.Parameters.AddWithValue("@fistName", customer.CustomerFirstName);
+                command.Parameters.AddWithValue("@lastName", customer.CustomerLastName);
+                command.Parameters.AddWithValue("@phoneNumber", customer.CustomerPhoneNumber);
+                command.ExecuteNonQuery();
+                return true;
+            }
+
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        //delete Customer
+        public bool DeleteCustomer(string Id)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+
+                connection.Open();
+                string query = $"delete Customer where CustomerId='{Id}'";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.ExecuteNonQuery();
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
         //add Order
         public bool AddOrder(Order order)
         {
@@ -455,5 +526,6 @@ namespace WpfMedecine.Data
                 connection.Close();
             }
         }
+        
     }
 }
