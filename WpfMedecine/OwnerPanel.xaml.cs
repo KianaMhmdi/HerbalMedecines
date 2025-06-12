@@ -928,7 +928,6 @@ namespace WpfMedecine
                     clearErrorsAddCustomer();
                     RefreshGridCustomer();
                     ClearCustomerFields();
-
                     SellOrEditCustomer.Content = "Add Customer";
                     btnAddCustomer.Content = "Add";
                     CustomerGrid.SelectedItem = null;
