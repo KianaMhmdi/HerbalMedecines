@@ -21,7 +21,7 @@
             <!-- هدر -->
             <Border Grid.Row="0" Height="80" Background="#8bbb79" CornerRadius="0 0 40 40">
                 <Grid>
-                    <Label FontSize="35" FontWeight="Medium" HorizontalAlignment="Center" Margin="0,9,0,0" Foreground="White">Seller</Label>
+                    <Label FontSize="35" FontWeight="Medium" HorizontalAlignment="Center" Margin="0,9,0,0" Foreground="White">صفحه  مشتری</Label>
                     <Button HorizontalAlignment="Right" Height="40" Width="50" Margin="10,10,25,15" FontSize="13" Name="LoginWindow" Click="LoginWindow_Click">Back</Button>
                 </Grid>
             </Border>
@@ -42,28 +42,28 @@
                             <Border Grid.Row="0" Background="#80000000" Margin="15">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="210"/>
                                         <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="230"/>
                                     </Grid.ColumnDefinitions>
 
                                     <!-- منو -->
-                                    <Border Grid.Column="0"  Background="#8bbb79" Opacity=".8">
+                                    <Border Grid.Column="1"  Background="#8bbb79" Opacity=".8">
                                         <StackPanel Orientation="Vertical"  HorizontalAlignment="Center"  VerticalAlignment="Stretch" Width="200">
-                                            <Button Height="50" Margin="5 8 5 5"  Name="CustomersManagement" Click="CustomersManagement_Click">Customers management</Button>
-                                            <Button Height="50" Margin="5"  Name="MedicationsManagement" Click="MedicationsManagement_Click">Medications management</Button>
-                                            <Button Height="50" Margin="5"  Name="SellingMedicine" Click="SellingMedicine_Click">Selling medicine</Button>
-                                            <Button Height="50" Margin="5"  Name="Reports" Click="Reports_Click">Reports</Button>
-                                            <Button Height="50" Margin="5"  Name="PersonalSettings" Click="PersonalSettings_Click">Personal settings</Button>
+                                            <Button Height="50" Margin="5 8 5 5"  Name="CustomersManagement" Click="CustomersManagement_Click">مدیریت مشتریان</Button>
+                                            <Button Height="50" Margin="5"  Name="MedicationsManagement" Click="MedicationsManagement_Click">مدیریت داروها</Button>
+                                            <Button Height="50" Margin="5"  Name="SellingMedicine" Click="SellingMedicine_Click">فروش دارو </Button>
+                                            <Button Height="50" Margin="5"  Name="Reports" Click="Reports_Click">گزارشات</Button>
+                                            <Button Height="50" Margin="5"  Name="PersonalSettings" Click="PersonalSettings_Click">تنظیمات شخصی</Button>
                                         </StackPanel>
                                     </Border>
 
                                     <!-- صفحه اصلی -->
-                                    <Border  Grid.Column="1" Visibility="Visible" Name="MainWindow">
+                                    <Border  Grid.Column="0" Visibility="Visible" Name="MainWindow">
                                         <!-- <TextBlock TextAlignment="Right" Foreground="White" FontSize="55" Margin="0 15 160 0" FontWeight="Bold"  FontFamily="Monotype Corsiva" Opacity=".7">Welcome</TextBlock> -->
                                     </Border>
 
                                     <!-- صفحه CustomersManagement -->
-                                    <Border Grid.Column="1" Visibility="Collapsed" Name="CustomersManagementPanel">
+                                    <Border Grid.Column="0" Visibility="Collapsed" Name="CustomersManagementPanel">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="auto"/>
@@ -73,7 +73,7 @@
 
                                             <Border Grid.Row="0" Background="#8bbb79">
                                                 <Grid>
-                                                    <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 10 0 10" Foreground="White">Customers Managment</Label>
+                                                    <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 10 0 10" Foreground="White">مدیریت مشتری ها </Label>
                                                 </Grid>
                                             </Border>
 
@@ -102,7 +102,7 @@
                                                             <DataGridTextColumn Header="Name" Binding="{Binding CustomerFirstName}" Width="*"/>
                                                             <DataGridTextColumn Header="Last Name" Binding="{Binding CustomerLastName}" Width="*"/>
                                                             <DataGridTextColumn Header="National Code" Binding="{Binding CustomerId}" Width="*"/>
-                                                            <DataGridTextColumn Header="Phone Number" Binding="{Binding PhoneNumber}" Width="*"/>
+                                                            <DataGridTextColumn Header="Phone Number" Binding="{Binding CustomerPhoneNumber}" Width="*"/>
                                                         </DataGrid.Columns>
                                                     </DataGrid>
                                                 </Grid>
@@ -112,7 +112,7 @@
                                     </Border>
 
                                     <!-- صفحه AddCustomers -->
-                                    <Border Grid.Column="1" Name="AddCustomersPanel" Visibility="Collapsed">
+                                    <Border Grid.Column="0" Name="AddCustomersPanel" Visibility="Collapsed">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="auto"/>
@@ -122,7 +122,7 @@
 
                                             <Border Grid.Row="0" Background="#8bbb79">
                                                 <Grid>
-                                                    <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 10 0 10" Foreground="White">Add Customer</Label>
+                                                    <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 10 0 10" Foreground="White">اضافه کردن مشتری</Label>
                                                     <Button HorizontalAlignment="Right" Height="35" Width="45" Margin="10,10,25,15" FontSize="12" Name="AddCustomerBack" Click="AddCustomerBack_Click">Back</Button>
                                                 </Grid>
                                             </Border>
@@ -131,33 +131,15 @@
                                                 <StackPanel Margin="40,50,20,20" Width="400" HorizontalAlignment="Center">
                                                     <TextBlock Text="First Name:" FontWeight="Bold" Margin="5,5,0,0" Foreground="White"/>
                                                     <TextBox x:Name="txtFirstName" Margin="5,0,0,0"/>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="FnameError">*Inter your firstname.</TextBlock>
 
                                                     <TextBlock Text="Last Name:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
                                                     <TextBox x:Name="txtLastName" Margin="5,0,0,0"/>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="LnameError">*Inter your lastname.</TextBlock>
 
                                                     <TextBlock Text="National Code:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
                                                     <TextBox x:Name="txtNationalCode" Margin="5,0,0,0"/>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="NationalCodeError">*.</TextBlock>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitNationalCodeError">*National Code must containonly digits!</TextBlock>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="LengthNationalCodeError">*National Code must be 10 digits!</TextBlock>
 
                                                     <TextBlock Text="Phone Number:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
                                                     <TextBox x:Name="txtPhoneNumber" Margin="5,0,0,0"/>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="PhonrnumberError">*Enter your phone Number.</TextBlock>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitPhoneNumberError">*Phone Number must containonly digits!</TextBlock>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="LengthPhoneNumberError">*Phone Number must be 11 digits!</TextBlock>
-
-                                                    <TextBlock Text="Address :" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
-                                                    <TextBox Name="txtaddress" AcceptsReturn="True" TextWrapping="Wrap" Height="50" Margin="5,0,0,0" ></TextBox>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="AddressError">*Enter your Address.</TextBlock>
-
-                                                    <TextBlock Text="Postal Code:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
-                                                    <TextBox x:Name="txtPostalCode" Margin="5,0,0,0"/>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="PostalCodeError">*.</TextBlock>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitPostalCodeError">*National Code must containonly digits!</TextBlock>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="LengthPostalCodeError">*National Code must be 10 digits!</TextBlock>
 
                                                     <Button Height="40" Width="75" Margin="30" Name="btnOkAddCustomer" Click="btnOkAddCustomer_Click">Add</Button>
                                                 </StackPanel>
@@ -167,7 +149,7 @@
 
 
                                     <!-- صفحه EditCustomers -->
-                                    <Border Grid.Column="1" Name="EditCustomersPanel" Visibility="Collapsed">
+                                    <Border Grid.Column="0" Name="EditCustomersPanel" Visibility="Collapsed">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="auto"/>
@@ -177,7 +159,7 @@
 
                                             <Border Grid.Row="0" Background="#8bbb79">
                                                 <Grid>
-                                                    <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 10 0 10" Foreground="White">Edit Customer</Label>
+                                                    <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 10 0 10" Foreground="White">ویرایش مشتری</Label>
                                                     <Button HorizontalAlignment="Right" Height="35" Width="45" Margin="10,10,25,15" FontSize="12" Name="EditCustomerBack" Click="EditCustomerBack_Click">Back</Button>
                                                 </Grid>
                                             </Border>
@@ -186,33 +168,15 @@
                                                 <StackPanel Margin="40,50,20,20" Width="400" HorizontalAlignment="Center">
                                                     <TextBlock Text="First Name:" FontWeight="Bold" Margin="5,5,0,0" Foreground="White"/>
                                                     <TextBox x:Name="txtFirstNameEdit" Margin="5,0,0,0"/>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="FnameErrorEdit">*Inter your firstname.</TextBlock>
 
                                                     <TextBlock Text="Last Name:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
                                                     <TextBox x:Name="txtLastNameEdit" Margin="5,0,0,0"/>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="LnameErrorEdit">*Inter your lastname.</TextBlock>
 
                                                     <TextBlock Text="National Code:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
                                                     <TextBox x:Name="txtNationalCodeEdit" Margin="5,0,0,0"/>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="NationalCodeErrorEdit">*.</TextBlock>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitNationalCodeErrorEdit">*National Code must containonly digits!</TextBlock>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="LengthNationalCodeErrorEdit">*National Code must be 10 digits!</TextBlock>
 
                                                     <TextBlock Text="Phone Number:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
                                                     <TextBox x:Name="txtPhoneNumberEdit" Margin="5,0,0,0"/>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="PhonrnumberErrorEdit">*Enter your phone Number.</TextBlock>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitPhoneNumberErrorEdit">*Phone Number must containonly digits!</TextBlock>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="LengthPhoneNumberErrorEdit">*Phone Number must be 11 digits!</TextBlock>
-
-                                                    <TextBlock Text="Address :" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
-                                                    <TextBox Name="txtaddressEdit" AcceptsReturn="True" TextWrapping="Wrap" Height="50" Margin="5,0,0,0" ></TextBox>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="AddressErrorEdit">*Enter your Address.</TextBlock>
-
-                                                    <TextBlock Text="Postal Code:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
-                                                    <TextBox x:Name="txtPostalCodeEdit" Margin="5,0,0,0"/>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="PostalCodeErrorEdit">*.</TextBlock>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitPostalCodeErrorEdit">*National Code must containonly digits!</TextBlock>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="LengthPostalCodeErrorEdit">*National Code must be 10 digits!</TextBlock>
 
                                                     <Button Height="40" Width="75" Margin="30" Name="btnOkEditCustomer" Click="btnOkEditCustomer_Click">Edit</Button>
                                                 </StackPanel>
@@ -221,7 +185,7 @@
                                     </Border>
 
                                     <!--صفحه MedicationsManagment  -->
-                                    <Border Grid.Column="1" Visibility="Collapsed" Name="MedicationsManagment">
+                                    <Border Grid.Column="0" Visibility="Collapsed" Name="MedicationsManagment">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="auto"/>
@@ -231,7 +195,7 @@
 
                                             <Border Grid.Row="0" Background="#8bbb79">
                                                 <Grid>
-                                                    <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 10 0 10" Foreground="White">Medications Managment</Label>
+                                                    <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 10 0 10" Foreground="White">مدیریت داروها</Label>
                                                 </Grid>
                                             </Border>
 
@@ -273,7 +237,7 @@
                                     </Border>
 
                                     <!-- صفحه AddMedecinesPanel -->
-                                    <Border Grid.Column="1" Name="AddMedecinesPanel" Visibility="Collapsed">
+                                    <Border Grid.Column="0" Name="AddMedecinesPanel" Visibility="Collapsed">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="auto"/>
@@ -283,45 +247,33 @@
 
                                             <Border Grid.Row="0" Background="#8bbb79">
                                                 <Grid>
-                                                    <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 10 0 10" Foreground="White">Add Medecine</Label>
+                                                    <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 10 0 10" Foreground="White">اضافه کردن دارو</Label>
                                                     <Button HorizontalAlignment="Right" Height="35" Width="45" Margin="10,10,25,15" FontSize="12" Name="AddMedecineBack" Click="AddMedecineBack_Click">Back</Button>
                                                 </Grid>
                                             </Border>
 
                                             <Border Grid.Row="1">
                                                 <StackPanel Margin="40,50,20,20" Width="400" HorizontalAlignment="Center">
-                                                    <TextBlock Text="Id:" FontWeight="Bold" Margin="5,5,0,0" Foreground="White"/>
+                                                    <TextBlock Text=":آیدی" FontWeight="Bold" Margin="5,5,0,1" Foreground="White" HorizontalAlignment="Right"/>
                                                     <TextBox x:Name="txtId" Margin="5,0,0,0"/>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IdError">*Inter your firstname.</TextBlock>
 
-                                                    <TextBlock Text="Name:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBlock Text=":نام" FontWeight="Bold" Margin="5,15,5,1" Foreground="White" HorizontalAlignment="Right"/>
                                                     <TextBox x:Name="txtName" Margin="5,0,0,0"/>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="nameError">*Inter your lastname.</TextBlock>
+                                                    
+                                                    <TextBlock Text=":تاریخ خرید" FontWeight="Bold" Margin="5,15,5,1" Foreground="White" HorizontalAlignment="Right"/>
+                                                    <DatePicker Name="dpBirthDate" SelectedDateFormat="Short" FirstDayOfWeek="Saturday" Margin="5,0" DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}" SelectedDate="{Binding BirthDate,Mode=TwoWay}" SelectedDateChanged="dpBirthDate_SelectedDateChanged"></DatePicker>
 
-                                                    <TextBlock Text="Data buy:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
-                                                    <TextBox x:Name="txtDataBuy" Margin="5,0,0,0"/>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="DataBuyError">*.</TextBlock>
-
-                                                    <TextBlock Text="Price buy:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBlock Text=":قیمت خرید" FontWeight="Bold" Margin="5,15,5,1" Foreground="White" HorizontalAlignment="Right"/>
                                                     <TextBox x:Name="txtPriceBuy" Margin="5,0,0,0"/>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="PriceBuyError">*Enter your phone Number.</TextBlock>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitPriceBuyError">*Phone Number must containonly digits!</TextBlock>
 
-
-                                                    <TextBlock Text="Price sell:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBlock Text=":قیمت فروش" FontWeight="Bold" Margin="5,15,5,1" Foreground="White" HorizontalAlignment="Right"/>
                                                     <TextBox x:Name="txtPriceSell" Margin="5,0,0,0"/>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="PriceSellError">*Enter your phone Number.</TextBlock>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitPriceSellError">*Phone Number must containonly digits!</TextBlock>
 
-                                                    <TextBlock Text="Quantity:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBlock Text=":مقدار" FontWeight="Bold" Margin="5,15,5,1" Foreground="White" HorizontalAlignment="Right"/>
                                                     <TextBox x:Name="txtQuantity" Margin="5,0,0,0"/>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="QuantityError">*.</TextBlock>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitQuantityError">*National Code must containonly digits!</TextBlock>
 
-
-                                                    <TextBlock Text="Unit:" FontWeight="Bold" Margin="5,15,5,0" Foreground="White"/>
+                                                    <TextBlock Text=":واحد فروش" FontWeight="Bold" Margin="5,15,5,1" Foreground="White" HorizontalAlignment="Right"/>
                                                     <TextBox x:Name="txtUnit" Margin="5,0,0,0"/>
-                                                    <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="UnitError">*.</TextBlock>
 
                                                     <Button Height="40" Width="75" Margin="30" Name="btnOkAddMecedine" Click="btnOkAddMecedine_Click">Add</Button>
                                                 </StackPanel>
@@ -329,6 +281,85 @@
                                         </Grid>
                                     </Border>
 
+                                    <!-- صفحه EditCustomers -->
+                                    <Border Grid.Column="0" Name="EditMedecinePanel" Visibility="Collapsed">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Border Grid.Row="0" Background="#8bbb79">
+                                                <Grid>
+                                                    <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 10 0 10" Foreground="White">ویرایش دارو ها</Label>
+                                                    <Button HorizontalAlignment="Right" Height="35" Width="45" Margin="10,10,25,15" FontSize="12" Name="EditMedecinBack" Click="EditMedecinBack_Click">برگشت</Button>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Grid.Row="1">
+                                                <StackPanel Margin="40,50,20,20" Width="400" HorizontalAlignment="Center">
+                                                    <TextBlock Text=":آیدی" FontWeight="Bold" Margin="5,5,0,1" Foreground="White" HorizontalAlignment="Right"/>
+                                                    <TextBox x:Name="txtIdEdit" Margin="5,0,0,0"/>
+
+                                                    <TextBlock Text=":نام" FontWeight="Bold" Margin="5,15,5,1" Foreground="White" HorizontalAlignment="Right"/>
+                                                    <TextBox x:Name="txtNameEdit" Margin="5,0,0,0"/>
+
+                                                    <TextBlock Text=":تاریخ خرید" FontWeight="Bold" Margin="5,15,5,1" Foreground="White" HorizontalAlignment="Right"/>
+                                                    <DatePicker Name="dpDateBuyEdit" SelectedDateFormat="Short" FirstDayOfWeek="Saturday" Margin="5,0" DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}" SelectedDate="{Binding BirthDate,Mode=TwoWay}" SelectedDateChanged="dpBirthDate_SelectedDateChanged"></DatePicker>
+
+                                                    <TextBlock Text=":قیمت خرید" FontWeight="Bold" Margin="5,15,5,1" Foreground="White" HorizontalAlignment="Right"/>
+                                                    <TextBox x:Name="txtPriceBuyEdit" Margin="5,0,0,0"/>
+
+                                                    <TextBlock Text=":قیمت فروش" FontWeight="Bold" Margin="5,15,5,1" Foreground="White" HorizontalAlignment="Right"/>
+                                                    <TextBox x:Name="txtPriceSellEdit" Margin="5,0,0,0"/>
+
+                                                    <TextBlock Text=":مقدار" FontWeight="Bold" Margin="5,15,5,1" Foreground="White" HorizontalAlignment="Right"/>
+                                                    <TextBox x:Name="txtQuantityEdit" Margin="5,0,0,0"/>
+
+                                                    <TextBlock Text=":واحد فروش" FontWeight="Bold" Margin="5,15,5,1" Foreground="White" HorizontalAlignment="Right"/>
+                                                    <TextBox x:Name="txtUnitEdit" Margin="5,0,0,0"/>
+
+                                                    <Button Height="40" Width="75" Margin="30" Name="btnOkEditMedecine" Click="btnOkEditMedecine_Click">ویرایش</Button>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+
+                                    
+                                    <!-- صفحه دکمه فروش دارو -->
+                                    <Border Grid.Column="0" Visibility="Visible">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Border Grid.Row="0" Background="#8bbb79">
+                                                <Grid>
+                                                    <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 10 0 10" Foreground="White">فروش دارو</Label>
+                                                    <Button HorizontalAlignment="Right" Height="35" Width="45" Margin="10,10,25,15" FontSize="12" Name="SellingMedicineBack" Click="SellingMedicineBack_Click">برگشت</Button>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border Grid.Row="1">
+                                                <Grid Grid.Row="1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="2*"/>
+                                                        <ColumnDefinition Width="3*"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Border Grid.Column="0" Margin="30 30 18 30" Background="#8bbb79" Opacity=".5" CornerRadius="20">
+
+                                                    </Border>
+
+                                                    <Border Grid.Column="1" Margin="18 30 30 30" Background="#8bbb79" Opacity=".5" CornerRadius="20">
+
+                                                    </Border>
+                                                </Grid>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
                                 </Grid>
                             </Border>
                         </Grid>

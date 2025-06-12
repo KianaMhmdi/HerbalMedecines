@@ -109,5 +109,60 @@ namespace WpfMedecine.Data
                 connection.Close();
             }
         }
+
+        public bool UpdateMedecine(Medicine MedecineEdit)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                connection.Open();
+                string query = "update Medecines_DB_Table set " +
+                    "Id=@id , NameMedecines=@nameMedecines , DateBuy=@dateBuy, PriceBuy=@priceBuy, PriceSell=@priceSell, Quantity=@quantity, Unit= @unit" +
+                    " where Id=@id";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@id", MedecineEdit.Id);
+                command.Parameters.AddWithValue("@nameMedecines", MedecineEdit.NameMedecines);
+                command.Parameters.AddWithValue("@dateBuy", MedecineEdit.DateBuy);
+                command.Parameters.AddWithValue("@priceBuy", MedecineEdit.PriceBuy);
+                command.Parameters.AddWithValue("@priceSell", MedecineEdit.PriceSell);
+                command.Parameters.AddWithValue("@quantity", MedecineEdit.Quantity);
+                command.Parameters.AddWithValue("@unit", MedecineEdit.Unit);
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public bool DeleteMedecine(string Id)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+
+                connection.Open();
+                string query = $"delete Medecines_DB_Table where Id='{Id}'";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.ExecuteNonQuery();
+                return true;
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
 }
