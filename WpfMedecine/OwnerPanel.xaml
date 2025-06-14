@@ -552,18 +552,23 @@
                         </Grid>
                     </Border>
 
-                   
-                    <Border Grid.Row="1" Grid.Column="0" Margin="0,10,5,0">
+
+                    <Border Grid.Row="1" Grid.Column="0" Margin="0,10,5,0" Name="BorderFactor" Visibility="Collapsed">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
-                                <RowDefinition Height="*"/>
                                 <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                              
                             </Grid.RowDefinitions>
 
-                            <Label Grid.Row="0" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="5">Order Items</Label>
+                            <Label Grid.Row="0" Name="NameCustomerSell"  FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="5"></Label>
 
-                            <DataGrid Grid.Row="1" Name="Factor" AutoGenerateColumns="False" Margin="10" IsReadOnly="True"  SelectionMode="Single">
+                            <Label Grid.Row="1" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="5">Order Items</Label>
+
+                            <DataGrid Grid.Row="2" Name="Factor" AutoGenerateColumns="False" Margin="10" IsReadOnly="True"  SelectionMode="Single">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Medicine Name" Binding="{Binding NameMedecines}" Width="*"/>
                                     <DataGridTextColumn Header="Quantity" IsReadOnly="False" Binding="{Binding Quantity}" Width="*" />
@@ -574,10 +579,14 @@
                                 </DataGrid.Columns>
                             </DataGrid>
 
-                            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
                                 <Label FontWeight="Bold">Total:</Label>
                                 <Label Name="TotalAmountLabel" FontWeight="Bold" MinWidth="80">0.00</Label>
+                                <Button Name="btnAddOrder" Content="sumit" Width="100" Height="40"  FontSize="20" Margin="5" Click="btnAddOrder_Click"/>
                             </StackPanel>
+
+                            
+
                         </Grid>
                     </Border>
 
@@ -586,12 +595,14 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <Label Grid.Row="0" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="5">Medicine Inventory</Label>
+                            <Label Grid.Row="2" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="5">Medicine Inventory</Label>
 
-                            <DataGrid Grid.Row="1" Name="MedicineSellListGrid" AutoGenerateColumns="False" Margin="10"   SelectionChanged="MedicineSellListGrid_SelectionChanged" IsReadOnly="True" SelectionMode="Single">
+                            <DataGrid Grid.Row="3" Name="MedicineSellListGrid" AutoGenerateColumns="False" Margin="10"   SelectionChanged="MedicineSellListGrid_SelectionChanged" IsReadOnly="True" SelectionMode="Single">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="0.5*"/>
                                     <DataGridTextColumn Header="Medicine Name" Binding="{Binding NameMedecines}" Width="*"/>
@@ -602,6 +613,17 @@
 
                                 </DataGrid.Columns>
                             </DataGrid>
+                            <Label Grid.Row="0" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="5">Customer</Label>
+                            <DataGrid Grid.Row="1" Name="CustomerSellListGrid" AutoGenerateColumns="False" Margin="10"   SelectionChanged="CustomerSellListGrid_SelectionChanged" IsReadOnly="True" SelectionMode="Single">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="CustomerId" Binding="{Binding CustomerId}" Width="0.5*"/>
+                                    <DataGridTextColumn Header="First Name" Binding="{Binding CustomerFirstName}" Width="*"/>
+                                    <DataGridTextColumn Header="Last Name" Binding="{Binding CustomerLastName}" Width="*"/>
+                                    <DataGridTextColumn Header="Phone Number " Binding="{Binding CustomerPhoneNumber }" Width="*"/>
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+
                         </Grid>
                     </Border>
 

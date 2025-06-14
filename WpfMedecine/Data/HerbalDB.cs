@@ -480,14 +480,15 @@ namespace WpfMedecine.Data
             try
             {
                 connection.Open();
-                string query = "insert into  MedicineOrderDB(CustomerId,MedicineId,Quantity,TotalAmount,OrderDate)" +
-                    "values (@customerid,@medicineid,@quantity,@totalAmunt,@time)";
+                string query = "insert into [Order](CustomerFullName,MedincineName,SellPrice,Quntity,TotalAmunt,orderTime)" +
+                    "values (@customerFullName,@medincineName,@sellPrice,@quntity,@totalAmunt,Getdate())";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@customerid", order.CustomerId);
-                command.Parameters.AddWithValue("@medicineid", order.MedincineId);
-                command.Parameters.AddWithValue("@quantity", order.Quntity);
+                command.Parameters.AddWithValue("@customerFullName", order.CustomerFullName);
+               command.Parameters.AddWithValue("@medincineName", order.MedincineName);
+                command.Parameters.AddWithValue("@sellPrice", order.SellPrice);
+                command.Parameters.AddWithValue("@quntity", order.Quntity);
                 command.Parameters.AddWithValue("@totalAmunt", order.TotalAmunt);
-                command.Parameters.AddWithValue("@time", order.orderTime);
+               
 
                 command.ExecuteNonQuery();
                 return true;

@@ -24,6 +24,7 @@ namespace WpfMedecine
             InitializeComponent();
         }
         public float Quantiry;
+        public int flag = 0;
        public bool ValidateInputQuantity()
         {
             if (txtQuantity.Text == "")
@@ -60,6 +61,7 @@ namespace WpfMedecine
             if (ValidateInputQuantity())
             {
                 Quantiry = Convert.ToSingle(txtQuantity.Text);
+                flag = 1;
                 this.Close();
             }
            

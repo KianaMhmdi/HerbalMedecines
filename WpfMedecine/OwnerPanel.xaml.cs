@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using WpfMedecine.Data;
 using System.Data;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace WpfMedecine
 {
@@ -612,123 +613,7 @@ namespace WpfMedecine
         }
 
 
-        ///صفحه مربوط به فروش دارو
-
-        private void btnMedecinesSell_Click(object sender, RoutedEventArgs e)
-        {
-
-        
-            
-        }
-    
-        
       
-        //رویداد انتخاب دارو و نمایش آن روی فاکتور
-
-        private void MedicineSellListGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Medicine medicine = new Medicine();
-            HerbalDB herbal = new HerbalDB();
-            if (MedicineSellListGrid.SelectedItem != null)
-            {
-               
-                Order order = new Order();
-                var selectedRow = (DataRowView)MedicineSellListGrid.SelectedItem;
-                medicine.Id = selectedRow["Id"].ToString();
-                medicine.NameMedecines = selectedRow["NameMedecines"].ToString();
-               medicine.Quantity = 1;
-                medicine.Unit = selectedRow["Unit"].ToString();
-                float price;
-                
-                if (float.TryParse(selectedRow["PriceSell"].ToString(), out price)) {
-                    medicine.PriceSell = price;
-                
-                }
-                
-
-
-                MedicineSellQuantity quantity = new MedicineSellQuantity();
-                quantity.ShowDialog();
-                
-                if (IsMedicineInFactorGrid(medicine.NameMedecines))
-                {
-                    MessageBox.Show("This item is already selected.");
-
-                }
-                
-                else
-                {
-                    medicine.Quantity = quantity.Quantiry;
-                    Customer customer = new Customer();
-                   
-                    Order order1 = new Order();
-                    customer.CustomerId = txtCustomerID.Text;
-                    customer.CustomerFirstName = txtCustomerFirstName.Text;
-                    customer.CustomerLastName = txtCustomerLastName.Text;
-                    customer.CustomerPhoneNumber = txtCustomrPhoneNumber.Text;
-                    order.CustomerId = txtCustomerID.Text;
-                    order.MedincineId = selectedRow["Id"].ToString();
-                    order.Quntity = medicine.Quantity;
-                    order.TotalAmunt = medicine.Price;
-                    order.orderTime = DateTime.Today;
-                   
-                    if (herbal.AddCustomer(customer) )
-                    {
-                        if (herbal.AddOrder(order))
-                        {
-                            MessageBox.Show("Your orderhas been successfully.");
-                            if (herbal.UpdateSellQuantity(order.Quntity, medicine.Id))
-                            {
-                                DataTable originalTable = new DataTable();
-                                originalTable = herbal.SelectMedicine();
-                                MedicineSellListGrid.ItemsSource = originalTable.DefaultView;
-
-
-                            }
-                        }
-                    }
-
-                   
-                    Factor.Items.Add(medicine);
-                }
-
-               
-
-                UpdateTotalPrice(); // محاسبه جمع کل پس از اضافه‌شدن دارو
-
-            }
-        }
-        private void SubmitOrderButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        //بررسی می کند ایا ایتم انختاب شده برای فروش در فاکتور است یا نه
-        public bool IsMedicineInFactorGrid(string MedicineName)
-        {
-            foreach(Medicine item in Factor.Items)
-            {
-                if(item.NameMedecines== MedicineName)
-                {
-                    return true;
-                }
-               
-            }
-            return false;
-        }
-
-       
-      
-        private void UpdateTotalPrice()
-        {
-            float total = 0;
-            foreach (Medicine item in Factor.Items)
-            {
-                total += item.Price; // جمع کل = تعداد × قیمت هر واحد
-            }
-            TotalAmountLabel.Content = total;
-        }
-       
-       
         public bool ValidateInputAddCustomer()
         {
            
@@ -818,13 +703,7 @@ namespace WpfMedecine
 
         }
 
-        private void AddOrderBack_Click(object sender, RoutedEventArgs e)
-        {
-            
-                AddCustomer.Visibility = Visibility.Visible;
-                AddOrder.Visibility = Visibility.Collapsed;
-        }
-
+      
        
 
         private void MedicineSellListGrid_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -1027,7 +906,196 @@ namespace WpfMedecine
             txtCustomerLastName.Text = "";
             txtCustomrPhoneNumber.Text="";
         }
+
+        ///صفحه مربوط به فروش دارو
+
+        private void btnMedecinesSell_Click(object sender, RoutedEventArgs e)
+        {
+
+            Main.Visibility = Visibility.Collapsed;
+            AddOrder.Visibility = Visibility.Visible;
+            HerbalDB herbalDB = new HerbalDB();
+            DataTable originalTable = new DataTable();
+            originalTable = herbalDB.SelectMedicine();
+            MedicineSellListGrid.ItemsSource = originalTable.DefaultView;
+            originalTable = herbalDB.SelectCustomer();
+            CustomerSellListGrid.ItemsSource = originalTable.DefaultView;
+           
+           
+        }
+        private void AddOrderBack_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Visibility = Visibility.Visible;
+            AddOrder.Visibility = Visibility.Collapsed;
+           
+        }
+        private void CustomerSellListGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CustomerSellListGrid.SelectedItem != null)
+            {
+                
+                BorderFactor.Visibility = Visibility.Visible;
+                var selectedRow = (DataRowView)CustomerSellListGrid.SelectedItem;
+                NameCustomerSell.Content =selectedRow["CustomerFirstName"].ToString() + ' ' + selectedRow["CustomerLastName"].ToString();
+
+            }
+        }
+
+
+        //رویداد انتخاب دارو و نمایش آن روی فاکتور
+
+        private void MedicineSellListGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Medicine medicine = new Medicine();
+            HerbalDB herbal = new HerbalDB();
+            if (MedicineSellListGrid.SelectedItem != null)
+            {
+
+                Order order = new Order();
+                var selectedRow = (DataRowView)MedicineSellListGrid.SelectedItem;
+                medicine.Id = selectedRow["Id"].ToString();
+                medicine.NameMedecines = selectedRow["NameMedecines"].ToString();
+                medicine.Quantity = 1;
+                medicine.Unit = selectedRow["Unit"].ToString();
+                float price;
+
+                if (float.TryParse(selectedRow["PriceSell"].ToString(), out price))
+                {
+                    medicine.PriceSell = price;
+
+                }
+
+
+
+                MedicineSellQuantity quantity = new MedicineSellQuantity();
+                quantity.ShowDialog();
+
+
+                if (IsMedicineInFactorGrid(medicine.NameMedecines))
+                {
+                    MessageBox.Show("This item is already selected.");
+
+                }
+
+                else
+                {
+                    medicine.Quantity = quantity.Quantiry;
+                    Customer customer = new Customer();
+
+                    Order order1 = new Order();
+                    var selectedRowCustomer = (DataRowView)CustomerSellListGrid.SelectedItem;
+                    order.CustomerFullName = selectedRowCustomer["CustomerFirstName"].ToString() + ' ' + selectedRowCustomer["CustomerLastName"].ToString();
+                    order.MedincineName = selectedRow["NameMedecines"].ToString();
+                    order.SellPrice = price;
+                    order.Quntity = medicine.Quantity;
+                    order.TotalAmunt = medicine.Price;
+                    order.orderTime = DateTime.Today;
+
+                  
+
+                    if (herbal.UpdateSellQuantity(order.Quntity, medicine.Id))
+                    {
+                        DataTable originalTable = new DataTable();
+                        originalTable = herbal.SelectMedicine();
+                        MedicineSellListGrid.ItemsSource = originalTable.DefaultView;
+
+
+                    }
+                    if (quantity.flag==1)
+                    {
+
+                        Factor.Items.Add(medicine);
+                    }
+
+
+
+                }
+
+
+
+                UpdateTotalPrice(); // محاسبه جمع کل پس از اضافه‌شدن دارو
+
+            }
+        }
+        private void SubmitOrderButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        //بررسی می کند ایا ایتم انختاب شده برای فروش در فاکتور است یا نه
+        public bool IsMedicineInFactorGrid(string MedicineName)
+        {
+            foreach (Medicine item in Factor.Items)
+            {
+                if (item.NameMedecines == MedicineName)
+                {
+                    return true;
+                }
+
+            }
+            return false;
+        }
+
+
+
+        private void UpdateTotalPrice()
+        {
+            float total = 0;
+            foreach (Medicine item in Factor.Items)
+            {
+                total += item.Price; // جمع کل = تعداد × قیمت هر واحد
+            }
+            TotalAmountLabel.Content = total;
+        }
+
+        private void btnAddOrder_Click(object sender, RoutedEventArgs e)
+        {
+            HerbalDB herbal = new HerbalDB();
+            int count = 0;
+            Order order = new Order();
+          
+            foreach (Medicine item in Factor.Items)
+                {
+
+
+
+                 order.CustomerFullName = NameCustomerSell.Content.ToString();
+                 order.MedincineName = item.NameMedecines;
+                 float price;
+                 if (float.TryParse(item.PriceSell.ToString(), out price))
+                 {
+                     order.SellPrice= price;
+
+                 }
+
+                 float total;
+                 if (float.TryParse(item.Price.ToString(), out total))
+                 {
+                     order.TotalAmunt = total;
+
+                 }
+                 
+                
+                      
+                            if (herbal.AddOrder(order))
+                        {
+                            count++;
+                        }
+
+                    
+               
+            }
+               
+            
+            if (count == Factor.Items.Count)
+            {
+                MessageBox.Show("ثبت سفارش با موفقیت انجام شد!");
+            }
+            else
+            {
+                MessageBox.Show("ثبت سفارش با موفقیت انجام نشد!");
+            }
+        }
     }
-   
-    }
+
+}
 
