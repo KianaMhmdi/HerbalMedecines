@@ -15,6 +15,7 @@ namespace WpfMedecine
         public float PriceSell { get; set; }
         public float Quantity { get; set; }
         public string Unit { get; set; }
+       
         public float Price => Quantity * PriceSell; // محاسبه خودکار قیمت کل
 
     }

@@ -18,6 +18,9 @@ using WpfMedecine.Data;
 using System.Data;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using LiveCharts;
+using LiveCharts.Wpf;
+
 
 namespace WpfMedecine
 {
@@ -45,7 +48,7 @@ namespace WpfMedecine
             backtoLogin.Show();
             this.Close();
         }
-
+        
         /// دکمه های مالک و امکانت آن
         private void btnOwnersList_Click(object sender, RoutedEventArgs e)
         {
@@ -341,8 +344,9 @@ namespace WpfMedecine
                 txtMedicineQuantity.Text = selectedRow["Quantity"].ToString();
                 txtMedicineSellPrice.Text = selectedRow["PriceSell"].ToString();
 
+                
 
-              
+
 
 
             }
@@ -418,7 +422,7 @@ namespace WpfMedecine
                     RefreshBuyMedicine();
                     InventoryMedecinesPanel.Visibility = Visibility.Visible;
                     BuyMedecinesPanel.Visibility = Visibility.Collapsed;
-
+                    RefershInventoryMedicineGrid();
 
                 }
                 else
@@ -521,18 +525,7 @@ namespace WpfMedecine
 
        
 
-        private void btnPurchaseReports_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
        
-        
-
-        private void btnSalesReports_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void btnPersonalSettings_Click(object sender, RoutedEventArgs e)
         {
@@ -704,7 +697,7 @@ namespace WpfMedecine
         }
 
       
-       
+      
 
         private void MedicineSellListGrid_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
@@ -927,8 +920,12 @@ namespace WpfMedecine
         {
             Main.Visibility = Visibility.Visible;
             AddOrder.Visibility = Visibility.Collapsed;
+            BorderFactor.Visibility = Visibility.Collapsed;
+            Factor.Items.Clear();
+            TotalAmountLabel.Content = 0.0;
            
         }
+       
         private void CustomerSellListGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (CustomerSellListGrid.SelectedItem != null)
@@ -939,6 +936,7 @@ namespace WpfMedecine
                 NameCustomerSell.Content =selectedRow["CustomerFirstName"].ToString() + ' ' + selectedRow["CustomerLastName"].ToString();
 
             }
+           
         }
 
 
@@ -948,74 +946,87 @@ namespace WpfMedecine
         {
             Medicine medicine = new Medicine();
             HerbalDB herbal = new HerbalDB();
+
             if (MedicineSellListGrid.SelectedItem != null)
             {
-
-                Order order = new Order();
-                var selectedRow = (DataRowView)MedicineSellListGrid.SelectedItem;
-                medicine.Id = selectedRow["Id"].ToString();
-                medicine.NameMedecines = selectedRow["NameMedecines"].ToString();
-                medicine.Quantity = 1;
-                medicine.Unit = selectedRow["Unit"].ToString();
-                float price;
-
-                if (float.TryParse(selectedRow["PriceSell"].ToString(), out price))
+                if (CustomerSellListGrid.SelectedItem != null)
                 {
-                    medicine.PriceSell = price;
+
+
+                    Order order = new Order();
+                    var selectedRow = (DataRowView)MedicineSellListGrid.SelectedItem;
+                    medicine.Id = selectedRow["Id"].ToString();
+                    medicine.NameMedecines = selectedRow["NameMedecines"].ToString();
+                    medicine.Quantity = 1;
+                    medicine.Unit = selectedRow["Unit"].ToString();
+                    float price;
+
+                    if (float.TryParse(selectedRow["PriceSell"].ToString(), out price))
+                    {
+                        medicine.PriceSell = price;
+
+                    }
+
+
+
+                    MedicineSellQuantity quantity = new MedicineSellQuantity();
+                    quantity.ShowDialog();
+
+
+                    if (IsMedicineInFactorGrid(medicine.NameMedecines))
+                    {
+                        MessageBox.Show("This item is already selected.");
+
+                    }
+
+                    else
+                    {
+                        medicine.Quantity = quantity.Quantiry;
+                        Customer customer = new Customer();
+
+                        Order order1 = new Order();
+                        var selectedRowCustomer = (DataRowView)CustomerSellListGrid.SelectedItem;
+                        order.CustomerFullName = selectedRowCustomer["CustomerFirstName"].ToString() + ' ' + selectedRowCustomer["CustomerLastName"].ToString();
+                        order.MedincineName = selectedRow["NameMedecines"].ToString();
+                        order.SellPrice = price;
+
+                        order.TotalAmunt = medicine.Price;
+                        order.orderTime = DateTime.Today;
+                        float q = herbal.SelectInventoryQuntity(medicine.Id);
+
+                        if (quantity.Quantiry <= q)
+                        {
+                            order.Quntity = quantity.Quantiry;
+                            medicine.Quantity = quantity.Quantiry;
+
+
+                            if (quantity.flag == 1)
+                            {
+
+                                Factor.Items.Add(medicine);
+                            }
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("بیشتر از موجودی انبار است ");
+                        }
+
+
+
+                    }
+
+
+
+                    UpdateTotalPrice(); // محاسبه جمع کل پس از اضافه‌شدن دارو
 
                 }
-
-
-
-                MedicineSellQuantity quantity = new MedicineSellQuantity();
-                quantity.ShowDialog();
-
-
-                if (IsMedicineInFactorGrid(medicine.NameMedecines))
-                {
-                    MessageBox.Show("This item is already selected.");
-
-                }
-
                 else
                 {
-                    medicine.Quantity = quantity.Quantiry;
-                    Customer customer = new Customer();
-
-                    Order order1 = new Order();
-                    var selectedRowCustomer = (DataRowView)CustomerSellListGrid.SelectedItem;
-                    order.CustomerFullName = selectedRowCustomer["CustomerFirstName"].ToString() + ' ' + selectedRowCustomer["CustomerLastName"].ToString();
-                    order.MedincineName = selectedRow["NameMedecines"].ToString();
-                    order.SellPrice = price;
-                    order.Quntity = medicine.Quantity;
-                    order.TotalAmunt = medicine.Price;
-                    order.orderTime = DateTime.Today;
-
-                  
-
-                    if (herbal.UpdateSellQuantity(order.Quntity, medicine.Id))
-                    {
-                        DataTable originalTable = new DataTable();
-                        originalTable = herbal.SelectMedicine();
-                        MedicineSellListGrid.ItemsSource = originalTable.DefaultView;
-
-
-                    }
-                    if (quantity.flag==1)
-                    {
-
-                        Factor.Items.Add(medicine);
-                    }
-
-
-
+                    MessageBox.Show("مشتری انتخاب نشده است");
                 }
-
-
-
-                UpdateTotalPrice(); // محاسبه جمع کل پس از اضافه‌شدن دارو
-
             }
+            
         }
         private void SubmitOrderButton_Click(object sender, RoutedEventArgs e)
         {
@@ -1042,7 +1053,7 @@ namespace WpfMedecine
             float total = 0;
             foreach (Medicine item in Factor.Items)
             {
-                total += item.Price; // جمع کل = تعداد × قیمت هر واحد
+                total += item.PriceSell*item.Quantity; // جمع کل = تعداد × قیمت هر واحد
             }
             TotalAmountLabel.Content = total;
         }
@@ -1060,7 +1071,13 @@ namespace WpfMedecine
 
                  order.CustomerFullName = NameCustomerSell.Content.ToString();
                  order.MedincineName = item.NameMedecines;
-                 float price;
+                float quntityOrder;
+                if (float.TryParse(item.Quantity.ToString(), out quntityOrder))
+                {
+                    order.Quntity = quntityOrder;
+
+                }
+                float price;
                  if (float.TryParse(item.PriceSell.ToString(), out price))
                  {
                      order.SellPrice= price;
@@ -1078,7 +1095,15 @@ namespace WpfMedecine
                       
                             if (herbal.AddOrder(order))
                         {
-                            count++;
+                    if (herbal.UpdateSellQuantity(order.Quntity,order.MedincineName))
+                    {
+                        DataTable originalTable = new DataTable();
+                        originalTable = herbal.SelectMedicine();
+                        MedicineSellListGrid.ItemsSource = originalTable.DefaultView;
+
+
+                    }
+                    count++;
                         }
 
                     
@@ -1094,6 +1119,333 @@ namespace WpfMedecine
             {
                 MessageBox.Show("ثبت سفارش با موفقیت انجام نشد!");
             }
+            BorderFactor.Visibility = Visibility.Collapsed;
+            Factor.Items.Clear();
+            TotalAmountLabel.Content = 0.0;
+        }
+
+        private void btnDeleteFactor_Click(object sender, RoutedEventArgs e)
+        {
+            Factor.Items.Clear();
+            TotalAmountLabel.Content = 0.0;
+        }
+
+
+        ///صفحه گزارش فروش 
+       
+        private void btnSalesReports_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Visibility = Visibility.Collapsed;
+            SelllesReport.Visibility = Visibility.Visible;
+            HerbalDB herbal = new HerbalDB();
+            DataTable originalTable = new DataTable();
+            originalTable = herbal.SelectOrder();
+            SelllesReportGrid.ItemsSource = originalTable.DefaultView;
+            dpendDate.SelectedDate = DateTime.Today;
+        }
+        public int SearchBaze=0;
+        private void SelllesReportBack_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Visibility = Visibility.Visible;
+            SelllesReport.Visibility = Visibility.Collapsed;
+            SearchBaze = 0;
+            RefreshGridOrder();
+            dpStartDate.SelectedDate = null;
+            endAndStartDateError.Visibility = Visibility.Collapsed;
+
+        }
+
+        private void txtSearchSelllesReport_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            string filter = txtSearchSelllesReport.Text.Trim();
+            HerbalDB herbal = new HerbalDB();
+            DataTable originalTable;
+            if (SearchBaze == 0)
+            {
+
+
+                if (txtSearchSelllesReport.Text == "")
+                {
+                    RefreshGridOrder();
+                }
+                else
+                {
+                    originalTable = herbal.SearchOrder(filter);
+                    SelllesReportGrid.ItemsSource = originalTable.DefaultView;
+                } }
+
+            if (SearchBaze == 1)
+            {
+
+
+                if (txtSearchSelllesReport.Text == "")
+                {
+                    RefreshGridOrderBaze();
+                }
+                else
+                {
+                    originalTable = herbal.SearchGetOrderByDateRange(dpStartDate.SelectedDate.Value, dpendDate.SelectedDate.Value,filter);
+                    SelllesReportGrid.ItemsSource = originalTable.DefaultView;
+                }
+            }
+
+        }
+        public void RefreshGridOrder()
+        {
+            HerbalDB herbal = new HerbalDB();
+            DataTable originalTable;
+            originalTable = herbal.SelectOrder();
+            SelllesReportGrid.ItemsSource = originalTable.DefaultView;
+        }
+        public void RefreshGridOrderBaze()
+        {
+            HerbalDB herbal = new HerbalDB();
+            DataTable originalTable;
+            originalTable = herbal.GetOrderByDateRange(dpStartDate.SelectedDate.Value, dpendDate.SelectedDate.Value);
+            SelllesReportGrid.ItemsSource = originalTable.DefaultView;
+        }
+        //تابعی برای اعتبار سنجی تاریخ 
+        public bool validateDates()
+        {
+            DateTime? startDate = dpStartDate.SelectedDate;
+            DateTime? endDate = dpendDate.SelectedDate;
+
+
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                if(endDate < startDate)
+                {
+                    endAndStartDateError.Text = " تاریخ نامعتبر است";
+                    endAndStartDateError.Visibility = Visibility.Visible;
+                    return false;
+                }
+                
+                
+            }
+            if (startDate.HasValue && !endDate.HasValue)
+            {
+                endAndStartDateError.Text = " تاریخ پایان تعیین نشده است";
+                endAndStartDateError.Visibility = Visibility.Visible;
+                return false;
+            }
+            if (!startDate.HasValue && !endDate.HasValue)
+            {
+                endAndStartDateError.Text = " تاریخ نامعتبر است";
+                endAndStartDateError.Visibility = Visibility.Visible;
+                return false;
+            }
+            endAndStartDateError.Visibility = Visibility.Collapsed;
+            return true;
+        }
+
+        private void dpStartDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            
+            validateDates();
+        }
+
+        private void dpendDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            validateDates();
+        }
+
+        private void btnMohasebeDateReport_Click(object sender, RoutedEventArgs e)
+        {
+           
+            if (validateDates())
+            {
+                SearchBaze = 1;
+                endAndStartDateError.Visibility = Visibility.Collapsed;
+                DateTime startDate = dpStartDate.SelectedDate.Value;
+                DateTime endDate = dpendDate.SelectedDate.Value;
+                HerbalDB herbal = new HerbalDB();
+                DataTable originalTable;
+                originalTable = herbal.GetOrderByDateRange(startDate,endDate);
+                SelllesReportGrid.ItemsSource = originalTable.DefaultView;
+            }   
+        }
+
+
+        ///گزار فروش در یک روز خاص
+        private void btnDailySalesReports_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Visibility = Visibility.Collapsed;
+            DailySelllesReport.Visibility = Visibility.Visible;
+           
+            dpDate.SelectedDate = DateTime.Today;
+            RefreshGridOrderDaily();
+
+
+        }
+        public void RefreshGridOrderDaily()
+        {
+            HerbalDB herbal = new HerbalDB();
+            DataTable originalTable;
+            originalTable = herbal.DailySalesReport(dpDate.SelectedDate.Value);
+            DailySelllesReportGrid.ItemsSource = originalTable.DefaultView;
+        }
+        private void DailySelllesReportBack_Click(object sender, RoutedEventArgs e)
+        {
+            Main.Visibility = Visibility.Visible;
+            DailySelllesReport.Visibility = Visibility.Collapsed;
+            RefreshGridOrderDaily();
+            DateError.Visibility = Visibility.Collapsed;
+        }
+
+        private void txtDailySearchSelllesReport_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string filter = txtDailySearchSelllesReport.Text.Trim();
+            HerbalDB herbal = new HerbalDB();
+            DataTable originalTable;
+
+            if (txtDailySearchSelllesReport.Text == "")
+            {
+                RefreshGridOrderDaily();
+            }
+            else
+            {
+                originalTable = herbal.SearchDailySalesReport(dpDate.SelectedDate.Value,filter);
+                DailySelllesReportGrid.ItemsSource = originalTable.DefaultView;
+
+
+            }
+        }
+
+        private void btnDateReport_Click(object sender, RoutedEventArgs e)
+        {
+            if (validateDatesDaily())
+            {
+                RefreshGridOrderDaily();
+            }
+
+        }
+        public bool validateDatesDaily(){
+            if (dpDate.SelectedDate.HasValue)
+            {
+                DateError.Visibility = Visibility.Collapsed;
+                return true;
+
+                }
+            else
+            {
+                DateError.Text = "تاریخ نامعتبر است";
+                DateError.Visibility = Visibility.Visible;
+                return false;
+            }
+            }
+
+
+        private void dpDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            validateDatesDaily();
+        }
+        //صفحه واردن تاریخ برای رسم نمودار 
+        private void DateEntryPageForCahrtBack_Click(object sender, RoutedEventArgs e)
+        {
+            DateEntryPageForCahrt.Visibility = Visibility.Collapsed;
+            
+            dpendDateProductSelesReport.SelectedDate=null;
+            dpStartDateproductSelesReport.SelectedDate=null;
+
+            ProductSelesReportGrid.Items.Clear();
+            Main.Visibility = Visibility.Visible;
+            endAndStartProductSelesReportDateError.Visibility = Visibility.Collapsed;
+
+        }
+
+        private void btnProductSalesReport_Click(object sender, RoutedEventArgs e)
+        {
+            DateEntryPageForCahrt.Visibility = Visibility.Visible;
+            Main.Visibility = Visibility.Collapsed;
+           
+
+        }
+        public bool validateDatesProductSellReport()
+        {
+
+            DateTime? startDate = dpStartDateproductSelesReport.SelectedDate;
+            DateTime? endDate = dpendDateProductSelesReport.SelectedDate;
+
+
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                if (endDate < startDate)
+                {
+                    endAndStartProductSelesReportDateError.Text = " تاریخ نامعتبر است";
+                    endAndStartProductSelesReportDateError.Visibility = Visibility.Visible;
+                    return false;
+                }
+
+
+            }
+            if (startDate.HasValue && !endDate.HasValue)
+            {
+                endAndStartProductSelesReportDateError.Text = " تاریخ پایان تعیین نشده است";
+                endAndStartProductSelesReportDateError.Visibility = Visibility.Visible;
+                return false;
+            }
+            if (!startDate.HasValue && endDate.HasValue)
+            {
+                endAndStartProductSelesReportDateError.Text = " تاریخ شروع تعییم نشده است";
+                endAndStartProductSelesReportDateError.Visibility = Visibility.Visible;
+                return false;
+            }
+            if (!startDate.HasValue && !endDate.HasValue)
+            {
+                endAndStartProductSelesReportDateError.Text = "تاریخ نامعتبر است";
+                endAndStartProductSelesReportDateError.Visibility = Visibility.Visible;
+                return false;
+            }
+            endAndStartProductSelesReportDateError.Visibility = Visibility.Collapsed;
+            return true;
+        }
+
+        private void dpStartDateproductSelesReport_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            validateDatesProductSellReport();
+        }
+
+        private void dpendDateProductSelesReport_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            validateDatesProductSellReport();
+        }
+
+        private void btnCalculate_Click(object sender, RoutedEventArgs e)
+        {
+            if (validateDatesProductSellReport())
+            {
+                RefreshGridProductSelesReportGrid();
+
+
+
+            }
+           
+        }
+        public void RefreshGridProductSelesReportGrid()
+        {
+            HerbalDB herbal = new HerbalDB();
+            DataTable originalTable;
+            originalTable = herbal.GetProductSeleareport(dpStartDateproductSelesReport.SelectedDate.Value, dpendDateProductSelesReport.SelectedDate.Value);
+            ProductSelesReportGrid.ItemsSource = originalTable.DefaultView;
+        }
+
+        private void btnChartProductSelesreport_Click(object sender, RoutedEventArgs e)
+        {
+            // DateEntryPageForCahrt.Visibility = Visibility.Collapsed;
+            // ProductSelesCahrt.Visibility = Visibility.Visible;
+            HerbalDB herbal = new HerbalDB();
+            Chart v = new Chart();
+            DataTable dt= herbal.GetProductSeleareport(dpStartDateproductSelesReport.SelectedDate.Value, dpendDateProductSelesReport.SelectedDate.Value);
+            v.CreatChart(dt);
+            v.ShowDialog();
+
+        }
+        private void ProductSelesCahrtBack_Click(object sender, RoutedEventArgs e)
+        {
+            DateEntryPageForCahrt.Visibility = Visibility.Visible;
+            ProductSelesCahrt.Visibility = Visibility.Collapsed;
         }
     }
 

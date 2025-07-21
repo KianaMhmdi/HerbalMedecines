@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:liveChars="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:local="clr-namespace:WpfMedecine"
         mc:Ignorable="d"
         Title="OwnerPanel" Height="600" Width="1050"
@@ -124,8 +125,11 @@
 
                                     <Border Grid.Row="1" >
                                         <StackPanel>
-                                            <Button Name="btnPurchaseReports" Margin="20 20 20 5" Height="50" FontWeight="Medium" Click="btnPurchaseReports_Click">Purchase Reports</Button>
-                                            <Button Name="btnSalesReports" Margin="20 15 20 10" Height="50" FontWeight="Medium" Click="btnSalesReports_Click">Sale Reports</Button>
+
+                                            <Button Name="btnSalesReports" Margin="20 15 20 10" Height="50" FontWeight="Medium" Click="btnSalesReports_Click">گزارش فروش در بازه زمانی خاص</Button>
+                                            <Button Name="btnDailySalesReports" Margin="20 15 20 10" Height="50" FontWeight="Medium" Click="btnDailySalesReports_Click">گزارش فروش ر یک روز خاص</Button>
+                                            <Button Name="btnProductSalesReport" Margin="20 15 20 10" Height="50" FontWeight="Medium" Click="btnProductSalesReport_Click">گزارش فروش تعداد هر محصول </Button>
+                                           
                                         </StackPanel>
                                     </Border>
                                 </Grid>
@@ -583,6 +587,7 @@
                                 <Label FontWeight="Bold">Total:</Label>
                                 <Label Name="TotalAmountLabel" FontWeight="Bold" MinWidth="80">0.00</Label>
                                 <Button Name="btnAddOrder" Content="sumit" Width="100" Height="40"  FontSize="20" Margin="5" Click="btnAddOrder_Click"/>
+                                <Button Name="btnDeleteFactor" Content="delet" Width="100" Height="40"  FontSize="20" Margin="5" Click="btnDeleteFactor_Click"/>
                             </StackPanel>
 
                             
@@ -617,9 +622,9 @@
                             <DataGrid Grid.Row="1" Name="CustomerSellListGrid" AutoGenerateColumns="False" Margin="10"   SelectionChanged="CustomerSellListGrid_SelectionChanged" IsReadOnly="True" SelectionMode="Single">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="CustomerId" Binding="{Binding CustomerId}" Width="0.5*"/>
-                                    <DataGridTextColumn Header="First Name" Binding="{Binding CustomerFirstName}" Width="*"/>
-                                    <DataGridTextColumn Header="Last Name" Binding="{Binding CustomerLastName}" Width="*"/>
-                                    <DataGridTextColumn Header="Phone Number " Binding="{Binding CustomerPhoneNumber }" Width="*"/>
+                                    <DataGridTextColumn Header="First Name" Binding="{Binding CustomerFirstName}" Width="0.5*"/>
+                                    <DataGridTextColumn Header="Last Name" Binding="{Binding CustomerLastName}" Width="0.5*"/>
+                                    <DataGridTextColumn Header="Phone Number " Binding="{Binding PhoneNumber }" Width="0.5*"/>
 
                                 </DataGrid.Columns>
                             </DataGrid>
@@ -631,8 +636,239 @@
                    
                 </Grid>
             </Border>
+<!--    صفحه گزارش بر اساس تاریخ در بازه زمانی خاص-->
+
+            <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="SelllesReport">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
+                        <Grid>
+                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">SellesReport</Label>
+                            <Button HorizontalAlignment="Right" Height="30" Width="30" Margin="15" Name="SelllesReportBack" Click="SelllesReportBack_Click">Back</Button>
+                        </Grid>
+                    </Border>
+
+                    <!-- Search and Action Buttons -->
+                    <Border Grid.Row="1" Padding="10" Background="#769C61" CornerRadius="10" Margin="20,10,20,10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" Content="Search:" VerticalAlignment="Center" Margin="5,0" FontSize="16"/>
+                            <TextBox Grid.Column="1" Name="txtSearchSelllesReport"  Margin="5,0" Height="30" VerticalAlignment="Center" TextChanged="txtSearchSelllesReport_TextChanged"/>
+                    
+                            <Label Grid.Column="2" Content="start" VerticalAlignment="Center" Margin="5,0" FontSize="16"/>
+                            <DatePicker Grid.Column="3" Name="dpStartDate" SelectedDateFormat="Short" FirstDayOfWeek="Saturday" Margin="5,0" DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}" SelectedDate="{Binding BirthDate,Mode=TwoWay}" SelectedDateChanged="dpStartDate_SelectedDateChanged"></DatePicker>
+
+                            <Label Grid.Column="4" Content="end" VerticalAlignment="Center" Margin="5,0" FontSize="16"/>
+                            <DatePicker Grid.Column="5" Name="dpendDate" SelectedDateFormat="Short" FirstDayOfWeek="Saturday" Margin="5,0" DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}" SelectedDate="{Binding BirthDate,Mode=TwoWay}" SelectedDateChanged="dpendDate_SelectedDateChanged"></DatePicker>
+
+                            <Button Grid.Column="6" Name="btnMohasebeDateReport" Content="محاسبه " Width="100" Height="40"  FontSize="20" Margin="5,0" Click="btnMohasebeDateReport_Click"/>
+                            <TextBlock Grid.Row="1" Grid.Column="6" Foreground="Red" Margin="5" Visibility="Collapsed" Name="endAndStartDateError" VerticalAlignment="Center"></TextBlock>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="2">
+                        <Grid>
+                            <DataGrid Name="SelllesReportGrid" AutoGenerateColumns="False" Margin="20,10,20,20" IsReadOnly="True" SelectionMode="Single">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Customer Name" Binding="{Binding CustomerFullName}" Width="*"/>
+                                    <DataGridTextColumn Header="Medicine Name" Binding="{Binding MedincineName}" Width="*"/>
+                                    <DataGridTextColumn Header="Sell Price" Binding="{Binding SellPrice}" Width="*"/>
+                                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quntity}" Width="*"/>
+                                    <DataGridTextColumn Header="Total Amunt" Binding="{Binding TotalAmunt}" Width="*"/>
+                                    <DataGridTextColumn Header="order Time" Binding="{Binding orderTime}" Width="*"/>
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+            
+            
+            
+            <!-- صفحه گزارش فروش در یک روز خاص-->
+            <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="DailySelllesReport">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
+                        <Grid>
+                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">گزارش فروش </Label>
+                            <Button HorizontalAlignment="Right" Height="30" Width="30" Margin="15" Name="DailySelllesReportBack" Click="DailySelllesReportBack_Click">Back</Button>
+                        </Grid>
+                    </Border>
+
+                    <!-- Search and Action Buttons -->
+                    <Border Grid.Row="1" Padding="10" Background="#769C61" CornerRadius="10" Margin="20,10,20,10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" Content="Search:" VerticalAlignment="Center" Margin="5,0" FontSize="16"/>
+                            <TextBox Grid.Column="1" Name="txtDailySearchSelllesReport"  Margin="5,0" Height="30" VerticalAlignment="Center" TextChanged="txtDailySearchSelllesReport_TextChanged"/>
+
+                            
+
+                           
+                            <DatePicker Grid.Column="5" Name="dpDate" SelectedDateFormat="Short" FirstDayOfWeek="Saturday" Margin="5,0" DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}" SelectedDate="{Binding BirthDate,Mode=TwoWay}" SelectedDateChanged="dpDate_SelectedDateChanged"></DatePicker>
+
+                            <Button Grid.Column="6" Name="btnDateReport" Content="محاسبه " Width="100" Height="40"  FontSize="20" Margin="5,0" Click="btnDateReport_Click"/>
+                            <TextBlock Grid.Row="1" Grid.Column="6" Foreground="Red" Margin="5" Visibility="Collapsed" Name="DateError" VerticalAlignment="Center"></TextBlock>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="2">
+                        <Grid>
+                            <DataGrid Name="DailySelllesReportGrid" AutoGenerateColumns="False" Margin="20,10,20,20" IsReadOnly="True" SelectionMode="Single">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Customer Name" Binding="{Binding CustomerFullName}" Width="*"/>
+                                    <DataGridTextColumn Header="Medicine Name" Binding="{Binding MedincineName}" Width="*"/>
+                                    <DataGridTextColumn Header="Sell Price" Binding="{Binding SellPrice}" Width="*"/>
+                                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quntity}" Width="*"/>
+                                    <DataGridTextColumn Header="Total Amunt" Binding="{Binding TotalAmunt}" Width="*"/>
+                                    <DataGridTextColumn Header="order Time" Binding="{Binding orderTime}" Width="*"/>
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+            
+            
+            <!-- صفحه وراد کردن تاریخ برای رسم نمودار تعدادفروش محصولات-->
+
+            <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="DateEntryPageForCahrt">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
+                        <Grid>
+                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0"> گزارش فروش تعداد هر محصول</Label>
+                            <Button HorizontalAlignment="Right" Height="30" Width="30" Margin="15" Name="DateEntryPageForCahrtBack" Click="DateEntryPageForCahrtBack_Click">Back</Button>
+                        </Grid>
+                    </Border>
+
+                   <Border Grid.Row="1" Padding="10" Background="#769C61" CornerRadius="10" Margin="20,10,20,10">
+                    <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                               
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Row="2" Grid.Column="1">
+                                <Label  Content="start" HorizontalAlignment="Center" Margin="5,0" FontSize="16"/>
+                                <DatePicker  Width="400" Height="30" VerticalAlignment="Center" Name="dpStartDateproductSelesReport" SelectedDateFormat="Short" FirstDayOfWeek="Saturday" Margin="5,0" DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}" SelectedDate="{Binding BirthDate,Mode=TwoWay}" SelectedDateChanged="dpStartDateproductSelesReport_SelectedDateChanged"></DatePicker>
+
+                                <Label  Content="end" HorizontalAlignment="Center"  Margin="5,0" FontSize="16"/>
+                                <DatePicker Width="400" Height="30" VerticalAlignment="Center" Name="dpendDateProductSelesReport" SelectedDateFormat="Short" FirstDayOfWeek="Saturday" Margin="5,0" DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}" SelectedDate="{Binding BirthDate,Mode=TwoWay}" SelectedDateChanged="dpendDateProductSelesReport_SelectedDateChanged"></DatePicker>
+
+                                
+
+                            </StackPanel>
+                            <Grid Grid.Row="3" Grid.Column="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                   
+                                </Grid.RowDefinitions>
+                                <Button Grid.Column="0" Grid.Row="0" Name="btnCalculate" Content="محاسبه " Width="100" Height="40"  FontSize="20" Margin="5,10" Click="btnCalculate_Click"/>
+                                <TextBlock  Grid.Column="0" Grid.Row="1" Foreground="Red" HorizontalAlignment="Center"   Margin="5" Visibility="Collapsed" Name="endAndStartProductSelesReportDateError" VerticalAlignment="Center"></TextBlock>
+                                <Button  Grid.Column="1" Grid.Row="0" Name="btnChartProductSelesreport" Content="نمودار " Width="100" Height="40"  FontSize="20" Margin="5,10" Click="btnChartProductSelesreport_Click"/>
+                            </Grid>
+
+                            
+                            <Border Grid.Row="1" Grid.Column="0">
+                                <Grid>
+                                    <DataGrid Name="ProductSelesReportGrid" AutoGenerateColumns="False" Margin="20,10,20,20" IsReadOnly="True" SelectionMode="Single">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header=" نام دارو" Binding="{Binding  medincineName}" Width="0.5*"/>
+                                            <DataGridTextColumn Header="شناسه دارو " Binding="{Binding  id}" Width="0.5*"/>
+                                            <DataGridTextColumn Header="تعدا کل فروخته شده" Binding="{Binding total}" Width="0.5*"/>
 
 
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                            </Border>
+                        </Grid>
+            </Border>
+
+                   
+                </Grid>
+            </Border>
+            
+            <!--صفحه نمودار تعدا فروش هر محصول-->
+
+            <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="ProductSelesCahrt">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
+                        <Grid>
+                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">گزارش فروش تعداد هر محصول</Label>
+                            <Button HorizontalAlignment="Right" Height="30" Width="30" Margin="15" Name="ProductSelesCahrtBack" Click="ProductSelesCahrtBack_Click">Back</Button>
+                        </Grid>
+                    </Border>
+                    <Border Grid.Row="1" Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
+                        <Grid>
+
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+            
 
 
 

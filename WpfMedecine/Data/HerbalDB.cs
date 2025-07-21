@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Windows;
 using System.Data;
 using System.Xml;
+using System.Windows.Markup;
 
 
 
@@ -504,13 +505,13 @@ namespace WpfMedecine.Data
             }
         }
         //update Sell Quantity
-        public bool UpdateSellQuantity(float quntity, string Id)
+        public bool UpdateSellQuantity(float quntity, string MedincineName)
         {
             SqlConnection connection = new SqlConnection(connectionString);
             try
             {
                 connection.Open();
-                string query = $"update Medecines_DB_Table set Quantity=Quantity-{quntity} where Id='{Id}'";
+                string query = $"update Medecines_DB_Table set Quantity=Quantity-{quntity} where NameMedecines='{MedincineName}'";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.ExecuteNonQuery();
 
@@ -527,6 +528,215 @@ namespace WpfMedecine.Data
                 connection.Close();
             }
         }
-        
+
+        //مقدار تعداد رو از جدول دارو ها رو بر میکردوند 
+        public float SelectInventoryQuntity(string Id)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                connection.Open();
+                string query = $"select Quantity from  Medecines_DB_Table  where Id='{Id}'";
+                SqlCommand command = new SqlCommand(query, connection);
+                object result=command.ExecuteScalar();
+               
+                return  Convert.ToSingle(result);
+            }
+
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return -1;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+        }
+
+        //select order
+        public DataTable SelectOrder()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            DataTable data = new DataTable();
+            try
+            {
+                connection.Open();
+                string query = $"select * from  [Order]";
+                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+
+                adapter.Fill(data);
+                connection.Close();
+
+            }
+
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+               
+            }
+            return data;
+            
+        }
+        //search Order
+        public DataTable SearchOrder(string filter)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            DataTable data = new DataTable();
+            try
+            {
+                connection.Open();
+                string query = $"select * from [Order] where CustomerFullName like '{filter}%' ";
+                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+
+                adapter.Fill(data);
+                connection.Close();
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            return data;
+
+        }
+
+        //فیلتر کردن سفارشات بر اساس بازه تعریف شده
+        public DataTable GetOrderByDateRange(DateTime start,DateTime end)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            DataTable data = new DataTable();
+           
+            try
+            {
+                connection.Open();
+                string query = $"select * from  [Order] where orderTime between '{start.Date}' and '{end.Date}' order by orderTime ";
+                SqlCommand command = new SqlCommand(query, connection);
+
+             
+                command.ExecuteNonQuery();
+                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+                
+                adapter.Fill(data);
+                connection.Close();
+
+            }
+
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+
+            }
+            return data;
+
+        }
+
+        //سرچ برای سفارش در  بین دو بازه
+        public DataTable SearchGetOrderByDateRange(DateTime start, DateTime end , string filter)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            DataTable data = new DataTable();
+            
+            try
+            {
+                connection.Open();
+                string query = $"select * from  [Order] where (orderTime between '{start.Date}' and '{end.Date}')  and CustomerFullName like '{filter}%' order by orderTime ";
+                SqlCommand command = new SqlCommand(query, connection);
+
+
+                command.ExecuteNonQuery();
+                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+
+                adapter.Fill(data);
+                connection.Close();
+
+            }
+
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+
+            }
+            return data;
+
+        }
+
+        ///گزارش فروش بر اساس یک روز خاص
+
+        public DataTable DailySalesReport(DateTime date)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            DataTable data = new DataTable();
+            try
+            {
+                connection.Open();
+                string query = $"select * from  [Order] where orderTime='{date.Date}'";
+                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+
+                adapter.Fill(data);
+                connection.Close();
+
+            }
+
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+
+            }
+            return data;
+
+        }
+
+
+        // سرچ برای گزارش در یک روز خاص
+        public DataTable SearchDailySalesReport(DateTime date,string filter)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            DataTable data = new DataTable();
+            try
+            {
+                connection.Open();
+                string query = $"select * from  [Order] where orderTime='{date.Date}' and CustomerFullName like '{filter}%'";
+                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+
+                adapter.Fill(data);
+                connection.Close();
+
+            }
+
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+
+            }
+            return data;
+
+        }
+
+        //تعداد فروش هر محصول 
+        public DataTable GetProductSeleareport(DateTime start,DateTime end)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            DataTable data = new DataTable();
+            try
+            {
+                connection.Open();
+                string query = $"select o.MedincineName as medincineName,m.Id as id ,sum(o.Quntity) as total from [Order] as o inner join Medecines_DB_Table as m on o.MedincineName=m.NameMedecines  where  o.orderTime  between '{start.Date}' and '{end.Date}' group by o.MedincineName,m.Id ";
+                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+
+                adapter.Fill(data);
+                connection.Close();
+
+            }
+
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+
+            }
+            return data;
+
+        }
     }
 }

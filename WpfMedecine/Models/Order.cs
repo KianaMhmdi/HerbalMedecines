@@ -15,5 +15,6 @@ namespace WpfMedecine
         public float Quntity { set; get; }
         public float TotalAmunt { get; set; }
         public DateTime orderTime { set; get; }
+
     }
 }
