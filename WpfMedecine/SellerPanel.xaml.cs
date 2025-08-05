@@ -74,7 +74,10 @@ namespace WpfMedecine
         {
             MainWindow.Visibility = Visibility.Collapsed;
             AddCustomersPanel.Visibility = Visibility.Collapsed;
+            EditCustomersPanel.Visibility = Visibility.Collapsed;
             MedicationsManagment.Visibility = Visibility.Collapsed;
+            AddMedecinesPanel.Visibility = Visibility.Collapsed;
+            EditMedecinePanel.Visibility = Visibility.Collapsed;
             CustomersManagementPanel.Visibility = Visibility.Visible;
 
             CustomerDB customerDB = new CustomerDB();
@@ -85,6 +88,10 @@ namespace WpfMedecine
         {
             MainWindow.Visibility = Visibility.Collapsed;
             CustomersManagementPanel.Visibility= Visibility.Collapsed;
+            AddCustomersPanel.Visibility = Visibility.Collapsed;
+            EditCustomersPanel.Visibility = Visibility.Collapsed;
+            AddMedecinesPanel.Visibility = Visibility.Collapsed;
+            EditMedecinePanel.Visibility = Visibility.Collapsed;
             MedicationsManagment.Visibility = Visibility.Visible;
 
             MedecineDB medecineDB = new MedecineDB();
@@ -111,7 +118,14 @@ namespace WpfMedecine
 
         }
 
+
         ////////////////////////////////////////////////// صفحه مدیریت مشتری ها 
+
+        private void CustomersManagementBack_Click(object sender, RoutedEventArgs e)
+        {
+            CustomersManagementPanel.Visibility = Visibility.Collapsed;
+            MainWindow.Visibility = Visibility.Visible;
+        }
 
         private void txtSearchCustomer_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -133,7 +147,6 @@ namespace WpfMedecine
 
         private void btnAddCustomer_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Visibility = Visibility.Collapsed;
             CustomersManagementPanel.Visibility = Visibility.Collapsed;
             AddCustomersPanel.Visibility = Visibility.Visible;
         }
@@ -143,7 +156,7 @@ namespace WpfMedecine
         {
             if (CustomersListGrid.SelectedItem == null)
             {
-                MessageBox.Show("Please select an item.");
+                MessageBox.Show(".لطفا مشتری مورد نظر را انتخاب کنید");
                 return;
             }
 
@@ -151,7 +164,7 @@ namespace WpfMedecine
 
             if (selectedCustomer == null)
             {
-                MessageBox.Show("The selected item is not valid.");
+                MessageBox.Show(".گزینه انتخاب شده معتبر نمی‌باشد");
                 return;
             }
             // مقداردهی TextBoxها
@@ -171,7 +184,7 @@ namespace WpfMedecine
         {
             if (CustomersListGrid.SelectedItem == null)
             {
-                MessageBox.Show("Please select an item.");
+                MessageBox.Show(".لطفا مشتری مورد نظر را انتخاب کنید");
                 return;
             }
             else
@@ -184,7 +197,7 @@ namespace WpfMedecine
                 string firstName = selectedCustomer.CustomerFirstName;
                 string lastName = selectedCustomer.CustomerLastName;
 
-                if (MessageBox.Show($"Are you sure you want to delete? {firstName + ' ' + lastName}", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show($"  آیا از حذف کردن {firstName + ' ' + lastName} اطمینان دارید؟", "حذف", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     try
                     {
@@ -194,16 +207,16 @@ namespace WpfMedecine
 
                         if (customerDB.DeleteCustomer(id))
                         {
-                            MessageBox.Show($"{firstName + ' ' + lastName} has been deleted!");
+                            MessageBox.Show($"{firstName + ' ' + lastName} !حذف شد ");
                         }
                         else
                         {
-                            MessageBox.Show("Failed to delete customer.");
+                            MessageBox.Show($" خطا در حذف {firstName + ' ' + lastName}");
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Error deleting customer: {ex.Message}");
+                        MessageBox.Show($":خطای حذف مشتری {ex.Message}");
                     }
                 }
                 RefreshGridCustomer();
@@ -243,12 +256,14 @@ namespace WpfMedecine
                 //بررسی می کند که ایا ثبت نام وفقیت امیز بوده یا نه
                 if (customerDB.AddCustomer(customer))
                 {
-                    MessageBox.Show("✅ Adding was successful !", "Adding ", MessageBoxButton.OK);
+                    MessageBox.Show(" ! اضافه کردن مشتری با موفقیت انجام شد✅", "اضافه کردن ", MessageBoxButton.OK);
                     RefreshGridCustomer();
+                    AddCustomersPanel.Visibility = Visibility.Collapsed;
+                    CustomersManagementPanel.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    MessageBox.Show("Adding was unsuccessful !", "Adding ", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("اضافه کردن مشتری انجام داده نشد !", "اضافه کردن ", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -269,11 +284,11 @@ namespace WpfMedecine
 
             if (customerDB.UpdateCustomer(updatedCustomer))
             {
-                MessageBox.Show("Information updated successfully.");
+                MessageBox.Show(".ویرایش مشتری با موفقیت انجام شده");
             }
             else
             {
-                MessageBox.Show("The update operation failed.");
+                MessageBox.Show(".ویرایش مشتری انجام داده نشد");
             }
             RefreshGridCustomer();
             EditCustomersPanel.Visibility = Visibility.Collapsed;
@@ -286,7 +301,24 @@ namespace WpfMedecine
             CustomersManagementPanel.Visibility = Visibility.Visible;
         }
 
+        private void dpBirthDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DateTime? selectedDate = dpBirthDate.SelectedDate;
+            if (selectedDate.HasValue)
+            {
+                DateTime birthDate = selectedDate.Value;
+                int age = DateTime.Now.Year - birthDate.Year;
+                if (birthDate > DateTime.Now.AddYears(-age))
+                {
+                    age--;
+                }
 
+            }
+        }
+
+
+
+        //////////////////////////////////////////////////////////////////////////////// صفحه مدیرت داروها
 
         private void txtSearchMedecine_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -307,7 +339,6 @@ namespace WpfMedecine
 
         private void btnAddMedecine_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.Visibility = Visibility.Collapsed;
             MedicationsManagment.Visibility = Visibility.Collapsed;
             AddMedecinesPanel.Visibility = Visibility.Visible;
         }
@@ -316,7 +347,7 @@ namespace WpfMedecine
         {
             if (MedecinesListGrid.SelectedItem == null)
             {
-                MessageBox.Show("Please select an item.");
+                MessageBox.Show(".لطفا دارو موردنظر را انتخاب نمایید");
                 return;
             }
 
@@ -324,7 +355,7 @@ namespace WpfMedecine
 
             if (selectedMedecine == null)
             {
-                MessageBox.Show("The selected item is not valid.");
+                MessageBox.Show(".گزینه انتخاب شده معتبر نمی‌باشد");
                 return;
             }
             // مقداردهی TextBoxها
@@ -337,20 +368,17 @@ namespace WpfMedecine
             txtUnitEdit.Text = selectedMedecine.Unit;
 
             // نمایش پنل ویرایش
-            MainWindow.Visibility = Visibility.Collapsed;
             MedicationsManagment.Visibility = Visibility.Collapsed;
             EditMedecinePanel.Visibility = Visibility.Visible;
 
             RefreshGridMedecine();
-
-
         }
 
         private void btnDeleteMedecine_Click(object sender, RoutedEventArgs e)
         {
             if (MedecinesListGrid.SelectedItem == null)
             {
-                MessageBox.Show("Please select an item.");
+                MessageBox.Show(".لطفا دارو موردنظر را انتخاب نمایید");
                 return;
             }
             else
@@ -366,7 +394,7 @@ namespace WpfMedecine
                 string Quantity = selectedMedecine.Quantity.ToString();
                 string Unit = selectedMedecine.Unit;
 
-                if (MessageBox.Show($"Are you sure you want to delete? {NameMedecines + " with id " + Id}", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show($"آیا از حذف کردن {NameMedecines + " with id " + Id} اطمینان دارید؟", "حذف", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     try
                     {
@@ -376,16 +404,16 @@ namespace WpfMedecine
 
                         if (medecineDB.DeleteMedecine(Id))
                         {
-                            MessageBox.Show($"{NameMedecines + ' ' + Id} has been deleted!");
+                            MessageBox.Show($"{NameMedecines + ' ' + Id} !با موفقیت حذف شد");
                         }
                         else
                         {
-                            MessageBox.Show("Failed to delete medecine.");
+                            MessageBox.Show("!حذف دارو با شکست مواجه شد");
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Error deleting medecine: {ex.Message}");
+                        MessageBox.Show($":خطای حذف دارو {ex.Message}");
                     }
                 }
                 RefreshGridMedecine();
@@ -398,20 +426,6 @@ namespace WpfMedecine
             MedicationsManagment.Visibility = Visibility.Visible;
         }
 
-        private void dpBirthDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            DateTime? selectedDate = dpBirthDate.SelectedDate;
-            if (selectedDate.HasValue)
-            {
-                DateTime birthDate = selectedDate.Value;
-                int age = DateTime.Now.Year - birthDate.Year;
-                if (birthDate > DateTime.Now.AddYears(-age))
-                {
-                    age--;
-                }
-  
-            }
-        }
 
         private void btnOkAddMecedine_Click(object sender, RoutedEventArgs e)
         {
@@ -432,13 +446,13 @@ namespace WpfMedecine
                 //بررسی می کند که ایا ثبت نام وفقیت امیز بوده یا نه
                 if (medecineDB.AddMedecine(medicine))
                 {
-                    MessageBox.Show("✅ Adding was successful !", "Adding ", MessageBoxButton.OK);
+                    MessageBox.Show("!دارو با موفقیت اضافه شد✅", "اضافه کردن ", MessageBoxButton.OK);
                     RefreshGridMedecine();
                 }
             }
             else
             {
-                MessageBox.Show("Adding was unsuccessful !", "Adding ", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("!اضافه کردن دار با شکست مواجه شد", "اضافه کردن ", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -465,16 +479,25 @@ namespace WpfMedecine
 
             if (medecineDB.UpdateMedecine(updatedMedecine))
             {
-                MessageBox.Show("Information updated successfully.");
+                MessageBox.Show(".ویرایش دارو با موفقیت انجام شد");
             }
             else
             {
-                MessageBox.Show("The update operation failed.");
+                MessageBox.Show("!ویرایش دارو با شکست مواجه شد");
             }
+
             RefreshGridMedecine();
+
             EditMedecinePanel.Visibility = Visibility.Collapsed;
             MedicationsManagment.Visibility = Visibility.Visible;
         }
+
+        private void MedicationsManagmentBack_Click(object sender, RoutedEventArgs e)
+        {
+            MedicationsManagment.Visibility = Visibility.Collapsed;
+            MainWindow.Visibility = Visibility.Visible;
+        }
+
 
         private void SellingMedicineBack_Click(object sender, RoutedEventArgs e)
         {
