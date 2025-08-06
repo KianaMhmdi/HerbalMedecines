@@ -78,6 +78,8 @@ namespace WpfMedecine
             MedicationsManagment.Visibility = Visibility.Collapsed;
             AddMedecinesPanel.Visibility = Visibility.Collapsed;
             EditMedecinePanel.Visibility = Visibility.Collapsed;
+            SellingMedicinePanel.Visibility = Visibility.Collapsed;
+            ReportsPanel.Visibility = Visibility.Collapsed;
             CustomersManagementPanel.Visibility = Visibility.Visible;
 
             CustomerDB customerDB = new CustomerDB();
@@ -92,6 +94,8 @@ namespace WpfMedecine
             EditCustomersPanel.Visibility = Visibility.Collapsed;
             AddMedecinesPanel.Visibility = Visibility.Collapsed;
             EditMedecinePanel.Visibility = Visibility.Collapsed;
+            SellingMedicinePanel.Visibility = Visibility.Collapsed;
+            ReportsPanel.Visibility = Visibility.Collapsed;
             MedicationsManagment.Visibility = Visibility.Visible;
 
             MedecineDB medecineDB = new MedecineDB();
@@ -100,17 +104,31 @@ namespace WpfMedecine
 
         private void SellingMedicine_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow.Visibility = Visibility.Collapsed;
+            CustomersManagementPanel.Visibility = Visibility.Collapsed;
+            AddCustomersPanel.Visibility = Visibility.Collapsed;
+            EditCustomersPanel.Visibility = Visibility.Collapsed;
+            MedicationsManagment.Visibility = Visibility.Collapsed;
+            AddMedecinesPanel.Visibility = Visibility.Collapsed;
+            EditMedecinePanel.Visibility = Visibility.Collapsed;
+            ReportsPanel.Visibility = Visibility.Collapsed;
+            SellingMedicinePanel.Visibility= Visibility.Visible;
 
-        }
-
-        private void medicineRequest_Click(object sender, RoutedEventArgs e)
-        {
-
+            MedecineDB medecineDB = new MedecineDB();
+            MedecinesListSaleGrid.ItemsSource = medecineDB.SelectMedecine();
         }
 
         private void Reports_Click(object sender, RoutedEventArgs e)
         {
-
+            MainWindow.Visibility = Visibility.Collapsed;
+            CustomersManagementPanel.Visibility = Visibility.Collapsed;
+            AddCustomersPanel.Visibility = Visibility.Collapsed;
+            EditCustomersPanel.Visibility = Visibility.Collapsed;
+            MedicationsManagment.Visibility = Visibility.Collapsed;
+            AddMedecinesPanel.Visibility = Visibility.Collapsed;
+            EditMedecinePanel.Visibility = Visibility.Collapsed;
+            SellingMedicinePanel.Visibility = Visibility.Collapsed;
+            ReportsPanel.Visibility = Visibility.Visible;
         }
 
         private void PersonalSettings_Click(object sender, RoutedEventArgs e)
@@ -501,7 +519,24 @@ namespace WpfMedecine
 
         private void SellingMedicineBack_Click(object sender, RoutedEventArgs e)
         {
+            SellingMedicinePanel.Visibility = Visibility.Collapsed;
+            MainWindow.Visibility = Visibility.Visible;
+        }
 
+        private void ReportsBack_Click(object sender, RoutedEventArgs e)
+        {
+            ReportsPanel.Visibility = Visibility.Collapsed;
+            MainWindow.Visibility = Visibility.Visible;
+        }
+
+        private void BuyingReports_Click(object sender, RoutedEventArgs e)
+        {
+            BuyingMenuReport.Visibility = Visibility.Visible;
+        }
+
+        private void SellingReports_Click(object sender, RoutedEventArgs e)
+        {
+            SellingMenuReport.Visibility = Visibility.Visible;
         }
     }
 

@@ -26,38 +26,38 @@
         
 
         <StackPanel Margin="40,50,20,20" Width="400" HorizontalAlignment="Left">
-            <TextBlock Text="First Name:" FontWeight="Bold" Margin="5,5,0,0"/>
+            <TextBlock Text=":نام" FontWeight="Bold" Margin="5,5,0,0" HorizontalAlignment="Right"/>
             <TextBox x:Name="txtFirstName" Margin="5,0,0,0"/>
             <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="FnameError">*Inter your firstname.</TextBlock>
 
-            
-            <TextBlock Text="Last Name:" FontWeight="Bold" Margin="5,15,5,0"/>
+
+            <TextBlock Text=":نام خانوادگی" FontWeight="Bold" Margin="5,15,5,0" HorizontalAlignment="Right"/>
             <TextBox x:Name="txtLastName" Margin="5,0,0,0"/>
             <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="LnameError">*Inter your lastname.</TextBlock>
 
 
-            <TextBlock Text="National Code:" FontWeight="Bold" Margin="5,15,5,0"/>
+            <TextBlock Text=":کدملی" FontWeight="Bold" Margin="5,15,5,0" HorizontalAlignment="Right"/>
             <TextBox x:Name="txtNationalCode" Margin="5,0,0,0"/>
             <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="NationalCodeError">*.</TextBlock>
             <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitNationalCodeError">*National Code must containonly digits!</TextBlock>
             <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="LengthNationalCodeError">*National Code must be 10 digits!</TextBlock>
 
 
-            <TextBlock Text="Gender:" FontWeight="Bold" Margin="5,15,5,0"/>
+            <TextBlock Text=":جنسیت" FontWeight="Bold" Margin="5,15,5,0" HorizontalAlignment="Right"/>
             <ComboBox x:Name="cmbGender" Margin="5,0,0,15" SelectedIndex="0">
                 <ComboBoxItem Content="Man" Tag="0"/>
                 <ComboBoxItem Content="Woman" Tag="1"/>
             </ComboBox>
-            
 
-            <TextBlock Text="Role:" FontWeight="Bold" Margin="5,0"/>
+
+            <TextBlock Text=":سمت" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Right"/>
             <ComboBox x:Name="cmbRole" Margin="5,0,0,15" SelectedIndex="0">
                 <ComboBoxItem Content="Owner" Tag="0"/>
                 <ComboBoxItem Content="Seller" Tag="1"/>
             </ComboBox>
             
             
-            <TextBlock Text="Phone Number:" FontWeight="Bold" Margin="5,0"/>
+            <TextBlock Text=":شماره تلفن" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Right"/>
             <TextBox x:Name="txtPhoneNumber" Margin="5,0"/>
             <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="PhonrnumberError">*Enter your phone Number.</TextBlock>
             <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitPhoneNumberError">*Phone Number must containonly digits!</TextBlock>
@@ -68,28 +68,28 @@
 
 
         <StackPanel Margin="20,50,40,20" Width="400" HorizontalAlignment="Right">
-            <TextBlock Text="Address :" FontWeight="Bold" Margin="5,0"/>
-            <TextBox Name="txtaddress" AcceptsReturn="True" TextWrapping="Wrap" Height="50" Margin="5,0,0,0" ></TextBox>
+            <TextBlock Text=":آدرس" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Right"/>
+            <TextBox Name="txtaddress" AcceptsReturn="True" TextWrapping="Wrap" Height="50" Margin="5,0,0,0"></TextBox>
             <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="AddressError">*Enter your Address.</TextBlock>
 
-            <TextBlock Text="Email :" FontWeight="Bold" Margin="5,9.5,5,0"/>
+            <TextBlock Text=":ایمیل" FontWeight="Bold" Margin="5,9.5,5,0" HorizontalAlignment="Right"/>
             <TextBox x:Name="txtEmail" Margin="5,0,0,0" Text="(Optional)" Foreground="Gray" GotFocus="txtEmail_GotFocus" LostFocus="txtEmail_LostFocus"/>
 
-            <TextBlock  Text="Favorite Number :" FontWeight="Bold" Margin="5,9.5,0,0"/>
+            <TextBlock  Text=":عدد مورد‌علاقه" FontWeight="Bold" Margin="5,9.5,0,0" HorizontalAlignment="Right"/>
             <TextBox Name="txtFavoriteNumber" Margin="5 0 0 0"></TextBox>
             <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="FavoriteNumberError">*Enter your Favorite Number.</TextBlock>
 
-            <TextBlock Text="Birth Date :" FontWeight="Bold" Margin="5,9.5,5,0"/>
+            <TextBlock Text=":تاریخ تولد" FontWeight="Bold" Margin="5,9.5,5,0" HorizontalAlignment="Right"/>
             <DatePicker Name="dpBirthDate" SelectedDateFormat="Short" FirstDayOfWeek="Saturday" Margin="5,0" DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}" SelectedDate="{Binding BirthDate,Mode=TwoWay}" SelectedDateChanged="dpBirthDate_SelectedDateChanged"></DatePicker>
             <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="AgeError">The age must be between 18 and 70!</TextBlock>
             <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="NullAgeError">*Enter your Age.</TextBlock>
 
-            <TextBlock Text="Password :" FontWeight="Bold" Margin="5,9.5,5,0"/>
+            <TextBlock Text=":رمز عبور" FontWeight="Bold" Margin="5,9.5,5,0" HorizontalAlignment="Right"/>
             <PasswordBox Name="txtPassword" MaxLength="16" Margin="5 0"></PasswordBox>
             <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="PasswordError">*Enter The password.</TextBlock>
             <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="VallidPasswordError">*The password must contain at least 1 letter and number,and be between 8 to 16 characters!</TextBlock>
 
-            <TextBlock Text="Repeat Password :" FontWeight="Bold" Margin="5,9.5,5,0"/>
+            <TextBlock Text=":تکرار رمز عبور" FontWeight="Bold" Margin="5,9.5,5,0" HorizontalAlignment="Right"/>
             <PasswordBox Margin="5,0" Name="txtRepeatPassword"></PasswordBox>
             <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="RepeatError">Inter the repeat password.</TextBlock>
             <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="TrueRepeatError">*Password and confirmation do not match.</TextBlock>

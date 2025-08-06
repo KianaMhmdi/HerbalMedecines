@@ -845,7 +845,7 @@
                 </Grid>
             </Border>
             
-            <!--صفحه نمودار تعدا فروش هر محصول-->
+            <!--صفحه نمودار تعداد فروش هر محصول-->
 
             <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="ProductSelesCahrt">
                 <Grid>
