@@ -18,9 +18,9 @@
         </Image>
 
         <StackPanel>
-            <TextBlock Name="RegistertionOrEdite" Text="Registration" FontSize="32" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0" Height="100" FontFamily="Monotype Corsiva"/>
+            <TextBlock Name="RegistertionOrEdite" Text="ثبت نام" FontSize="32" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0" Height="100" FontFamily="Monotype Corsiva"/>
 
-            <Button Name="btnRegister"  Content="Register" Margin="20,250" Width="150" Height="40" HorizontalAlignment="Center" FontSize="20" FontFamily="Monotype Corsiva" Background="DarkGray" Click="btnRegister_Click">
+            <Button Name="btnRegister"  Content="ثبت نام" Margin="20,250" Width="150" Height="40" HorizontalAlignment="Center" FontSize="20" FontFamily="Monotype Corsiva" Background="DarkGray" Click="btnRegister_Click">
             </Button>
         </StackPanel>
         
@@ -45,15 +45,15 @@
 
             <TextBlock Text=":جنسیت" FontWeight="Bold" Margin="5,15,5,0" HorizontalAlignment="Right"/>
             <ComboBox x:Name="cmbGender" Margin="5,0,0,15" SelectedIndex="0">
-                <ComboBoxItem Content="Man" Tag="0"/>
-                <ComboBoxItem Content="Woman" Tag="1"/>
+                <ComboBoxItem Content="مرد" Tag="0"/>
+                <ComboBoxItem Content="زن" Tag="1"/>
             </ComboBox>
 
 
             <TextBlock Text=":سمت" FontWeight="Bold" Margin="5,0" HorizontalAlignment="Right"/>
             <ComboBox x:Name="cmbRole" Margin="5,0,0,15" SelectedIndex="0">
-                <ComboBoxItem Content="Owner" Tag="0"/>
-                <ComboBoxItem Content="Seller" Tag="1"/>
+                <ComboBoxItem Content="مالک" Tag="0"/>
+                <ComboBoxItem Content="فروشنده" Tag="1"/>
             </ComboBox>
             
             
@@ -73,7 +73,7 @@
             <TextBlock Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="AddressError">*Enter your Address.</TextBlock>
 
             <TextBlock Text=":ایمیل" FontWeight="Bold" Margin="5,9.5,5,0" HorizontalAlignment="Right"/>
-            <TextBox x:Name="txtEmail" Margin="5,0,0,0" Text="(Optional)" Foreground="Gray" GotFocus="txtEmail_GotFocus" LostFocus="txtEmail_LostFocus"/>
+            <TextBox x:Name="txtEmail" Margin="5,0,0,0" Text="(اختیاری)" Foreground="Gray" GotFocus="txtEmail_GotFocus" LostFocus="txtEmail_LostFocus"/>
 
             <TextBlock  Text=":عدد مورد‌علاقه" FontWeight="Bold" Margin="5,9.5,0,0" HorizontalAlignment="Right"/>
             <TextBox Name="txtFavoriteNumber" Margin="5 0 0 0"></TextBox>

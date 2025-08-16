@@ -24,13 +24,13 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0"  Text="Quantit:" FontSize="20" FontWeight="Bold" Width="102"
+            <TextBlock Grid.Row="0" Grid.Column="1" Text=":لطفا مقدار مورد نیاز را وارد کنید" FontSize="14" FontWeight="Bold" Width="190"
 HorizontalAlignment="Center" Margin="0,33,0,22" Foreground="White" FontFamily="Monotype Corsiva"/>
 
-            <TextBox Grid.Row="0"  Grid.Column="1" Text="1" x:Name="txtQuantity" Margin="0,33,10,79"  Height="30" GotFocus="txtQuantity_GotFocus"/>
+            <TextBox Grid.Row="0"  Grid.Column="0" Text="1" x:Name="txtQuantity" Margin="20,33,10,79"  Height="30" GotFocus="txtQuantity_GotFocus"/>
             <TextBlock  Grid.Row="1"  Grid.Column="0" Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="MedicinSellQuantityError">*Inter your Quantity.</TextBlock>
             <TextBlock   Grid.Row="1"  Grid.Column="1" Foreground="Red" Margin="5,0" Visibility="Collapsed" Name="IsdigitMedicinSellQuantityError">*Quantity must containonly digits!</TextBlock>
-            <Button Grid.Row="3"  Grid.Column="1" Name="btnQuanity"  Content="Nex"  Width="50" Height="50" HorizontalAlignment="Center" Margin="5,5,0,0" FontSize="20" FontFamily="Monotype Corsiva" Click="btnQuanity_Click" Foreground="White">
+            <Button Grid.Row="3"  Grid.Column="1" Name="btnQuanity"  Content="تایید"  Width="50" Height="50" HorizontalAlignment="Center" Margin="5,5,0,0" FontSize="20" FontFamily="Monotype Corsiva" Click="btnQuanity_Click" Foreground="White">
                 <Button.Background>
                     <ImageBrush/>
                 </Button.Background>

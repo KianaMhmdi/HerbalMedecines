@@ -108,6 +108,7 @@
     <Compile Include="Data\CustomerDB.cs" />
     <Compile Include="Data\HerbalDB.cs" />
     <Compile Include="Data\MedecineDB.cs" />
+    <Compile Include="Data\OrderDB.cs" />
     <Compile Include="Data\PasswordHash.cs" />
     <Compile Include="ForgotPassword.xaml.cs">
       <DependentUpon>ForgotPassword.xaml</DependentUpon>
@@ -118,6 +119,7 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Medicine.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\Orders.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="OwnerPanel.xaml.cs">
       <DependentUpon>OwnerPanel.xaml</DependentUpon>

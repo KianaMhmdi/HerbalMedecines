@@ -25,7 +25,7 @@ namespace WpfMedecine
         }
         public float Quantiry;
         public int flag = 0;
-       public bool ValidateInputQuantity()
+        public bool ValidateInputQuantity()
         {
             if (txtQuantity.Text == "")
             {
@@ -52,9 +52,9 @@ namespace WpfMedecine
             MedicinSellQuantityError.Visibility = Visibility.Collapsed;
             IsdigitMedicinSellQuantityError.Visibility = Visibility.Collapsed;
         }
-        
 
-        
+
+
 
         private void btnQuanity_Click(object sender, RoutedEventArgs e)
         {
@@ -64,7 +64,7 @@ namespace WpfMedecine
                 flag = 1;
                 this.Close();
             }
-           
+
 
         }
 

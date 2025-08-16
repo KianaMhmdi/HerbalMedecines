@@ -358,39 +358,8 @@
                                                     </Grid.ColumnDefinitions>
 
                                                     <Border Grid.Column="0"  Grid.ColumnSpan="2">
-                                                        <Grid>
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition Height="*"/>
-                                                                <RowDefinition Height="*"/>
-                                                            </Grid.RowDefinitions>
 
-                                                            <Border Grid.Row="0"  Background="#8bbb79" Opacity=".8" CornerRadius="20" Margin="20,20,5,5">
-                                                                <Grid>
-                                                                    <Grid.RowDefinitions>
-                                                                        <RowDefinition Height="Auto"/>
-                                                                        <RowDefinition Height="*"/>
-                                                                    </Grid.RowDefinitions>
-
-                                                                    <Border Grid.Row="0" Height="50" Background="White" CornerRadius="20 20 0 0">
-                                                                        <Label FontSize="20" HorizontalAlignment="Center" Margin="0 5 0 5" Foreground="Black">لیست انتخاب شده</Label>
-                                                                    </Border>
-
-                                                                    <Border Grid.Row="1">
-                                                                        <DataGrid  AutoGenerateColumns="False" Margin="12,12" IsReadOnly="True" SelectionMode="Single">
-                                                                            <DataGrid.Columns>
-                                                                                <DataGridTextColumn Header="واحد اندازه‌گیری" Width="2.7*"/>
-                                                                                <DataGridTextColumn Header="مقدار درخواستی" Width="2.7*"/>
-                                                                                <DataGridTextColumn Header="قیمت فروش" Width="2.3*"/>
-                                                                                <DataGridTextColumn Header="نام دارو" Width="2*"/>
-                                                                                <DataGridTextColumn Header="کد دارو" Width="2*"/>
-                                                                            </DataGrid.Columns>
-                                                                        </DataGrid>
-                                                                    </Border>
-                                                                </Grid>
-                                                            </Border>
-
-                                                            
-                                                            <Border Grid.Row="1" Background="#8bbb79" Opacity=".8" CornerRadius="20" Margin="20,5,5,25">
+                                                        <Border Grid.Row="0" Background="#8bbb79" Opacity=".8" CornerRadius="20" Margin="20,20,5,25">
                                                                 <Grid>
                                                                     <Grid.RowDefinitions>
                                                                         <RowDefinition Height="Auto"/>
@@ -408,33 +377,48 @@
                                                                                 <RowDefinition/>
                                                                                 <RowDefinition/>
                                                                                 <RowDefinition/>
-                                                                                <RowDefinition/>
                                                                             </Grid.RowDefinitions>
 
                                                                             <Border Grid.Row="0">
-                                                                                <Label FontSize="13" FontWeight="Medium" HorizontalAlignment="Right"  Foreground="Black">:مشتری</Label>
-                                                                            </Border>
+                                                                            <DataGrid x:Name="Factor"  AutoGenerateColumns="False" Margin="12,12" IsReadOnly="True" SelectionMode="Single" SelectionChanged="Factor_SelectionChanged" ItemsSource="{Binding Medicines}">
+                                                                                <DataGrid.Columns>
+                                                                                    <DataGridTextColumn Header="قیمت کل" Binding="{Binding TotalAmunt}"  Width="2*"/>
+                                                                                    <DataGridTextColumn Header="واحد اندازه‌گیری" Binding="{Binding Unit}"  Width="2.7*"/>
+                                                                                    <DataGridTextColumn Header="قیمت فروش" Binding="{Binding PriceSell}"  Width="2.3*"/>
+                                                                                    <DataGridTextColumn Header="مقدار درخواستی" Binding="{Binding REqQuantity}" Width="2.7*"/>
+                                                                                    <DataGridTextColumn Header="نام دارو" Binding="{Binding NameMedecines}" Width="1.9*"/>
+                                                                                    <DataGridTextColumn Header="کد دارو" Width="1.9*" Binding="{Binding Id}"/>
+                                                                                </DataGrid.Columns>
+                                                                            </DataGrid>
+                                                                        </Border>
 
-                                                                            <Border Grid.Row="1">
-
-                                                                            </Border>
+                                                                        <Border Grid.Row="1">
+                                                                            <DataGrid Name="CustomersListSale"  AutoGenerateColumns="False" Margin="12,12" IsReadOnly="True" SelectionMode="Single" ItemsSource="{Binding Medicines}" SelectionChanged="CustomersListSale_SelectionChanged">
+                                                                                <DataGrid.Columns>
+                                                                                    <DataGridTextColumn Header="کدملی مشتری" Binding="{Binding CusId}" Width="2*"/>
+                                                                                    <DataGridTextColumn Header="نام خانوداگی مشتری" Binding="{Binding CusFName}" Width="2.7*"/>
+                                                                                    <DataGridTextColumn Header="نام مشتری" Binding="{Binding CusLName}" Width="2*"/>
+                                                                                </DataGrid.Columns>
+                                                                            </DataGrid>
+                                                                        </Border>
 
                                                                             <Border Grid.Row="2">
-                                                                                <Label FontSize="13" FontWeight="Medium" HorizontalAlignment="Right"  Foreground="Black">:جمع کل</Label>
+                                                                                <StackPanel>
+                                                                                    <Label FontSize="13" FontWeight="Medium" HorizontalAlignment="Right"  Foreground="Black">:جمع کل</Label>
+                                                                                    <TextBox Margin="5,0" Height="30"/>
+                                                                                </StackPanel>
+
                                                                             </Border>
 
                                                                             <Border Grid.Row="3">
-
-                                                                            </Border>
-
-                                                                            <Border Grid.Row="4">
                                                                                 <Button Height="35" Width="120" Margin="3">تایید فروش</Button>
                                                                             </Border>
+                                                                            
                                                                         </Grid>
                                                                     </Border>
                                                                 </Grid>
                                                             </Border>
-                                                        </Grid>
+                              
                                                     </Border>
 
                                                     <Border Grid.Column="2" Margin="15,20,20,25" Background="#8bbb79" Opacity=".8" CornerRadius="20">
@@ -444,8 +428,8 @@
                                                                 <RowDefinition Height="*"/>
                                                             </Grid.RowDefinitions>
 
-                                                            <Border Grid.Row="0" Height="60" Background="White" CornerRadius="20 20 0 0">
-                                                                <Label FontSize="20" HorizontalAlignment="Center" Margin="0 10 0 10" Foreground="Black">سبد فروش</Label>
+                                                            <Border Grid.Row="0" Height="55" Background="White" CornerRadius="20 20 0 0">
+                                                                <Label FontSize="20" HorizontalAlignment="Center" Margin="0 10 0 8" Foreground="Black">سبد فروش</Label>
                                                             </Border>
 
                                                             <Border Grid.Row="1">
@@ -454,8 +438,8 @@
                                                                     <Grid.RowDefinitions>
                                                                         <RowDefinition Height="Auto"/>
                                                                         <RowDefinition Height="Auto"/>
-                                                                        <RowDefinition Height="*"/>
-                                                                        <RowDefinition Height="Auto"/>
+                                                                        <RowDefinition Height="3*"/>
+                                                                        <RowDefinition Height="2*"/>
                                                                     </Grid.RowDefinitions>
 
                                                                     <Border Grid.Row="0">
@@ -469,13 +453,13 @@
                                                                                 <ColumnDefinition Width="Auto"/>
                                                                             </Grid.ColumnDefinitions>
 
-                                                                            <TextBox Grid.Column="0"  Margin="15,0,0,0" Height="25" VerticalAlignment="Center"/>
+                                                                            <TextBox Grid.Column="0" Name="SellingMedecineSearch" TextChanged="SellingMedecineSearch_TextChanged"  Margin="15,0,0,0" Height="25" VerticalAlignment="Center" HorizontalContentAlignment="Right" />
                                                                             <Label Grid.Column="1" Content=":جست‌وجو" VerticalAlignment="Center" Margin="0,0,15,8" FontSize="15" Foreground="Black"/>
                                                                         </Grid>
                                                                     </Border>
 
                                                                     <Border Grid.Row="2">
-                                                                        <DataGrid  Name="MedecinesListSaleGrid" AutoGenerateColumns="False" Margin="15,0" IsReadOnly="True" SelectionMode="Single">
+                                                                        <DataGrid  Name="MedecinesListSaleGrid" SelectionChanged="MedecinesListSaleGrid_SelectionChanged" AutoGenerateColumns="False" Margin="15,0,15,15" IsReadOnly="True" SelectionMode="Single">
                                                                             <DataGrid.Columns>
                                                                                 <DataGridTextColumn Header="واحد اندازه‌گیری" Binding="{Binding Unit}" Width="2.7*"/>
                                                                                 <DataGridTextColumn Header="مقدار مانده" Binding="{Binding Quantity}" Width="2.3*"/>
@@ -487,7 +471,18 @@
                                                                     </Border>
 
                                                                     <Border Grid.Row="3">
-                                                                        <Button Height="40" Width="75" Margin="8">انتخاب</Button>
+                                                                        <StackPanel>
+                                                                            <Label FontSize="13" FontWeight="Medium" HorizontalAlignment="Center"  Foreground="Black">:لطفا مشتری مورد نظر را انتخاب کنید</Label>
+
+                                                                            <DataGrid  Name="CustomerSaleList" SelectionChanged="CustomerSaleList_SelectionChanged" AutoGenerateColumns="False" Margin="15,0,15,15" IsReadOnly="True" SelectionMode="Single">
+                                                                                <DataGrid.Columns>
+                                                                                    <DataGridTextColumn Header="نام خانوداگی" Binding="{Binding CustomerLastName}" Width="2.7*"/>
+                                                                                    <DataGridTextColumn Header="نام" Binding="{Binding CustomerFirstName}" Width="2*"/>
+                                                                                    <DataGridTextColumn Header="کدملی" Width="2*" Binding="{Binding CustomerId}"/>
+                                                                                </DataGrid.Columns>
+                                                                            </DataGrid>
+
+                                                                        </StackPanel>
                                                                     </Border>
 
                                                                 </Grid>

@@ -32,12 +32,8 @@ namespace WpfMedecine
         
         public OwnerPanel()
         {
-            InitializeComponent();
-
-           
+            InitializeComponent();      
         }
-
-      
 
      
        
@@ -59,14 +55,14 @@ namespace WpfMedecine
             string filterText = txtSearchOwners.Text.Trim();
             originalTable = herbalDB.SelectPerson("Owner");
             OwnersListGrid.ItemsSource = originalTable.DefaultView;
-
-
         }
+
         private void OwnersListBack_Click(object sender, RoutedEventArgs e)
         {
             Main.Visibility = Visibility.Visible;
             OwnersListPanel.Visibility = Visibility.Collapsed;
         }
+
         private void btnAddOwner_Click(object sender, RoutedEventArgs e)
         {
             var registeration = new Registeration();
@@ -95,11 +91,8 @@ namespace WpfMedecine
                 edite.txtaddress.Text = selectedRow["Address"].ToString();
                 edite.ShowDialog();
                
-                RefreshGridOwner();
-
-            
+                RefreshGridOwner();        
             }
-
         }
 
         private void btnDeleteOwner_Click(object sender, RoutedEventArgs e)
@@ -123,10 +116,9 @@ namespace WpfMedecine
                     herbal.SelectPerson("Owner");
                     RefreshGridOwner();
                 }
-            }
-           
-
+            }         
         }
+
         //سرچ مالک ها
         private void txtSearchOwners_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -164,14 +156,13 @@ namespace WpfMedecine
             string filterText = txtSearchSeller.Text.Trim();
             originalTable = herbalDB.SelectPerson("Seller");
             SellersListGrid.ItemsSource = originalTable.DefaultView;
-
         }
+
         private void SellersListBack_Click(object sender, RoutedEventArgs e)
         {
             Main.Visibility = Visibility.Visible;
             SellersListPanel.Visibility = Visibility.Collapsed;
         }
-
 
 
         private void txtSearchSeller_TextChanged(object sender, TextChangedEventArgs e)
@@ -188,9 +179,8 @@ namespace WpfMedecine
                originalTable= herbalDB.SearchPerson(filter, "Person_DB_Table", "Seller");
                 SellersListGrid.ItemsSource = originalTable.DefaultView;
             }
-
-
         }
+
         public void RefreshGridSeller()
         {
             HerbalDB herbal = new HerbalDB();
@@ -343,10 +333,6 @@ namespace WpfMedecine
                 txtMedicineBuyPrice.Text = selectedRow["PriceBuy"].ToString();
                 txtMedicineQuantity.Text = selectedRow["Quantity"].ToString();
                 txtMedicineSellPrice.Text = selectedRow["PriceSell"].ToString();
-
-                
-
-
 
 
             }
@@ -522,18 +508,13 @@ namespace WpfMedecine
         {
 
         }
-
-       
-
-       
+  
 
         private void btnPersonalSettings_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-
-   
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -595,6 +576,7 @@ namespace WpfMedecine
 
             return true;
         }
+
         ///بررسی رقم بودن فید ها  در خرید دارو  
         public bool IsNumberInput(string input)
         {
@@ -821,11 +803,7 @@ namespace WpfMedecine
                     AddCustomer.Visibility = Visibility.Collapsed;
                     CustomerPanel.Visibility = Visibility.Visible;
                 }
-
             }
-           
-
-
         }
 
         private void btnEditCustomerPanel_Click(object sender, RoutedEventArgs e)
@@ -851,11 +829,7 @@ namespace WpfMedecine
                txtCustomerFirstName.Text= selectedRow["CustomerFirstName"].ToString();
                 txtCustomerLastName.Text= selectedRow["CustomerLastName"].ToString();
                 txtCustomrPhoneNumber.Text= selectedRow["PhoneNumber"].ToString();
-
-
-
             }
-
         }
 
         private void btnDeleteCustomerPanel_Click(object sender, RoutedEventArgs e)
@@ -952,7 +926,6 @@ namespace WpfMedecine
                 if (CustomerSellListGrid.SelectedItem != null)
                 {
 
-
                     Order order = new Order();
                     var selectedRow = (DataRowView)MedicineSellListGrid.SelectedItem;
                     medicine.Id = selectedRow["Id"].ToString();
@@ -1012,10 +985,7 @@ namespace WpfMedecine
                             MessageBox.Show("بیشتر از موجودی انبار است ");
                         }
 
-
-
                     }
-
 
 
                     UpdateTotalPrice(); // محاسبه جمع کل پس از اضافه‌شدن دارو
@@ -1025,9 +995,9 @@ namespace WpfMedecine
                 {
                     MessageBox.Show("مشتری انتخاب نشده است");
                 }
-            }
-            
+            }           
         }
+
         private void SubmitOrderButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -1104,9 +1074,7 @@ namespace WpfMedecine
 
                     }
                     count++;
-                        }
-
-                    
+                        }               
                
             }
                

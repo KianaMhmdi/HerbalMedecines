@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using OxyPlot.Series;
 using WpfMedecine.Data;
 
 namespace WpfMedecine
@@ -116,6 +117,9 @@ namespace WpfMedecine
 
             MedecineDB medecineDB = new MedecineDB();
             MedecinesListSaleGrid.ItemsSource = medecineDB.SelectMedecine();
+
+            CustomerDB customerDB = new CustomerDB();
+            CustomerSaleList.ItemsSource = customerDB.SelectCustomer();
         }
 
         private void Reports_Click(object sender, RoutedEventArgs e)
@@ -537,6 +541,78 @@ namespace WpfMedecine
         private void SellingReports_Click(object sender, RoutedEventArgs e)
         {
             SellingMenuReport.Visibility = Visibility.Visible;
+        }
+
+        private void SellingMedecineSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string filter = SellingMedecineSearch.Text.Trim();
+            MedecineDB medecineDB = new MedecineDB();
+            ObservableCollection<Medicine> searchResults;
+
+            if (string.IsNullOrEmpty(filter)) // بررسی میکنیم که تکست باکس خالی نباشه
+            {
+                RefreshGridMedecine(); // اگر خالی بود، کل گرید رو دوباره پر میکنیم
+            }
+            else
+            {
+                searchResults = medecineDB.Search(filter); // جستجو بر اساس فیلتر
+                MedecinesListSaleGrid.ItemsSource = searchResults; // نمایش نتایج جستجو در گرید
+            }
+        }
+
+        private void SellingMedecineChoosebtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+
+        private void MedecinesListSaleGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MedicineSellQuantity quantity = new MedicineSellQuantity();
+            quantity.ShowDialog();
+
+
+            var selectedMedicine = MedecinesListSaleGrid.SelectedItem as Medicine;
+
+            var newOrders = new Orders
+            {
+                Id = selectedMedicine.Id,
+                NameMedecines = selectedMedicine.NameMedecines,
+                REqQuantity = quantity.Quantiry,
+                PriceSell = selectedMedicine.PriceSell,
+                Unit = selectedMedicine.Unit,
+                TotalAmunt = quantity.Quantiry * selectedMedicine.PriceSell,
+            };
+
+            if (Factor.ItemsSource is ObservableCollection<Orders> orders)
+            {
+                orders.Add(newOrders);
+            }
+            else
+            {
+                ObservableCollection<Orders> newFactorList = new ObservableCollection<Orders>();
+                newFactorList.Add(newOrders);
+                Factor.ItemsSource = newFactorList;
+            }
+
+        }
+
+
+
+        private void Factor_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void CustomerSaleList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+   
+        }
+
+        private void CustomersListSale_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 

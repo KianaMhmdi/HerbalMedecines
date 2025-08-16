@@ -21,20 +21,20 @@
 
             <!-- بردر هدر  -->
             <Border Grid.Row="0" Height="80" Background="#769C61" CornerRadius="0 0 40 40"></Border>
-            <Label FontSize="35" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 9 0 0" Foreground="White">Owner</Label>
-            <Button HorizontalAlignment="Right" Height="50" Width="60" Margin="20" Name="LoginWindow"  Click="LoginWindow_Click">LoginWindow</Button>
+            <Label FontSize="35" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 9 0 0" Foreground="White">مالک</Label>
+            <Button HorizontalAlignment="Right" Height="50" Width="60" Margin="20" Name="LoginWindow"  Click="LoginWindow_Click">خروج</Button>
 
             <!-- بردر بادی -->
             <Border Grid.Row="1"  VerticalAlignment="Stretch" Visibility="Visible" Name="Main">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <!-- people -->
+                        <!-- افراد -->
                         <ColumnDefinition Width="*"/>
-                        <!-- medecines -->
+                        <!-- داروها -->
                         <ColumnDefinition Width="*"/>
-                        <!-- customers -->
+                        <!-- مشتریان -->
                         <ColumnDefinition Width="*"/>
-                        <!-- reports -->
+                        <!-- گزارش -->
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
@@ -47,13 +47,13 @@
                             </Grid.RowDefinitions>
 
                             <Border Grid.Row="0"  Height="80" Background="#bdbebd" Opacity="1" CornerRadius="10 10 20 20">
-                                <Label FontSize="25" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 14 0 0">people</Label>
+                                <Label FontSize="25" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 14 0 0">افراد</Label>
                             </Border>
 
                             <Border Grid.Row="1" VerticalAlignment="Stretch">
                                 <StackPanel>
-                                    <Button Name="btnOwnersList" Margin="20 20 20 10" Height="50" FontWeight="Medium" Click="btnOwnersList_Click">Owners List</Button>
-                                    <Button Name="btnSellersList" Margin="20 10" Height="50" FontWeight="Medium" Click="btnSellersList_Click">Sellers List</Button>
+                                    <Button Name="btnOwnersList" Margin="20 20 20 10" Height="50" FontWeight="Medium" Click="btnOwnersList_Click">لیست مالکان</Button>
+                                    <Button Name="btnSellersList" Margin="20 10" Height="50" FontWeight="Medium" Click="btnSellersList_Click">لیست فروشندگان</Button>
                                 </StackPanel>
                             </Border>
                         </Grid>
@@ -68,15 +68,15 @@
                             </Grid.RowDefinitions>
 
                             <Border Grid.Row="0"  Height="80" Background="#bdbebd" CornerRadius="10 10 20 20">
-                                <Label FontSize="25" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 14 0 0">Medecines</Label>
+                                <Label FontSize="25" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 14 0 0">داروها</Label>
                             </Border>
 
                             <Border Grid.Row="1" >
                                 <StackPanel>
 
-                                    <Button Name="btnInventoryMedecines" Margin="20 20 20 10" Height="50" FontWeight="Medium" Click="btnInventoryMedecines_Click">Inventory</Button>
-                                    <Button Name="btnMedecinesBuy" Margin="20 20 20 10" Height="50" FontWeight="Medium" Click="btnMedecinesBuy_Click">Buy</Button>
-                                    <Button Name="btnMedecinesSell" Margin="20 20 20 10" Height="50" FontWeight="Medium" Click="btnMedecinesSell_Click">Sell</Button>
+                                    <Button Name="btnInventoryMedecines" Margin="20 20 20 10" Height="50" FontWeight="Medium" Click="btnInventoryMedecines_Click">فهرست داروها</Button>
+                                    <Button Name="btnMedecinesBuy" Margin="20 20 20 10" Height="50" FontWeight="Medium" Click="btnMedecinesBuy_Click">خرید دارو</Button>
+                                    <Button Name="btnMedecinesSell" Margin="20 20 20 10" Height="50" FontWeight="Medium" Click="btnMedecinesSell_Click">فروش دارو</Button>
                                 </StackPanel>
                             </Border>
                         </Grid>
@@ -91,19 +91,18 @@
                             </Grid.RowDefinitions>
 
                             <Border Grid.Row="0"  Height="80" Background="#bdbebd" CornerRadius="10 10 20 20">
-                                <Label FontSize="25" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 14 0 0">Custommers</Label>
+                                <Label FontSize="25" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 14 0 0">مشتریان</Label>
                             </Border>
 
                             <Border Grid.Row="1" >
                                 <StackPanel>
-                                    <Button Name="btnCustomers" Margin="20 20 20 10" Height="50" FontWeight="Medium" Click="btnCustomers_Click">customer</Button>
-                                   
+                                    <Button Name="btnCustomers" Margin="20 20 20 10" Height="50" FontWeight="Medium" Click="btnCustomers_Click">مدیریت مشتریان</Button>
                                 </StackPanel>
                             </Border>
                         </Grid>
                     </Border>
 
-                    <!--  -->
+                    <!-- بردر گزارش ها و تنظیمات -->
                     <Border Grid.Column="3" Margin="25">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -120,16 +119,16 @@
                                     </Grid.RowDefinitions>
 
                                     <Border Grid.Row="0"  Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
-                                        <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">Reports</Label>
+                                        <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">گزارشات</Label>
                                     </Border>
 
                                     <Border Grid.Row="1" >
                                         <StackPanel>
 
                                             <Button Name="btnSalesReports" Margin="20 15 20 10" Height="50" FontWeight="Medium" Click="btnSalesReports_Click">گزارش فروش در بازه زمانی خاص</Button>
-                                            <Button Name="btnDailySalesReports" Margin="20 15 20 10" Height="50" FontWeight="Medium" Click="btnDailySalesReports_Click">گزارش فروش ر یک روز خاص</Button>
-                                            <Button Name="btnProductSalesReport" Margin="20 15 20 10" Height="50" FontWeight="Medium" Click="btnProductSalesReport_Click">گزارش فروش تعداد هر محصول </Button>
-                                           
+                                            <Button Name="btnDailySalesReports" Margin="20 15 20 10" Height="50" FontWeight="Medium" Click="btnDailySalesReports_Click">گزارش فروش در یک روز خاص</Button>
+                                            <Button Name="btnProductSalesReport" Margin="20 15 20 10" Height="50" FontWeight="Medium" Click="btnProductSalesReport_Click">گزارش فروش تعداد هر محصول</Button>
+
                                         </StackPanel>
                                     </Border>
                                 </Grid>
@@ -144,12 +143,12 @@
                                     </Grid.RowDefinitions>
 
                                     <Border Grid.Row="0"  Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
-                                        <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">Settings</Label>
+                                        <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">تنظیمات</Label>
                                     </Border>
 
                                     <Border Grid.Row="1" >
                                         <StackPanel>
-                                            <Button Name="btnPersonalSettings" Margin="20 20 20 5" Height="50" FontWeight="Medium" Click="btnPersonalSettings_Click">Personal Settings</Button>
+                                            <Button Name="btnPersonalSettings" Margin="20 20 20 5" Height="50" FontWeight="Medium" Click="btnPersonalSettings_Click">تنظیمات شخصی</Button>
                                         </StackPanel>
                                     </Border>
                                 </Grid>
@@ -157,9 +156,9 @@
                         </Grid>
                     </Border>
                 </Grid>
-
             </Border>
-            <!-->                             صفحه مربوط به افراد مالک <!-->
+            
+            <!-- صفحه مربوط به افراد مالک -->
             <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="OwnersListPanel">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -170,8 +169,8 @@
 
                     <Border Grid.Row="0" Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
                         <Grid>
-                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">Owners List</Label>
-                            <Button HorizontalAlignment="Right" Height="30" Width="30" Margin="15" Name="OwnersListBack" Click="OwnersListBack_Click">Back</Button>
+                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">لیست مالکان</Label>
+                            <Button HorizontalAlignment="Right" Height="35" Width="50" Margin="15,10" Name="OwnersListBack" Click="OwnersListBack_Click">برگشت</Button>
                         </Grid>
                     </Border>
 
@@ -180,17 +179,17 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <Label Grid.Column="0" Content="Search:" VerticalAlignment="Center" Margin="5,0" FontSize="16"/>
-                            <TextBox Grid.Column="1" Name="txtSearchOwners"  Margin="5,0" Height="30" VerticalAlignment="Center" TextChanged="txtSearchOwners_TextChanged"/>
-                            <Button Grid.Column="2" Name="btnAddOwner" Content="Add" Margin="5,0" Width="80" Height="30" Click="btnAddOwner_Click"/>
-                            <Button Grid.Column="3" Name="btnEditOwner" Content="Edit" Margin="5,0" Width="80" Height="30" Click="btnEditOwner_Click"/>
-                            <Button Grid.Column="4" Name="btnDeleteOwner" Content="Delete" Margin="5,0" Width="80" Height="30" Click="btnDeleteOwner_Click"/>
+                            <Button Grid.Column="0" Name="btnDeleteOwner" Content="حذف" Margin="5,0" Width="80" Height="30" Click="btnDeleteOwner_Click"/>
+                            <Button Grid.Column="1" Name="btnEditOwner" Content="ویرایش" Margin="5,0" Width="80" Height="30" Click="btnEditOwner_Click"/>
+                            <Button Grid.Column="2" Name="btnAddOwner" Content="اضافه کردن" Margin="5,0" Width="80" Height="30" Click="btnAddOwner_Click"/>
+                            <TextBox Grid.Column="3" Name="txtSearchOwners"  Margin="5,0" Height="30" VerticalAlignment="Center" TextChanged="txtSearchOwners_TextChanged"/>
+                            <Label Grid.Column="4" Content=":جست‌و‌جو" VerticalAlignment="Center" Margin="5,0" FontSize="16"/>
                         </Grid>
                     </Border>
 
@@ -198,19 +197,19 @@
                         <Grid>
                             <DataGrid Name="OwnersListGrid" AutoGenerateColumns="False" Margin="20,10,20,20" IsReadOnly="True" SelectionMode="Single">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Name" Binding="{Binding FirstName}" Width="*"/>
-                                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*"/>
-                                    <DataGridTextColumn Header="National Code" Binding="{Binding NationalCode}" Width="*"/>
-                                    <DataGridTextColumn Header="Phone Number" Binding="{Binding PhoneNumber}" Width="*"/>
-                                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="*"/>
+                                    <DataGridTextColumn Header="آدرس" Binding="{Binding Address}" Width="*"/>
+                                    <DataGridTextColumn Header="شماره تلفن" Binding="{Binding PhoneNumber}" Width="*"/>
+                                    <DataGridTextColumn Header="کدملی" Binding="{Binding NationalCode}" Width="*"/>
+                                    <DataGridTextColumn Header="نام خانوداگی" Binding="{Binding LastName}" Width="*"/>
+                                    <DataGridTextColumn Header="نام" Binding="{Binding FirstName}" Width="*"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
                     </Border>
                 </Grid>
             </Border>
-            <!-->   صفحه مربوط به فروشنده<!-->
-
+            
+            <!-- صفحه مربوط به فروشنده -->
             <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="SellersListPanel">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -221,41 +220,39 @@
 
                     <Border Grid.Row="0" Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
                         <Grid>
-                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">SellersList</Label>
-                            <Button HorizontalAlignment="Right" Height="30" Width="30" Margin="15" Name="SellersListBack" Click="SellersListBack_Click">Back</Button>
+                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">لیست فروشندگان</Label>
+                            <Button HorizontalAlignment="Right" Height="35" Width="50" Margin="15" Name="SellersListBack" Click="SellersListBack_Click">برگشت</Button>
                         </Grid>
                     </Border>
+                    
                     <!-- Search and Action Buttons -->
                     <Border Grid.Row="1" Padding="10" Background="#769C61" CornerRadius="10" Margin="20,10,20,10">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-
-                            <Label Grid.Column="0" Content="Search:" VerticalAlignment="Center" Margin="5,0" FontSize="16"/>
-                            <TextBox Grid.Column="1" Name="txtSearchSeller"  Margin="5,0" Height="30" VerticalAlignment="Center" TextChanged="txtSearchSeller_TextChanged"/>
-                            <Button Grid.Column="2" Name="btnAddSeller" Content="Add" Margin="5,0" Width="80" Height="30" Click="btnAddSeller_Click"/>
-                            <Button Grid.Column="3" Name="btnEditSeller" Content="Edit" Margin="5,0" Width="80" Height="30" Click="btnEditSeller_Click"/>
-                            <Button Grid.Column="4" Name="btnDeleteSeller" Content="Delete" Margin="5,0" Width="80" Height="30" Click="btnDeleteSeller_Click"/>
-
+          
+                            <Button Grid.Column="0" Name="btnDeleteSeller" Content="حذف" Margin="5,0" Width="80" Height="30" Click="btnDeleteSeller_Click"/>
+                            <Button Grid.Column="1" Name="btnEditSeller" Content="ویرایش" Margin="5,0" Width="80" Height="30" Click="btnEditSeller_Click"/>
+                            <Button Grid.Column="2" Name="btnAddSeller" Content="اضافه کردن" Margin="5,0" Width="80" Height="30" Click="btnAddSeller_Click"/>
+                            <TextBox Grid.Column="3" Name="txtSearchSeller"  Margin="5,0" Height="30" VerticalAlignment="Center" TextChanged="txtSearchSeller_TextChanged"/>
+                            <Label Grid.Column="4" Content=":جست‌و‌جو" VerticalAlignment="Center" Margin="5,0" FontSize="16"/>
                         </Grid>
                     </Border>
-
-
 
                     <Border Grid.Row="2">
                         <Grid>
                             <DataGrid Name="SellersListGrid" AutoGenerateColumns="False" Margin="20,10,20,20" IsReadOnly="True" SelectionMode="Single">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Name" Binding="{Binding FirstName}" Width="*"/>
-                                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="*"/>
-                                    <DataGridTextColumn Header="National Code" Binding="{Binding NationalCode}" Width="*"/>
-                                    <DataGridTextColumn Header="Phone Number" Binding="{Binding PhoneNumber}" Width="*"/>
-                                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="*"/>
+                                    <DataGridTextColumn Header="آدرس" Binding="{Binding Address}" Width="*"/>
+                                    <DataGridTextColumn Header="شماره تلفن" Binding="{Binding PhoneNumber}" Width="*"/>
+                                    <DataGridTextColumn Header="کدملی" Binding="{Binding NationalCode}" Width="*"/>
+                                    <DataGridTextColumn Header="نام خانوداگی" Binding="{Binding LastName}" Width="*"/>
+                                    <DataGridTextColumn Header="نام" Binding="{Binding FirstName}" Width="*"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
@@ -264,7 +261,6 @@
             </Border>
 
             <!--صفحه مربوط به موجودی دارو-->
-
             <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="InventoryMedecinesPanel">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -275,8 +271,8 @@
 
                     <Border Grid.Row="0" Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
                         <Grid>
-                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">Inventory Medicine</Label>
-                            <Button HorizontalAlignment="Right" Height="30" Width="30" Margin="15" Name="InventoryMedecinesPanelBack" Click="InventoryMedecinesPanelBack_Click">Back</Button>
+                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">فهرست داروها</Label>
+                            <Button HorizontalAlignment="Right" Height="35" Width="50" Margin="15" Name="InventoryMedecinesPanelBack" Click="InventoryMedecinesPanelBack_Click">برگشت</Button>
                         </Grid>
                     </Border>
 
@@ -285,16 +281,15 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <Label Grid.Column="0" Content="Search:" VerticalAlignment="Center" Margin="5,0" FontSize="16"/>
-                            <TextBox Grid.Column="1" Name="txtSearchInventoryMedecinesPanel"  Margin="5,0" Height="30" VerticalAlignment="Center" TextChanged="txtSearchInventoryMedecinesPanel_TextChanged"/>
-                            <Button Grid.Column="2" Name="btnEditInventoryMedecinesPanel" Content="Edit" Margin="5,0" Width="80" Height="30" Click="btnEditInventoryMedecinesPanel_Click"/>
-                            <Button Grid.Column="3" Name="btnDeleteInventoryMedecinesPanel" Content="Delete" Margin="5,0" Width="80" Height="30" Click="btnDeleteInventoryMedecinesPanel_Click"/>
+                            <Label Grid.Column="3" Content=":جست‌و‌جو" VerticalAlignment="Center" Margin="5,0" FontSize="16"/>
+                            <TextBox Grid.Column="2" Name="txtSearchInventoryMedecinesPanel"  Margin="5,0" Height="30" VerticalAlignment="Center" TextChanged="txtSearchInventoryMedecinesPanel_TextChanged"/>
+                            <Button Grid.Column="1" Name="btnEditInventoryMedecinesPanel" Content="ویرایش" Margin="5,0" Width="80" Height="30" Click="btnEditInventoryMedecinesPanel_Click"/>
+                            <Button Grid.Column="0" Name="btnDeleteInventoryMedecinesPanel" Content="حذف" Margin="5,0" Width="80" Height="30" Click="btnDeleteInventoryMedecinesPanel_Click"/>
                         </Grid>
                     </Border>
 
@@ -302,13 +297,13 @@
                         <Grid>
                             <DataGrid Name="InventoryMedecinesPanelGrid" AutoGenerateColumns="False" Margin="20,10,20,20" IsReadOnly="True" SelectionMode="Single">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Medicine Id" Binding="{Binding Id}" Width="*"/>
-                                    <DataGridTextColumn Header="Medicine Name" Binding="{Binding NameMedecines}" Width="*"/>
-                                    <DataGridTextColumn Header="Buy Date " Binding="{Binding DateBuy}" Width="*"/>
-                                    <DataGridTextColumn Header="Buy Price " Binding="{Binding PriceBuy}" Width="*"/>
-                                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
-                                    <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="*"/>
-                                    <DataGridTextColumn Header="Sell Price" Binding="{Binding PriceSell}" Width="*"/>
+                                    <DataGridTextColumn Header="قیمت فروش" Binding="{Binding PriceSell}" Width="*"/>
+                                    <DataGridTextColumn Header="تاریخ خرید" Binding="{Binding DateBuy}" Width="*"/>
+                                    <DataGridTextColumn Header="قیمت خرید" Binding="{Binding PriceBuy}" Width="*"/>
+                                    <DataGridTextColumn Header="واحد انداز‌ه‌گیری" Binding="{Binding Unit}" Width="*"/>
+                                    <DataGridTextColumn Header="مقدار مانده" Binding="{Binding Quantity}" Width="*"/>
+                                    <DataGridTextColumn Header="نام دارو" Binding="{Binding NameMedecines}" Width="*"/>
+                                    <DataGridTextColumn Header="کد دارو" Binding="{Binding Id}" Width="*"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
@@ -317,7 +312,6 @@
             </Border>
 
             <!-- صحفه خرید دارو-->
-
             <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="BuyMedecinesPanel">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -328,11 +322,12 @@
 
                     <Border Grid.Row="0" Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
                         <Grid>
-                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0" Name="BuyOrEditMedicine">Buy Medicines</Label>
-                            <Button HorizontalAlignment="Right" Height="30" Width="30" Margin="15" Name="BuyMedecinesPanelBack" Click="BuyMedecinesPanelBack_Click">Back</Button>
+                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0" Name="BuyOrEditMedicine">خرید دارو</Label>
+                            <Button HorizontalAlignment="Right" Height="35" Width="50" Margin="15,10" Name="BuyMedecinesPanelBack" Click="BuyMedecinesPanelBack_Click">برگشت</Button>
 
                         </Grid>
                     </Border>
+                    
                     <!-- فرم اضافه کردن دارو-->
                     <Border Grid.Row="1" Padding="20" Background="#769C61" CornerRadius="10" Margin="20,10,20,10">
                         <Grid>
@@ -353,28 +348,26 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Label Grid.Row="0" Grid.Column="0" Content="Medicine ID:" VerticalAlignment="Center" Margin="5" FontSize="16"/>
-                            <TextBox Grid.Row="0" Grid.Column="1" Name="txtMedicineID" Margin="5" Height="30" HorizontalAlignment="Left" Width="200" GotFocus="txtMedicineID_GotFocus"/>
+                            <Label Grid.Row="0" Grid.Column="1" Content=":کد دارو" VerticalAlignment="Center" Margin="5" FontSize="16"/>
+                            <TextBox Grid.Row="0" Grid.Column="0" Name="txtMedicineID" Margin="5" Height="30" HorizontalAlignment="Left" Width="200" GotFocus="txtMedicineID_GotFocus"/>
                             <TextBlock Grid.Row="0" Grid.Column="2" Foreground="Red" Margin="5" Visibility="Collapsed" Name="MedicineIDError" VerticalAlignment="Center">* Please enter Medicine ID</TextBlock>
 
-
-                            <Label Grid.Row="1" Grid.Column="0" Content="Medicine Name:" VerticalAlignment="Center" Margin="5" FontSize="16"/>
-                            <TextBox Grid.Row="1" Grid.Column="1" Name="txtMedicineName" Margin="5" Height="30" HorizontalAlignment="Left" Width="200" GotFocus="txtMedicineName_GotFocus"/>
+                            <Label Grid.Row="1" Grid.Column="1" Content=":نام دارو" VerticalAlignment="Center" Margin="5" FontSize="16"/>
+                            <TextBox Grid.Row="1" Grid.Column="0" Name="txtMedicineName" Margin="5" Height="30" HorizontalAlignment="Left" Width="200" GotFocus="txtMedicineName_GotFocus"/>
                             <TextBlock Grid.Row="1" Grid.Column="2" Foreground="Red" Margin="5" Visibility="Collapsed" Name="MedicineNameError" VerticalAlignment="Center" >* Please enter Medicine Name</TextBlock>
 
-
-                            <Label Grid.Row="2" Grid.Column="0" Content="Medicine Buy Date:" VerticalAlignment="Center" Margin="5" FontSize="16"/>
-                            <DatePicker Grid.Row="2" Grid.Column="1" Name="dpMedicineBuyDate" Margin="5" Height="30" HorizontalAlignment="Left" Width="200" SelectedDateFormat="Short" GotFocus="dpMedicineBuyDate_GotFocus"/>
+                            <Label Grid.Row="2" Grid.Column="1" Content=":تاریخ خرید دارو" VerticalAlignment="Center" Margin="5" FontSize="16"/>
+                            <DatePicker Grid.Row="2" Grid.Column="0" Name="dpMedicineBuyDate" Margin="5" Height="30" HorizontalAlignment="Left" Width="200" SelectedDateFormat="Short" GotFocus="dpMedicineBuyDate_GotFocus"/>
                             <TextBlock Grid.Row="2" Grid.Column="2" Foreground="Red" Margin="5" Visibility="Collapsed" Name="MedicineBuyDateError" VerticalAlignment="Center">* Please select Buy Date</TextBlock>
 
 
-                            <Label Grid.Row="3" Grid.Column="0" Content="Medicine Buy Price:" VerticalAlignment="Center" Margin="5" FontSize="16"/>
-                            <TextBox Grid.Row="3" Grid.Column="1" Name="txtMedicineBuyPrice" Margin="5" Height="30" HorizontalAlignment="Left" Width="200" GotFocus="txtMedicineBuyPrice_GotFocus"/>
+                            <Label Grid.Row="3" Grid.Column="1" Content=":قیمت خرید دارو" VerticalAlignment="Center" Margin="5" FontSize="16"/>
+                            <TextBox Grid.Row="3" Grid.Column="0" Name="txtMedicineBuyPrice" Margin="5" Height="30" HorizontalAlignment="Left" Width="200" GotFocus="txtMedicineBuyPrice_GotFocus"/>
                             <TextBlock Grid.Row="3" Grid.Column="2" Foreground="Red" Margin="5" Visibility="Collapsed" Name="MedicineBuyPriceError" VerticalAlignment="Center">* Please enter valid Price</TextBlock>
                             <TextBlock Grid.Row="3" Grid.Column="3" Foreground="Red" Margin="5" Visibility="Collapsed" Name="MedicineBuyPriceErrorDigit" VerticalAlignment="Center">* Only numeric values are allowed.</TextBlock>
 
-                            <Label Grid.Row="4" Grid.Column="0" Content="Medicine Quantity:" VerticalAlignment="Center" Margin="5" FontSize="16"/>
-                            <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" Margin="5" VerticalAlignment="Center">
+                            <Label Grid.Row="4" Grid.Column="1" Content=":مقدار دارو خریداری شده" VerticalAlignment="Center" Margin="5" FontSize="16"/>
+                            <StackPanel Grid.Row="4" Grid.Column="0" Orientation="Horizontal" Margin="5" VerticalAlignment="Center">
                                 <TextBox Name="txtMedicineQuantity" Height="30" Width="100" Margin="0,0,10,0" GotFocus="txtMedicineQuantity_GotFocus"/>
                                 <ComboBox x:Name="comMedicineUnit" Width="90" SelectedIndex="0">
                                     <ComboBoxItem Content="kg" Tag="0"/>
@@ -385,20 +378,14 @@
                             <TextBlock Grid.Row="4" Grid.Column="2" Foreground="Red" Margin="5" Visibility="Collapsed" Name="MedicineQuantityError" VerticalAlignment="Center">* Please enter valid Quantity</TextBlock>
                             <TextBlock Grid.Row="4" Grid.Column="3" Foreground="Red" Margin="5" Visibility="Collapsed" Name="MedicineQuantityErrorDigit" VerticalAlignment="Center">*Only numeric values are allowed</TextBlock>
 
-
-                            <Label Grid.Row="5" Grid.Column="0" Content="Medicine Sell Price:" VerticalAlignment="Center" Margin="5" FontSize="16"/>
-                            <TextBox Grid.Row="5" Grid.Column="1" Name="txtMedicineSellPrice" Margin="5" Height="30" HorizontalAlignment="Left" Width="200" GotFocus="txtMedicineSellPrice_GotFocus"/>
+                            <Label Grid.Row="5" Grid.Column="1" Content=":قیمت فروش دارو" VerticalAlignment="Center" Margin="5" FontSize="16"/>
+                            <TextBox Grid.Row="5" Grid.Column="0" Name="txtMedicineSellPrice" Margin="5" Height="30" HorizontalAlignment="Left" Width="200" GotFocus="txtMedicineSellPrice_GotFocus"/>
                             <TextBlock Grid.Row="5" Grid.Column="2" Foreground="Red" Margin="5" Visibility="Collapsed" Name="MedicineSellPriceError" VerticalAlignment="Center">* Please enter valid Price</TextBlock>
                             <TextBlock Grid.Row="5" Grid.Column="3" Foreground="Red" Margin="5" Visibility="Collapsed" Name="MedicineSellPriceErrorDigit" VerticalAlignment="Center">* Only numeric values are allowed.</TextBlock>
 
-
-                            <Button Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" Name="btnAddMedicine" Content="Save" Width="100" Height="40" HorizontalAlignment="Center" FontSize="20" Margin="5" Click="btnAddMedicine_Click"/>
+                            <Button Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" Name="btnAddMedicine" Content="تایید" Width="100" Height="40" HorizontalAlignment="Center" FontSize="20" Margin="5" Click="btnAddMedicine_Click"/>
                         </Grid>
                     </Border>
-
-             
-
-
                 </Grid>
             </Border>
 
@@ -413,41 +400,38 @@
 
                     <Border Grid.Row="0" Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
                         <Grid>
-                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">Custumer</Label>
-                            <Button HorizontalAlignment="Right" Height="30" Width="30" Margin="15" Name="CustomerBack" Click="CustomerBack_Click">Back</Button>
+                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">مدیریت مشتریان</Label>
+                            <Button HorizontalAlignment="Right" Height="35" Width="50" Margin="15,10" Name="CustomerBack" Click="CustomerBack_Click">برگشت</Button>
                         </Grid>
                     </Border>
+
                     <!-- Search and Action Buttons -->
                     <Border Grid.Row="1" Padding="10" Background="#769C61" CornerRadius="10" Margin="20,10,20,10">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <Label Grid.Column="0" Content="Search:" VerticalAlignment="Center" Margin="5,0" FontSize="16"/>
-                            <TextBox Grid.Column="1" Name="txtSearchCustomer"  Margin="5,0" Height="30" VerticalAlignment="Center" TextChanged="txtSearchCustomer_TextChanged"/>
-                            <Button Grid.Column="2" Name="btnAddCustomerPanel" Content="Add" Margin="5,0" Width="80" Height="30" Click="btnAddCustomerPanel_Click"/>
-                            <Button Grid.Column="3" Name="btnEditCustomerPanel" Content="Edit" Margin="5,0" Width="80" Height="30" Click="btnEditCustomerPanel_Click"/>
-                            <Button Grid.Column="4" Name="btnDeleteCustomerPanel" Content="Delete" Margin="5,0" Width="80" Height="30" Click="btnDeleteCustomerPanel_Click"/>
-
+                            <Label Grid.Column="4" Content=":جست‌و‍‌جو" VerticalAlignment="Center" Margin="5,0" FontSize="16"/>
+                            <TextBox Grid.Column="3" Name="txtSearchCustomer"  Margin="5,0" Height="30" VerticalAlignment="Center" TextChanged="txtSearchCustomer_TextChanged"/>
+                            <Button Grid.Column="2" Name="btnAddCustomerPanel" Content="اضافه کردن" Margin="5,0" Width="80" Height="30" Click="btnAddCustomerPanel_Click"/>
+                            <Button Grid.Column="1" Name="btnEditCustomerPanel" Content="ویرایش" Margin="5,0" Width="80" Height="30" Click="btnEditCustomerPanel_Click"/>
+                            <Button Grid.Column="0" Name="btnDeleteCustomerPanel" Content="حذف" Margin="5,0" Width="80" Height="30" Click="btnDeleteCustomerPanel_Click"/>
                         </Grid>
                     </Border>
-
-
 
                     <Border Grid.Row="2">
                         <Grid>
                             <DataGrid Name="CustomerGrid" AutoGenerateColumns="False" Margin="20,10,20,20" IsReadOnly="True" SelectionMode="Single">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Name" Binding="{Binding CustomerFirstName}" Width="*"/>
-                                    <DataGridTextColumn Header="Last Name" Binding="{Binding CustomerLastName}" Width="*"/>
-                                    <DataGridTextColumn Header="National Code" Binding="{Binding  CustomerId }" Width="*"/>
-                                    <DataGridTextColumn Header="Phone Number" Binding="{Binding PhoneNumber}" Width="*"/>
-
+                                    <DataGridTextColumn Header="شماره تلفن" Binding="{Binding PhoneNumber}" Width="*"/>
+                                    <DataGridTextColumn Header="کدملی" Binding="{Binding  CustomerId }" Width="*"/>
+                                    <DataGridTextColumn Header="نام خانوداگی" Binding="{Binding CustomerLastName}" Width="*"/>
+                                    <DataGridTextColumn Header="نام" Binding="{Binding CustomerFirstName}" Width="*"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
@@ -455,11 +439,7 @@
                 </Grid>
             </Border>
 
-
-
             <!-- صفحه ثبت مشتری-->
-           
-
             <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="AddCustomer">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -470,8 +450,8 @@
 
                     <Border Grid.Row="0" Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
                         <Grid>
-                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0" Name="SellOrEditCustomer">Add Customer</Label>
-                            <Button HorizontalAlignment="Right" Height="30" Width="30" Margin="15" Name="AddCustomerBack" Click="AddCustomerBack_Click">Back</Button>
+                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0" Name="SellOrEditCustomer">اضافه کردن مشتری</Label>
+                            <Button HorizontalAlignment="Right" Height="35" Width="50" Margin="15,10" Name="AddCustomerBack" Click="AddCustomerBack_Click">برگشت</Button>
 
                         </Grid>
                     </Border>
@@ -498,9 +478,8 @@
                             <Label Grid.Row="0" Grid.Column="0" Content="Customer ID:" VerticalAlignment="Center" Margin="5" FontSize="16"/>
                             <TextBox Grid.Row="0" Grid.Column="1" Name="txtCustomerID" Margin="5" Height="30" HorizontalAlignment="Left" Width="200" GotFocus="txtCustomerID_GotFocus"/>
                             <TextBlock Grid.Row="0" Grid.Column="2" Foreground="Red" Margin="5" Visibility="Collapsed" Name="CustomerIDError" VerticalAlignment="Center">* Please enter Customer ID</TextBlock>
-                            <TextBlock Grid.Row="0" Grid.Column="3" Foreground="Red" Margin="5" Visibility="Collapsed" Name="CustomerIDErrorDigit" VerticalAlignment="Center">* Only numeric values are allowed </TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="3" Foreground="Red" Margin="5" Visibility="Collapsed" Name="CustomerIDErrorDigit" VerticalAlignment="Center">* Only numeric values are allowed</TextBlock>
                             <TextBlock Grid.Row="0" Grid.Column="4" Foreground="Red" Margin="5" Visibility="Collapsed" Name="CustomerIDLengthError">*National Code must be 10 digits!</TextBlock>
-
 
 
                             <Label Grid.Row="1" Grid.Column="0" Content="Customer First Name:" VerticalAlignment="Center" Margin="5" FontSize="16"/>
@@ -508,16 +487,9 @@
                             <TextBlock Grid.Row="1" Grid.Column="2" Foreground="Red" Margin="5" Visibility="Collapsed" Name="CustomerFirstNameError" VerticalAlignment="Center" >* Please enter Customer Name</TextBlock>
 
 
-                
-
-
                             <Label Grid.Row="2" Grid.Column="0" Content="Customer Last Name:" VerticalAlignment="Center" Margin="5" FontSize="16"/>
                             <TextBox Grid.Row="2" Grid.Column="1" Name="txtCustomerLastName" Margin="5" Height="30" HorizontalAlignment="Left" Width="200" GotFocus="txtCustomerLastName_GotFocus"/>
                             <TextBlock Grid.Row="2" Grid.Column="2" Foreground="Red" Margin="5" Visibility="Collapsed" Name="CustomerLastNameError" VerticalAlignment="Center">* Please enter Customer Last Name</TextBlock>
-                           
-
-                           
-                           
 
 
                             <Label Grid.Row="3" Grid.Column="0" Content="Customer Phone Number:" VerticalAlignment="Center" Margin="5" FontSize="16"/>
@@ -527,14 +499,13 @@
                             <TextBlock  Grid.Row="4" Grid.Column="0" Foreground="Red" Margin="5" Visibility="Collapsed" Name="LengthCustomerPhoneNumberError">*Phone Number must be 11 digits!</TextBlock>
 
 
-                            <Button Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" Name="btnAddCustomer" Content="Add" Width="100" Height="40" HorizontalAlignment="Center" FontSize="20" Margin="5" Click="btnAddCustomer_Click"/>
+                            <Button Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" Name="btnAddCustomer" Content="تایید" Width="100" Height="40" HorizontalAlignment="Center" FontSize="20" Margin="5" Click="btnAddCustomer_Click"/>
                         </Grid>
                     </Border>
 
-
-
                 </Grid>
             </Border>
+            
             <!-- صفحه فروش دارو -->
             <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="AddOrder">
                 <Grid>
@@ -552,7 +523,7 @@
                     <Border Grid.Row="0" Grid.ColumnSpan="2" Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
                         <Grid>
                             <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">Order</Label>
-                            <Button HorizontalAlignment="Right" Height="30" Width="30" Margin="15" Name="AddOrderBack" Click="AddOrderBack_Click">Back</Button>
+                            <Button HorizontalAlignment="Right" Height="35" Width="50" Margin="15,10" Name="AddOrderBack" Click="AddOrderBack_Click">برگشت</Button>
                         </Grid>
                     </Border>
 
@@ -576,7 +547,6 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Medicine Name" Binding="{Binding NameMedecines}" Width="*"/>
                                     <DataGridTextColumn Header="Quantity" IsReadOnly="False" Binding="{Binding Quantity}" Width="*" />
-                                   
                                     <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="*"/>
                                     <DataGridTextColumn Header="Price" Binding="{Binding PriceSell}" Width="0.5*"/>
                                     <DataGridTextColumn Header="Total" Binding="{Binding Price}" Width="*"/>
@@ -590,12 +560,10 @@
                                 <Button Name="btnDeleteFactor" Content="delet" Width="100" Height="40"  FontSize="20" Margin="5" Click="btnDeleteFactor_Click"/>
                             </StackPanel>
 
-                            
-
                         </Grid>
                     </Border>
 
-                   
+
                     <Border Grid.Row="1" Grid.Column="1" Margin="5,10,0,0">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -632,8 +600,6 @@
                         </Grid>
                     </Border>
 
-                   
-                   
                 </Grid>
             </Border>
 <!--    صفحه گزارش بر اساس تاریخ در بازه زمانی خاص-->
@@ -694,15 +660,13 @@
                                     <DataGridTextColumn Header="Quantity" Binding="{Binding Quntity}" Width="*"/>
                                     <DataGridTextColumn Header="Total Amunt" Binding="{Binding TotalAmunt}" Width="*"/>
                                     <DataGridTextColumn Header="order Time" Binding="{Binding orderTime}" Width="*"/>
-
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
                     </Border>
                 </Grid>
             </Border>
-            
-            
+                       
             
             <!-- صفحه گزارش فروش در یک روز خاص-->
             <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="DailySelllesReport">
@@ -740,9 +704,7 @@
                             <Label Grid.Column="0" Content="Search:" VerticalAlignment="Center" Margin="5,0" FontSize="16"/>
                             <TextBox Grid.Column="1" Name="txtDailySearchSelllesReport"  Margin="5,0" Height="30" VerticalAlignment="Center" TextChanged="txtDailySearchSelllesReport_TextChanged"/>
 
-                            
-
-                           
+           
                             <DatePicker Grid.Column="5" Name="dpDate" SelectedDateFormat="Short" FirstDayOfWeek="Saturday" Margin="5,0" DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}" SelectedDate="{Binding BirthDate,Mode=TwoWay}" SelectedDateChanged="dpDate_SelectedDateChanged"></DatePicker>
 
                             <Button Grid.Column="6" Name="btnDateReport" Content="محاسبه " Width="100" Height="40"  FontSize="20" Margin="5,0" Click="btnDateReport_Click"/>
@@ -769,8 +731,7 @@
             </Border>
             
             
-            <!-- صفحه وراد کردن تاریخ برای رسم نمودار تعدادفروش محصولات-->
-
+            <!-- صفحه وارد کردن تاریخ برای رسم نمودار تعدادفروش محصولات-->
             <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="DateEntryPageForCahrt">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -869,9 +830,6 @@
                 </Grid>
             </Border>
             
-
-
-
 
         </Grid>
 

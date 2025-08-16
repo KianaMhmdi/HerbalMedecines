@@ -15,8 +15,6 @@ namespace WpfMedecine.Data
         private string connectionString = "Data Source=.;Initial Catalog=HerbalProjectDB;Integrated Security=true";
 
         public ObservableCollection<Medicine> SelectMedecine()
-
-
         {
             ObservableCollection<Medicine> medecines = new ObservableCollection<Medicine>();
 
