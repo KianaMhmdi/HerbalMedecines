@@ -120,6 +120,7 @@ namespace WpfMedecine
 
             CustomerDB customerDB = new CustomerDB();
             CustomerSaleList.ItemsSource = customerDB.SelectCustomer();
+            MedecinesListSaleGrid.IsEnabled = false; // غیرفعال کردن DataGrid داروها
         }
 
         private void Reports_Click(object sender, RoutedEventArgs e)
@@ -525,6 +526,7 @@ namespace WpfMedecine
         {
             SellingMedicinePanel.Visibility = Visibility.Collapsed;
             MainWindow.Visibility = Visibility.Visible;
+
         }
 
         private void ReportsBack_Click(object sender, RoutedEventArgs e)
@@ -542,6 +544,8 @@ namespace WpfMedecine
         {
             SellingMenuReport.Visibility = Visibility.Visible;
         }
+
+
 
         private void SellingMedecineSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -563,57 +567,220 @@ namespace WpfMedecine
         private void SellingMedecineChoosebtn_Click(object sender, RoutedEventArgs e)
         {
 
-        }
-
-
-
-        private void MedecinesListSaleGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            MedicineSellQuantity quantity = new MedicineSellQuantity();
-            quantity.ShowDialog();
-
-
-            var selectedMedicine = MedecinesListSaleGrid.SelectedItem as Medicine;
-
-            var newOrders = new Orders
-            {
-                Id = selectedMedicine.Id,
-                NameMedecines = selectedMedicine.NameMedecines,
-                REqQuantity = quantity.Quantiry,
-                PriceSell = selectedMedicine.PriceSell,
-                Unit = selectedMedicine.Unit,
-                TotalAmunt = quantity.Quantiry * selectedMedicine.PriceSell,
-            };
-
-            if (Factor.ItemsSource is ObservableCollection<Orders> orders)
-            {
-                orders.Add(newOrders);
-            }
-            else
-            {
-                ObservableCollection<Orders> newFactorList = new ObservableCollection<Orders>();
-                newFactorList.Add(newOrders);
-                Factor.ItemsSource = newFactorList;
-            }
-
-        }
-
-
-
-        private void Factor_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
 
         }
 
         private void CustomerSaleList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-   
+            
+            if (CustomerSaleList.SelectedItem != null)
+            {
+                MedecinesListSaleGrid.IsEnabled = true;
+
+                var selectedCustomer = (Customer)CustomerSaleList.SelectedItem;
+
+               
+                NameCustomerSell.Content = selectedCustomer.CustomerFirstName + " " + selectedCustomer.CustomerLastName;
+            }
+            else
+            {
+                // اگر مشتری انتخاب نشد، داروها را غیرفعال کن
+                MedecinesListSaleGrid.IsEnabled = false;
+            }
+
         }
+
+
+        private void MedecinesListSaleGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+
+            Medicine medicine = new Medicine();
+            HerbalDB herbal = new HerbalDB();
+            
+
+
+            if (MedecinesListSaleGrid.SelectedItem != null)
+            {
+                if (CustomerSaleList.SelectedItem != null)
+                {
+
+                    var selectedMedicine = (Medicine)MedecinesListSaleGrid.SelectedItem;
+                    medicine.Id = selectedMedicine.Id;
+                    medicine.NameMedecines = selectedMedicine.NameMedecines;
+                    medicine.Quantity = 1;
+                    medicine.Unit = selectedMedicine.Unit;
+                    medicine.PriceSell = selectedMedicine.PriceSell;
+
+                    MedicineSellQuantity quantity = new MedicineSellQuantity();
+                    quantity.ShowDialog();
+
+                    if (IsMedicineInFactorGrid(medicine.NameMedecines))
+                    {
+                        MessageBox.Show("This item is already selected.");
+                    }
+                    else
+                    {
+                        medicine.Quantity = quantity.Quantiry;
+
+
+                        var selectedCustomer = (Customer)CustomerSaleList.SelectedItem;
+                        Order order = new Order();
+                        order.CustomerFullName = selectedCustomer.CustomerFirstName + " " + selectedCustomer.CustomerLastName;
+                        order.MedincineName = selectedMedicine.NameMedecines;
+                        order.SellPrice = selectedMedicine.PriceSell;
+                        order.TotalAmunt = medicine.Price;
+                        order.orderTime = DateTime.Today;
+
+                        float availableQuantity = herbal.SelectInventoryQuntity(medicine.Id);
+
+                        if (quantity.Quantiry <= availableQuantity)
+                        {
+                            order.Quntity = quantity.Quantiry;
+                            medicine.Quantity = quantity.Quantiry;
+
+                            if (quantity.flag == 1)
+                            {
+                                Factor.Items.Add(medicine);
+                            }
+
+                         
+                        }
+                        else
+                        {
+                            MessageBox.Show("بیشتر از موجودی انبار است");
+                        }
+                        UpdateTotalPrice(); // محاسبه جمع کل پس از اضافه‌شدن دارو
+                    }
+                }
+            
+            else
+            {
+                    MedecinesListSaleGrid.SelectedItem = null; // لغو انتخاب دارو
+                    return;
+                }
+            }
+
+        }
+
+
+        public bool IsMedicineInFactorGrid(string MedicineName)
+        {
+            foreach (Medicine item in Factor.Items)
+            {
+                if (item.NameMedecines == MedicineName)
+                {
+                    return true;
+                }
+
+            }
+            return false;
+        }
+
+        private void UpdateTotalPrice()
+        {
+            float total = 0;
+            foreach (Medicine item in Factor.Items)
+            {
+                total += item.PriceSell * item.Quantity; // جمع کل = تعداد × قیمت هر واحد
+            }
+            TotalAmountLabel.Content = total;
+        }
+        private void btnDeleteFactor_Click(object sender, RoutedEventArgs e)
+        {
+            Factor.Items.Clear();
+            TotalAmountLabel.Content = 0.0;
+            NameCustomerSell.Content = " ";
+
+            CustomerSaleList.SelectedItem = null;
+            MedecinesListSaleGrid.SelectedItem = null;
+            MedecinesListSaleGrid.IsEnabled = false; // غیرفعال کردن DataGrid داروها
+        }
+
+
+
+        private void btnsumitOrder_Click(object sender, RoutedEventArgs e)
+        {
+            HerbalDB herbal = new HerbalDB();
+            int count = 0;
+            Order order = new Order();
+
+            foreach (Medicine item in Factor.Items)
+            {
+
+
+
+                order.CustomerFullName = NameCustomerSell.Content.ToString();
+                order.MedincineName = item.NameMedecines;
+                float quntityOrder;
+                if (float.TryParse(item.Quantity.ToString(), out quntityOrder))
+                {
+                    order.Quntity = quntityOrder;
+
+                }
+                float price;
+                if (float.TryParse(item.PriceSell.ToString(), out price))
+                {
+                    order.SellPrice = price;
+
+                }
+
+                float total;
+                if (float.TryParse(item.Price.ToString(), out total))
+                {
+                    order.TotalAmunt = total;
+
+                }
+
+
+
+                if (herbal.AddOrder(order))
+                {
+                    if (herbal.UpdateSellQuantity(order.Quntity, order.MedincineName))
+                    {
+                        DataTable originalTable = new DataTable();
+                        originalTable = herbal.SelectMedicine();
+                        MedecinesListSaleGrid.ItemsSource = originalTable.DefaultView;
+
+
+                    }
+                    count++;
+                }
+
+            }
+
+
+            if (count == Factor.Items.Count)
+            {
+                MessageBox.Show("ثبت سفارش با موفقیت انجام شد!");
+            }
+            else
+            {
+                MessageBox.Show("ثبت سفارش با موفقیت انجام نشد!");
+            }
+           
+            Factor.Items.Clear();
+            TotalAmountLabel.Content = 0.0;
+            NameCustomerSell.Content = " ";
+
+            CustomerSaleList.SelectedItem = null;
+            MedecinesListSaleGrid.SelectedItem = null;
+            MedecinesListSaleGrid.IsEnabled = false; // غیرفعال کردن DataGrid داروها
+
+        }
+        private void Factor_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        
 
         private void CustomersListSale_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
+
+       
     }
 
 }

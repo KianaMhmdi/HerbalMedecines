@@ -382,36 +382,36 @@
                                                                             <Border Grid.Row="0">
                                                                             <DataGrid x:Name="Factor"  AutoGenerateColumns="False" Margin="12,12" IsReadOnly="True" SelectionMode="Single" SelectionChanged="Factor_SelectionChanged" ItemsSource="{Binding Medicines}">
                                                                                 <DataGrid.Columns>
-                                                                                    <DataGridTextColumn Header="قیمت کل" Binding="{Binding TotalAmunt}"  Width="2*"/>
-                                                                                    <DataGridTextColumn Header="واحد اندازه‌گیری" Binding="{Binding Unit}"  Width="2.7*"/>
-                                                                                    <DataGridTextColumn Header="قیمت فروش" Binding="{Binding PriceSell}"  Width="2.3*"/>
-                                                                                    <DataGridTextColumn Header="مقدار درخواستی" Binding="{Binding REqQuantity}" Width="2.7*"/>
-                                                                                    <DataGridTextColumn Header="نام دارو" Binding="{Binding NameMedecines}" Width="1.9*"/>
-                                                                                    <DataGridTextColumn Header="کد دارو" Width="1.9*" Binding="{Binding Id}"/>
+                                                                                    <DataGridTextColumn Header="Medicine Name" Binding="{Binding NameMedecines}" Width="*"/>
+                                                                                    <DataGridTextColumn Header="Quantity" IsReadOnly="False" Binding="{Binding Quantity}" Width="*" />
+                                                                                    <DataGridTextColumn Header="Unit" Binding="{Binding Unit}" Width="*"/>
+                                                                                    <DataGridTextColumn Header="Price" Binding="{Binding PriceSell}" Width="0.5*"/>
+                                                                                    <DataGridTextColumn Header="Total" Binding="{Binding Price}" Width="*"/>
                                                                                 </DataGrid.Columns>
                                                                             </DataGrid>
                                                                         </Border>
 
                                                                         <Border Grid.Row="1">
-                                                                            <DataGrid Name="CustomersListSale"  AutoGenerateColumns="False" Margin="12,12" IsReadOnly="True" SelectionMode="Single" ItemsSource="{Binding Medicines}" SelectionChanged="CustomersListSale_SelectionChanged">
-                                                                                <DataGrid.Columns>
-                                                                                    <DataGridTextColumn Header="کدملی مشتری" Binding="{Binding CusId}" Width="2*"/>
-                                                                                    <DataGridTextColumn Header="نام خانوداگی مشتری" Binding="{Binding CusFName}" Width="2.7*"/>
-                                                                                    <DataGridTextColumn Header="نام مشتری" Binding="{Binding CusLName}" Width="2*"/>
-                                                                                </DataGrid.Columns>
-                                                                            </DataGrid>
+                                                                            <StackPanel>
+                                                                                <Label  Name="nameCustomer"  FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="5"> اسم مشتری</Label>
+                                                                                <Label  Name="NameCustomerSell"  FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="5"></Label>
+                                                                                
+                                                                            </StackPanel>
+                                                                           
                                                                         </Border>
 
                                                                             <Border Grid.Row="2">
                                                                                 <StackPanel>
                                                                                     <Label FontSize="13" FontWeight="Medium" HorizontalAlignment="Right"  Foreground="Black">:جمع کل</Label>
-                                                                                    <TextBox Margin="5,0" Height="30"/>
-                                                                                </StackPanel>
+                                                                                <Label Name="TotalAmountLabel" FontWeight="Bold" MinWidth="80">0.00</Label>
+                                                                                
+                                                                                <Button Name="btnDeleteFactor" Content="delet" Width="100" Height="40"  FontSize="20" Margin="5" Click="btnDeleteFactor_Click"/>
+                                                                            </StackPanel>
 
                                                                             </Border>
 
                                                                             <Border Grid.Row="3">
-                                                                                <Button Height="35" Width="120" Margin="3">تایید فروش</Button>
+                                                                                <Button Name="btnsumitOrder" Height="35" Width="120" Margin="3"  Click="btnsumitOrder_Click">تایید فروش</Button>
                                                                             </Border>
                                                                             
                                                                         </Grid>
@@ -481,6 +481,7 @@
                                                                                     <DataGridTextColumn Header="کدملی" Width="2*" Binding="{Binding CustomerId}"/>
                                                                                 </DataGrid.Columns>
                                                                             </DataGrid>
+                                                                           
 
                                                                         </StackPanel>
                                                                     </Border>
