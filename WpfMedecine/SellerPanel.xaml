@@ -502,6 +502,7 @@
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="auto"/>
+                                               
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
 
@@ -522,6 +523,7 @@
                                                     <Border Grid.Column="0"  Background="#8bbb79" Opacity=".8" CornerRadius="20" Margin="10,15,5,15">
                                                         <Grid>
                                                             <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto"/>
                                                                 <RowDefinition Height="Auto"/>
                                                                 <RowDefinition Height="*"/>
                                                             </Grid.RowDefinitions>
@@ -550,10 +552,11 @@
                                                                                     <Grid.RowDefinitions>
                                                                                         <RowDefinition/>
                                                                                         <RowDefinition/>
+                                                                                        
                                                                                     </Grid.RowDefinitions>
 
                                                                                     <TextBlock Grid.Row="0" Text=":تا تاریخ" FontSize="15" Margin="5,10,10,1" HorizontalAlignment="Right"/>
-                                                                                    <DatePicker Grid.Row="1" SelectedDateFormat="Short" FirstDayOfWeek="Saturday" Margin="15,0,5,0" DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}" SelectedDate="{Binding BirthDate,Mode=TwoWay}"/>
+                                                                                    <DatePicker Grid.Row="1" Name="dpSellesDateEnd"  SelectedDateFormat="Short" FirstDayOfWeek="Saturday" Margin="15,0,5,0" DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}" SelectedDate="{Binding BirthDate,Mode=TwoWay}"/>
                                                                                 </Grid>
                                                                             </Border>
 
@@ -565,7 +568,7 @@
                                                                                     </Grid.RowDefinitions>
 
                                                                                     <TextBlock Grid.Row="0" Text=":از تاریخ" FontSize="15" Margin="5,10,10,1" HorizontalAlignment="Right"/>
-                                                                                    <DatePicker Grid.Row="1" SelectedDateFormat="Short" FirstDayOfWeek="Saturday" Margin="15,0,5,0" DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}" SelectedDate="{Binding BirthDate,Mode=TwoWay}"/>
+                                                                                    <DatePicker Name="dpSelesDateStart" Grid.Row="1" SelectedDateFormat="Short" FirstDayOfWeek="Saturday" Margin="15,0,5,0" DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}" SelectedDate="{Binding BirthDate,Mode=TwoWay}"/>
                                                                                 </Grid>
                                                                             </Border>
 
@@ -597,7 +600,7 @@
                                                                                     <DataGridTextColumn Header="کد‌دارو" Binding="{Binding Id}" Width=".5*"/>
                                                                                 </DataGrid.Columns>
                                                                             </DataGrid>
-
+                                                                           
                                                                             <Grid Grid.Row="1">
                                                                                 <Grid.ColumnDefinitions>
                                                                                     <ColumnDefinition/>
@@ -609,6 +612,7 @@
                                                                         </Grid>
                                                                     </Border>
 
+                                                                   
                                                                 </Grid>
                                                             </Border>
                                                             
@@ -708,9 +712,11 @@
                                                             
                                                         </Grid>
                                                     </Border>
-                                                    
+                                                  
+
                                                 </Grid>
                                             </Border>
+                                            
                                         </Grid>
                                     </Border>
                                     

@@ -134,6 +134,7 @@ namespace WpfMedecine
             EditMedecinePanel.Visibility = Visibility.Collapsed;
             SellingMedicinePanel.Visibility = Visibility.Collapsed;
             ReportsPanel.Visibility = Visibility.Visible;
+            dpSellesDateEnd.SelectedDate = DateTime.Today;
         }
 
         private void PersonalSettings_Click(object sender, RoutedEventArgs e)
@@ -535,17 +536,11 @@ namespace WpfMedecine
             MainWindow.Visibility = Visibility.Visible;
         }
 
-        private void BuyingReports_Click(object sender, RoutedEventArgs e)
-        {
-            BuyingMenuReport.Visibility = Visibility.Visible;
-        }
-
-        private void SellingReports_Click(object sender, RoutedEventArgs e)
-        {
-            SellingMenuReport.Visibility = Visibility.Visible;
-        }
+      
 
 
+
+        //صفحه فروش دارو
 
         private void SellingMedecineSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -780,7 +775,18 @@ namespace WpfMedecine
 
         }
 
-       
+        private void BuyingReports_Click(object sender, RoutedEventArgs e)
+        {
+            BuyingMenuReport.Visibility = Visibility.Visible;
+        }
+
+        private void SellingReports_Click(object sender, RoutedEventArgs e)
+        {
+            
+
+        
+
+        }
     }
 
 }

@@ -1,80 +1,55 @@
-﻿
+﻿using System;
 using System.Collections.Generic;
-using System;
 using System.Data;
 using System.Linq;
 using System.Windows;
-
 using LiveCharts;
 using LiveCharts.Wpf;
 using WpfMedecine.Data;
-using System.Windows.Controls;
-using System.Diagnostics;
 
 namespace WpfMedecine
 {
     /// <summary>
     /// Interaction logic for Chart.xaml
     /// </summary>
-    /// 
-   
     public partial class Chart : Window
     {
         public SeriesCollection SeriesCollection { get; set; }
-        public string[] Labels { get; set; }
-        OwnerPanel o = new OwnerPanel();
-        
-        public Chart()
+        public List<string> Labels { get; set; }
+
+        public Chart(DateTime start, DateTime end)
         {
             InitializeComponent();
-
-
-           //CreatChart(o.ProductSelesReportGrid);
             DataContext = this;
-            
+            LoadChartData(start, end);
         }
-        public void CreatChart(DataTable d)
+
+        private void LoadChartData(DateTime start, DateTime end)
         {
-            List<string> names = new List<string>();
-            List<double> salesCount = new List<double>();
+            // دریافت داده‌ها از متد موجود
+            HerbalDB db = new HerbalDB(); // ایجاد instance با new
+            DataTable salesData = db.GetProductSeleareport(start, end);
 
+            // آماده‌سازی داده‌ها برای نمودار
+            var values = new ChartValues<int>();
+            Labels = new List<string>();
 
-           /* foreach(DataRow row in d.Rows)
+            foreach (DataRow row in salesData.Rows)
             {
+                values.Add(Convert.ToInt32(row["total"]));
+                Labels.Add(row["medincineName"].ToString());
+            }
 
-                
-                    
-               
-                    names.Add(row["medincineName"].ToString());
-
-               // salesCount.Add(Convert.ToDouble(float.Parse(row["total"].ToString())));
-            }*/
-           
-           
-            string messgee = string.Join(",", names);
-            MessageBox.Show(messgee, "name");
-            names.Add("ooo");
-            names.Add("lll");
-            salesCount.Add(4);
-            salesCount.Add(3);
+            // ایجاد سری داده‌ها
             SeriesCollection = new SeriesCollection
             {
                 new ColumnSeries
                 {
-                    Title="فروش",
-                    Values=new ChartValues<double>(salesCount)
-
+                    Title = "تعداد فروش",
+                    Values = values,
+                    DataLabels = true
                 }
             };
-
-            Labels = names.ToArray();
-            DataContext = this;
         }
-        public class SalesProduct
-        {
-            public string medincineName { get; set; }
-            public double total { get; set; }
-        }
-        
     }
 }

@@ -6,8 +6,11 @@
         xmlns:liveChars="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:local="clr-namespace:WpfMedecine"
         mc:Ignorable="d"
-        Title="OwnerPanel" Height="600" Width="1050"
+       Title="سیستم مدیریت داروهای گیاهی - مالک" Height="700" Width="1200"
+        WindowStartupLocation="CenterScreen"
         WindowState="Maximized">
+
+
     <Grid>
         <Image Stretch="UniformToFill" Source="Image/Ba.jpg" Margin="0,0,0,0"></Image>
 
@@ -90,13 +93,27 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <Border Grid.Row="0"  Height="80" Background="#bdbebd" CornerRadius="10 10 20 20">
-                                <Label FontSize="25" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 14 0 0">مشتریان</Label>
+                            <Border Grid.Row="0"  Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
+                                <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">گزارشات</Label>
                             </Border>
 
-                            <Border Grid.Row="1" >
+
+
+                            <Border Grid.Row="1" RenderTransformOrigin="0.5,0.5" Margin="1,0,-2,-50" >
+                                <Border.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform AngleX="2.788"/>
+                                        <RotateTransform/>
+                                        <TranslateTransform X="3.701"/>
+                                    </TransformGroup>
+                                </Border.RenderTransform>
                                 <StackPanel>
-                                    <Button Name="btnCustomers" Margin="20 20 20 10" Height="50" FontWeight="Medium" Click="btnCustomers_Click">مدیریت مشتریان</Button>
+
+                                    <Button Name="btnSalesReports" Margin="20 15 20 10" Height="50" FontWeight="Medium" Click="btnSalesReports_Click">گزارش فروش در بازه زمانی خاص</Button>
+                                    <Button Name="btnDailySalesReports" Margin="20 15 20 10" Height="50" FontWeight="Medium" Click="btnDailySalesReports_Click">گزارش فروش در یک روز خاص</Button>
+                                    <Button Name="btnProductSalesReport" Margin="20 15 20 10" Height="50" FontWeight="Medium" Click="btnProductSalesReport_Click">گزارش فروش تعداد هر محصول</Button>
+                                    <Button Name="btnProfitSalesReport" Margin="20 15 20 10" Height="50" FontWeight="Medium" Click="btnProfitSalesReport_Click">گزارش سود</Button>
                                 </StackPanel>
                             </Border>
                         </Grid>
@@ -115,49 +132,33 @@
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-
-                                    <Border Grid.Row="0"  Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
-                                        <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">گزارشات</Label>
-                                    </Border>
-
-                                    <Border Grid.Row="1" >
-                                        <StackPanel>
-
-                                            <Button Name="btnSalesReports" Margin="20 15 20 10" Height="50" FontWeight="Medium" Click="btnSalesReports_Click">گزارش فروش در بازه زمانی خاص</Button>
-                                            <Button Name="btnDailySalesReports" Margin="20 15 20 10" Height="50" FontWeight="Medium" Click="btnDailySalesReports_Click">گزارش فروش در یک روز خاص</Button>
-                                            <Button Name="btnProductSalesReport" Margin="20 15 20 10" Height="50" FontWeight="Medium" Click="btnProductSalesReport_Click">گزارش فروش تعداد هر محصول</Button>
-
-                                        </StackPanel>
-                                    </Border>
-                                </Grid>
-                            </Border>
-
-                            <!-- settings -->
-                            <Border Grid.Row="1" Background="#769C61" CornerRadius="10" Opacity=".8" Margin="0 10 0 0">
-                                <Grid>
-                                    <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
 
-                                    <Border Grid.Row="0"  Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
-                                        <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">تنظیمات</Label>
+                                    <Border Grid.Row="0"  Height="80" Background="#bdbebd" CornerRadius="10 10 20 20">
+                                        <Label FontSize="25" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 14 0 0">مشتریان</Label>
                                     </Border>
 
-                                    <Border Grid.Row="1" >
+
+                                    <Border Grid.Row="1" Margin="0,0,0,222" >
                                         <StackPanel>
-                                            <Button Name="btnPersonalSettings" Margin="20 20 20 5" Height="50" FontWeight="Medium" Click="btnPersonalSettings_Click">تنظیمات شخصی</Button>
+                                            <Button Name="btnCustomers" Margin="20 20 20 10" Height="50" FontWeight="Medium" Click="btnCustomers_Click">مدیریت مشتریان</Button>
                                         </StackPanel>
                                     </Border>
+
+
+
                                 </Grid>
                             </Border>
+
+
+
                         </Grid>
                     </Border>
                 </Grid>
             </Border>
-            
+
             <!-- صفحه مربوط به افراد مالک -->
             <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="OwnersListPanel">
                 <Grid>
@@ -208,7 +209,7 @@
                     </Border>
                 </Grid>
             </Border>
-            
+
             <!-- صفحه مربوط به فروشنده -->
             <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="SellersListPanel">
                 <Grid>
@@ -224,7 +225,7 @@
                             <Button HorizontalAlignment="Right" Height="35" Width="50" Margin="15" Name="SellersListBack" Click="SellersListBack_Click">برگشت</Button>
                         </Grid>
                     </Border>
-                    
+
                     <!-- Search and Action Buttons -->
                     <Border Grid.Row="1" Padding="10" Background="#769C61" CornerRadius="10" Margin="20,10,20,10">
                         <Grid>
@@ -235,7 +236,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-          
+
                             <Button Grid.Column="0" Name="btnDeleteSeller" Content="حذف" Margin="5,0" Width="80" Height="30" Click="btnDeleteSeller_Click"/>
                             <Button Grid.Column="1" Name="btnEditSeller" Content="ویرایش" Margin="5,0" Width="80" Height="30" Click="btnEditSeller_Click"/>
                             <Button Grid.Column="2" Name="btnAddSeller" Content="اضافه کردن" Margin="5,0" Width="80" Height="30" Click="btnAddSeller_Click"/>
@@ -327,7 +328,7 @@
 
                         </Grid>
                     </Border>
-                    
+
                     <!-- فرم اضافه کردن دارو-->
                     <Border Grid.Row="1" Padding="20" Background="#769C61" CornerRadius="10" Margin="20,10,20,10">
                         <Grid>
@@ -505,7 +506,7 @@
 
                 </Grid>
             </Border>
-            
+
             <!-- صفحه فروش دارو -->
             <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="AddOrder">
                 <Grid>
@@ -519,7 +520,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    
+
                     <Border Grid.Row="0" Grid.ColumnSpan="2" Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
                         <Grid>
                             <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">Order</Label>
@@ -536,7 +537,7 @@
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
-                              
+
                             </Grid.RowDefinitions>
 
                             <Label Grid.Row="0" Name="NameCustomerSell"  FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="5"></Label>
@@ -602,7 +603,7 @@
 
                 </Grid>
             </Border>
-<!--    صفحه گزارش بر اساس تاریخ در بازه زمانی خاص-->
+            <!--    صفحه گزارش بر اساس تاریخ در بازه زمانی خاص-->
 
             <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="SelllesReport">
                 <Grid>
@@ -638,7 +639,7 @@
 
                             <Label Grid.Column="0" Content="Search:" VerticalAlignment="Center" Margin="5,0" FontSize="16"/>
                             <TextBox Grid.Column="1" Name="txtSearchSelllesReport"  Margin="5,0" Height="30" VerticalAlignment="Center" TextChanged="txtSearchSelllesReport_TextChanged"/>
-                    
+
                             <Label Grid.Column="2" Content="start" VerticalAlignment="Center" Margin="5,0" FontSize="16"/>
                             <DatePicker Grid.Column="3" Name="dpStartDate" SelectedDateFormat="Short" FirstDayOfWeek="Saturday" Margin="5,0" DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}" SelectedDate="{Binding BirthDate,Mode=TwoWay}" SelectedDateChanged="dpStartDate_SelectedDateChanged"></DatePicker>
 
@@ -666,8 +667,8 @@
                     </Border>
                 </Grid>
             </Border>
-                       
-            
+
+
             <!-- صفحه گزارش فروش در یک روز خاص-->
             <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="DailySelllesReport">
                 <Grid>
@@ -679,7 +680,7 @@
 
                     <Border Grid.Row="0" Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
                         <Grid>
-                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">گزارش فروش </Label>
+                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">گزارش فروش</Label>
                             <Button HorizontalAlignment="Right" Height="30" Width="30" Margin="15" Name="DailySelllesReportBack" Click="DailySelllesReportBack_Click">Back</Button>
                         </Grid>
                     </Border>
@@ -704,7 +705,7 @@
                             <Label Grid.Column="0" Content="Search:" VerticalAlignment="Center" Margin="5,0" FontSize="16"/>
                             <TextBox Grid.Column="1" Name="txtDailySearchSelllesReport"  Margin="5,0" Height="30" VerticalAlignment="Center" TextChanged="txtDailySearchSelllesReport_TextChanged"/>
 
-           
+
                             <DatePicker Grid.Column="5" Name="dpDate" SelectedDateFormat="Short" FirstDayOfWeek="Saturday" Margin="5,0" DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}" SelectedDate="{Binding BirthDate,Mode=TwoWay}" SelectedDateChanged="dpDate_SelectedDateChanged"></DatePicker>
 
                             <Button Grid.Column="6" Name="btnDateReport" Content="محاسبه " Width="100" Height="40"  FontSize="20" Margin="5,0" Click="btnDateReport_Click"/>
@@ -729,109 +730,572 @@
                     </Border>
                 </Grid>
             </Border>
-            
-            
+
+
             <!-- صفحه وارد کردن تاریخ برای رسم نمودار تعدادفروش محصولات-->
-            <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="DateEntryPageForCahrt">
+            <Border Grid.Row="1" Visibility="Collapsed" Background="#F5F7F9" Margin="15" CornerRadius="8" Name="DateEntryPageForCahrt"
+        BorderThickness="1" BorderBrush="#E1E4E8">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Border Grid.Row="0" Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
+                    <!-- هدر -->
+                    <Border Grid.Row="0" Height="60" Background="#3F51B5" CornerRadius="8,8,0,0">
                         <Grid>
-                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0"> گزارش فروش تعداد هر محصول</Label>
-                            <Button HorizontalAlignment="Right" Height="30" Width="30" Margin="15" Name="DateEntryPageForCahrtBack" Click="DateEntryPageForCahrtBack_Click">Back</Button>
+                            <Label FontSize="18" FontWeight="SemiBold" Foreground="White" 
+                       HorizontalAlignment="Center" VerticalAlignment="Center">
+                                گزارش فروش تعداد هر محصول
+                            </Label>
+                            <Button HorizontalAlignment="Left" Height="30" Width="30" Margin="10" 
+                        Name="DateEntryPageForCahrtBack" Click="DateEntryPageForCahrtBack_Click" 
+                        Background="Transparent" BorderBrush="Transparent" ToolTip="بازگشت">
+                                <Button.Content>
+                                    <Path Data="M15,5 L25,15 L15,25" Stroke="White" StrokeThickness="2" 
+                              StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                                </Button.Content>
+                            </Button>
                         </Grid>
                     </Border>
 
-                   <Border Grid.Row="1" Padding="10" Background="#769C61" CornerRadius="10" Margin="20,10,20,10">
-                    <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                               
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
+                    <!-- بخش کنترل‌ها -->
+                    <Border Grid.Row="1" Padding="15" Background="White" Margin="10,5,10,10" CornerRadius="5" 
+                BorderThickness="0" BorderBrush="#E0E0E0">
+                        <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Row="2" Grid.Column="1">
-                                <Label  Content="start" HorizontalAlignment="Center" Margin="5,0" FontSize="16"/>
-                                <DatePicker  Width="400" Height="30" VerticalAlignment="Center" Name="dpStartDateproductSelesReport" SelectedDateFormat="Short" FirstDayOfWeek="Saturday" Margin="5,0" DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}" SelectedDate="{Binding BirthDate,Mode=TwoWay}" SelectedDateChanged="dpStartDateproductSelesReport_SelectedDateChanged"></DatePicker>
 
-                                <Label  Content="end" HorizontalAlignment="Center"  Margin="5,0" FontSize="16"/>
-                                <DatePicker Width="400" Height="30" VerticalAlignment="Center" Name="dpendDateProductSelesReport" SelectedDateFormat="Short" FirstDayOfWeek="Saturday" Margin="5,0" DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}" SelectedDate="{Binding BirthDate,Mode=TwoWay}" SelectedDateChanged="dpendDateProductSelesReport_SelectedDateChanged"></DatePicker>
-
-                                
-
-                            </StackPanel>
-                            <Grid Grid.Row="3" Grid.Column="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
-                                   
-                                </Grid.RowDefinitions>
-                                <Button Grid.Column="0" Grid.Row="0" Name="btnCalculate" Content="محاسبه " Width="100" Height="40"  FontSize="20" Margin="5,10" Click="btnCalculate_Click"/>
-                                <TextBlock  Grid.Column="0" Grid.Row="1" Foreground="Red" HorizontalAlignment="Center"   Margin="5" Visibility="Collapsed" Name="endAndStartProductSelesReportDateError" VerticalAlignment="Center"></TextBlock>
-                                <Button  Grid.Column="1" Grid.Row="0" Name="btnChartProductSelesreport" Content="نمودار " Width="100" Height="40"  FontSize="20" Margin="5,10" Click="btnChartProductSelesreport_Click"/>
-                            </Grid>
-
-                            
-                            <Border Grid.Row="1" Grid.Column="0">
+                            <!-- بخش تاریخ و دکمه‌ها -->
+                            <StackPanel Grid.Column="0" Margin="0,0,15,0" Width="320">
                                 <Grid>
-                                    <DataGrid Name="ProductSelesReportGrid" AutoGenerateColumns="False" Margin="20,10,20,20" IsReadOnly="True" SelectionMode="Single">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                                        <Label Content="تاریخ شروع" HorizontalAlignment="Right" Margin="0,0,0,5" 
+                                   FontSize="14" Foreground="#424242" FontWeight="SemiBold"/>
+                                        <DatePicker Width="150" Height="32" VerticalAlignment="Center" 
+                                       Name="dpStartDateproductSelesReport" SelectedDateFormat="Short" 
+                                       FirstDayOfWeek="Saturday" Margin="0,0,0,10" FontSize="13"
+                                       DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}"
+                                       SelectedDateChanged="dpStartDateproductSelesReport_SelectedDateChanged"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                                        <Label Content="تاریخ پایان" HorizontalAlignment="Right" Margin="0,0,0,5" 
+                                   FontSize="14" Foreground="#424242" FontWeight="SemiBold"/>
+                                        <DatePicker Width="150" Height="32" VerticalAlignment="Center" 
+                                       Name="dpendDateProductSelesReport" SelectedDateFormat="Short" 
+                                       FirstDayOfWeek="Saturday" Margin="0,0,0,10" FontSize="13"
+                                       DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}"
+                                       SelectedDateChanged="dpendDateProductSelesReport_SelectedDateChanged"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                                    <Button Name="btnCalculate" Content="محاسبه" Width="90" Height="36"  
+                                FontSize="14" Margin="5,0" Background="#4CAF50" Foreground="White"
+                                Click="btnCalculate_Click" FontWeight="SemiBold"/>
+                                    <Button Name="btnChartProductSelesreport" Content="نمایش نمودار" Width="110" Height="36"  
+                                FontSize="14" Margin="10,0" Background="#2196F3" Foreground="White"
+                                Click="btnChartProductSelesreport_Click" FontWeight="SemiBold"/>
+                                </StackPanel>
+
+                                <TextBlock Foreground="#D32F2F" HorizontalAlignment="Center" Margin="5,10,5,0" 
+                               Visibility="Collapsed" Name="endAndStartProductSelesReportDateError" 
+                               VerticalAlignment="Center" TextWrapping="Wrap" FontSize="13"/>
+                            </StackPanel>
+
+                            <!-- جدول داده‌ها -->
+                            <Border Grid.Column="1" BorderThickness="1" BorderBrush="#E0E0E0" CornerRadius="5"
+                        Background="White" Margin="0,0,0,0">
+                                <Grid>
+                                    <DataGrid Name="ProductSelesReportGrid" AutoGenerateColumns="False" 
+                                  Margin="0" IsReadOnly="True" SelectionMode="Single"
+                                  HeadersVisibility="Column" CanUserAddRows="False"
+                                  AlternatingRowBackground="#F8F9FA" RowBackground="White"
+                                  HorizontalGridLinesBrush="#E0E0E0" VerticalGridLinesBrush="#E0E0E0"
+                                  ColumnWidth="*" FontSize="13" HorizontalScrollBarVisibility="Auto">
+                                        <DataGrid.ColumnHeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="Background" Value="#3F51B5" />
+                                                <Setter Property="Foreground" Value="White" />
+                                                <Setter Property="FontWeight" Value="SemiBold" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="Padding" Value="10,5" />
+                                            </Style>
+                                        </DataGrid.ColumnHeaderStyle>
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Header=" نام دارو" Binding="{Binding  medincineName}" Width="0.5*"/>
-                                            <DataGridTextColumn Header="شناسه دارو " Binding="{Binding  id}" Width="0.5*"/>
-                                            <DataGridTextColumn Header="تعدا کل فروخته شده" Binding="{Binding total}" Width="0.5*"/>
-
-
+                                            <DataGridTextColumn Header="نام دارو" Binding="{Binding medincineName}" Width="2*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="شناسه دارو" Binding="{Binding id}" Width="1*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="تعداد کل فروخته شده" Binding="{Binding total}" Width="1.5*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </Grid>
                             </Border>
                         </Grid>
-            </Border>
-
-                   
+                    </Border>
                 </Grid>
             </Border>
-            
-            <!--صفحه نمودار تعداد فروش هر محصول-->
 
-            <Border Grid.Row="1" Visibility="Collapsed" Background="#769C61" Opacity=".8" Margin="30" CornerRadius="10" Name="ProductSelesCahrt">
+            <!--- صفحه گزارش سود-->
+
+            <Border Grid.Row="1" Visibility="Collapsed" Background="#F5F7F9" Margin="15" CornerRadius="8" Name="ProfitReportPage"
+BorderThickness="1" BorderBrush="#E1E4E8">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Border Grid.Row="0" Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
+                    <!-- هدر -->
+                    <Border Grid.Row="0" Height="60" Background="#3F51B5" CornerRadius="8,8,0,0">
                         <Grid>
-                            <Label FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" Margin="0 12 0 0">گزارش فروش تعداد هر محصول</Label>
-                            <Button HorizontalAlignment="Right" Height="30" Width="30" Margin="15" Name="ProductSelesCahrtBack" Click="ProductSelesCahrtBack_Click">Back</Button>
+                            <Label FontSize="18" FontWeight="SemiBold" Foreground="White" 
+           HorizontalAlignment="Center" VerticalAlignment="Center">
+                                گزارش سود
+                            </Label>
+                            <Button HorizontalAlignment="Left" Height="30" Width="30" Margin="10" 
+            Name="ProfitReportPageBack" Click="ProfitReportPageBack_Click" 
+            Background="Transparent" BorderBrush="Transparent" ToolTip="بازگشت">
+                                <Button.Content>
+                                    <Path Data="M15,5 L25,15 L15,25" Stroke="White" StrokeThickness="2" 
+                  StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                                </Button.Content>
+                            </Button>
                         </Grid>
                     </Border>
-                    <Border Grid.Row="1" Height="60" Background="#bdbebd" CornerRadius="10 10 20 20">
+
+                    <!-- بخش کنترل‌ها -->
+                    <Border Grid.Row="1" Padding="15" Background="White" Margin="10,5,10,10" CornerRadius="5" 
+    BorderThickness="0" BorderBrush="#E0E0E0">
                         <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- بخش تاریخ و دکمه‌ها -->
+                            <StackPanel Grid.Column="0" Margin="0,0,15,0" Width="320">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                                        <Label Content="تاریخ شروع" HorizontalAlignment="Right" Margin="0,0,0,5" 
+                       FontSize="14" Foreground="#424242" FontWeight="SemiBold"/>
+                                        <DatePicker Width="150" Height="32" VerticalAlignment="Center" 
+                           Name="dpStartDateProfitReport" SelectedDateFormat="Short" 
+                           FirstDayOfWeek="Saturday" Margin="0,0,0,10" FontSize="13"
+                           DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}"
+                           SelectedDateChanged="dpStartDateProfitReport_SelectedDateChanged"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                                        <Label Content="تاریخ پایان" HorizontalAlignment="Right" Margin="0,0,0,5" 
+                       FontSize="14" Foreground="#424242" FontWeight="SemiBold"/>
+                                        <DatePicker Width="150" Height="32" VerticalAlignment="Center" 
+                           Name="dpEndDateProfitReport" SelectedDateFormat="Short" 
+                           FirstDayOfWeek="Saturday" Margin="0,0,0,10" FontSize="13"
+                           DisplayDateStart="1/1/1900" DisplayDateEnd="{Binding Today}"
+                           SelectedDateChanged="dpEndDateProfitReport_SelectedDateChanged"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- دکمه‌های نوع گزارش -->
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                                    <Button Name="btnDailyProfit" Content="سود روزانه" Width="100" Height="36"  
+                    FontSize="14" Margin="5,0" Background="#4CAF50" Foreground="White"
+                    Click="btnDailyProfit_Click" FontWeight="SemiBold"/>
+                                    <Button Name="btnMonthlyProfit" Content="سود ماهانه" Width="100" Height="36"  
+                    FontSize="14" Margin="5,0" Background="#2196F3" Foreground="White"
+                    Click="btnMonthlyProfit_Click" FontWeight="SemiBold"/>
+                                    <Button Name="btnYearlyProfit" Content="سود سالانه" Width="100" Height="36"  
+                    FontSize="14" Margin="5,0" Background="#FF9800" Foreground="White"
+                    Click="btnYearlyProfit_Click" FontWeight="SemiBold"/>
+
+                                </StackPanel>
+
+
+
+                                <TextBlock Foreground="#D32F2F" HorizontalAlignment="Center" Margin="5,10,5,0" 
+                   Visibility="Collapsed" Name="profitReportDateError" 
+                   VerticalAlignment="Center" TextWrapping="Wrap" FontSize="13" >ارور</TextBlock>
+                            </StackPanel>
+
+                            <!-- جدول داده‌ها -->
+                            <Border Grid.Column="1" Name="BorderProfitReportGrid" BorderThickness="1" BorderBrush="#E0E0E0" CornerRadius="5"
+            Background="White" Margin="0,0,0,0">
+                                <Grid>
+                                    <DataGrid Name="ProfitReportGrid" AutoGenerateColumns="False" 
+                      Margin="0" IsReadOnly="True" SelectionMode="Single"
+                      HeadersVisibility="Column" CanUserAddRows="False"
+                      AlternatingRowBackground="#F8F9FA" RowBackground="White"
+                      HorizontalGridLinesBrush="#E0E0E0" VerticalGridLinesBrush="#E0E0E0"
+                      ColumnWidth="*" FontSize="13" HorizontalScrollBarVisibility="Auto">
+                                        <DataGrid.ColumnHeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="Background" Value="#3F51B5" />
+                                                <Setter Property="Foreground" Value="White" />
+                                                <Setter Property="FontWeight" Value="SemiBold" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="Padding" Value="10,5" />
+                                            </Style>
+                                        </DataGrid.ColumnHeaderStyle>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="دوره" Binding="{Binding تاریخ}" Width="1.2*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="تعداد مشتریان" Binding="{Binding تعداد_مشتریان}" Width="1*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="تعداد سفارشات" Binding="{Binding تعداد_سفارشات}" Width="1*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="تعداد اقلام فروخته شده" Binding="{Binding تعداد_اقلام_فروخته_شده}" Width="1.2*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="کل فروش" Binding="{Binding کل_فروش, StringFormat=N0}" Width="1*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="کل هزینه" Binding="{Binding کل_هزینه, StringFormat=N0}" Width="1*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="سود خالص" Binding="{Binding سود_خالص, StringFormat=N0}" Width="1*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="درصد سود" Binding="{Binding درصد_سود, StringFormat=N0}" Width="1*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+
+                            </Border>
+
+
+
+
+
+                            <Border Grid.Column="1" Name="BorderMathlyProfitReportGrid" BorderThickness="1"  Visibility="Collapsed" BorderBrush="#E0E0E0" CornerRadius="5"
+Background="White" Margin="0,0,0,0">
+                                <Grid>
+                                    <DataGrid Name="MathlyProfitReportGrid" AutoGenerateColumns="False" 
+          Margin="0" IsReadOnly="True" SelectionMode="Single"
+          HeadersVisibility="Column" CanUserAddRows="False"
+          AlternatingRowBackground="#F8F9FA" RowBackground="White"
+          HorizontalGridLinesBrush="#E0E0E0" VerticalGridLinesBrush="#E0E0E0"
+          ColumnWidth="*" FontSize="13" HorizontalScrollBarVisibility="Auto">
+                                        <DataGrid.ColumnHeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="Background" Value="#3F51B5" />
+                                                <Setter Property="Foreground" Value="White" />
+                                                <Setter Property="FontWeight" Value="SemiBold" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="Padding" Value="10,5" />
+                                            </Style>
+                                        </DataGrid.ColumnHeaderStyle>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="سال" Binding="{Binding سال}" Width="1.2*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+
+
+                                            <DataGridTextColumn Header="ماه" Binding="{Binding ماه}" Width="1.2*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+
+                                            <DataGridTextColumn Header="نام_ماه" Binding="{Binding نام_ماه}" Width="1.2">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+
+                                            <DataGridTextColumn Header="تعداد مشتریان" Binding="{Binding تعداد_مشتریان}" Width="1.2*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="تعداد سفارشات" Binding="{Binding تعداد_سفارشات}" Width="1.2*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="تعداد اقلام فروخته شده" Binding="{Binding تعداد_اقلام_فروخته_شده}" Width="1.2*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="کل فروش" Binding="{Binding کل_فروش, StringFormat=N0}" Width="1*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="کل هزینه" Binding="{Binding کل_هزینه, StringFormat=N0}" Width="1*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="سود خالص" Binding="{Binding سود_خالص, StringFormat=N0}" Width="1*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="درصد سود" Binding="{Binding درصد_سود, StringFormat=N0}" Width="1*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+
+                            </Border>
+
+
+
+
+
+
+
+
+                            <Border Grid.Column="1" Name="BorderYearlyProfitReportGrid" BorderThickness="1"  Visibility="Collapsed" BorderBrush="#E0E0E0" CornerRadius="5"
+Background="White" Margin="0,0,0,0">
+                                <Grid>
+                                    <DataGrid Name="YearlyProfitReportGrid" AutoGenerateColumns="False" 
+          Margin="0" IsReadOnly="True" SelectionMode="Single"
+          HeadersVisibility="Column" CanUserAddRows="False"
+          AlternatingRowBackground="#F8F9FA" RowBackground="White"
+          HorizontalGridLinesBrush="#E0E0E0" VerticalGridLinesBrush="#E0E0E0"
+          ColumnWidth="*" FontSize="13" HorizontalScrollBarVisibility="Auto">
+                                        <DataGrid.ColumnHeaderStyle>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="Background" Value="#3F51B5" />
+                                                <Setter Property="Foreground" Value="White" />
+                                                <Setter Property="FontWeight" Value="SemiBold" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="Padding" Value="10,5" />
+                                            </Style>
+                                        </DataGrid.ColumnHeaderStyle>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="سال" Binding="{Binding سال}" Width="1.2*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+
+
+
+                                            <DataGridTextColumn Header="تعداد مشتریان" Binding="{Binding تعداد_مشتریان}" Width="1.2*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="تعداد سفارشات" Binding="{Binding تعداد_سفارشات}" Width="1.2*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="تعداد اقلام فروخته شده" Binding="{Binding تعداد_اقلام_فروخته_شده}" Width="1.2*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="کل فروش" Binding="{Binding کل_فروش, StringFormat=N0}" Width="1*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="کل هزینه" Binding="{Binding کل_هزینه, StringFormat=N0}" Width="1*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="سود خالص" Binding="{Binding سود_خالص, StringFormat=N0}" Width="1*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                            <DataGridTextColumn Header="درصد سود" Binding="{Binding درصد_سود, StringFormat=N0}" Width="1*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="TextAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="5,2" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+
+                            </Border>
+
+
+
 
                         </Grid>
                     </Border>
                 </Grid>
             </Border>
-            
+
+
+
 
         </Grid>
 
     </Grid>
-</Window>
+</Window> 

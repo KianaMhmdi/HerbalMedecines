@@ -738,5 +738,83 @@ namespace WpfMedecine.Data
             return data;
 
         }
+        // گزارش سود روزانه
+
+
+        public DataTable GetDailyProfitReports(DateTime start, DateTime end)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            DataTable data = new DataTable();
+            try
+            {
+                connection.Open();
+                string query = $"SELECT   CONVERT(DATE, o.[orderTime]) as تاریخ, COUNT(DISTINCT o.[CustomerFullName]) as تعداد_مشتریان, COUNT(*) as تعداد_سفارشات,   SUM(o.[Quntity]) as تعداد_اقلام_فروخته_شده,  SUM(o.[TotalAmunt]) as کل_فروش,   SUM(m.[PriceBuy] * o.[Quntity]) as کل_هزینه,   SUM(o.[TotalAmunt] - (m.[PriceBuy] * o.[Quntity])) as سود_خالص,  ROUND(SUM(o.[TotalAmunt] - (m.[PriceBuy] * o.[Quntity])) / NULLIF(SUM(m.[PriceBuy] * o.[Quntity]), 0) * 100, 2) as درصد_سود FROM [Order] o INNER JOIN [Medecines_DB_Table] m ON o.[MedincineName] = m.[NameMedecines]\r\nWHERE CONVERT(DATE, o.[orderTime]) BETWEEN '{start.Date}' AND '{end.Date}' GROUP BY CONVERT(DATE, o.[orderTime]) ORDER BY تاریخ DESC;";
+                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+
+                adapter.Fill(data);
+                connection.Close();
+
+            }
+
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+
+            }
+            return data;
+
+        }
+
+        //گزارش سود ماهانه
+        public DataTable GetMonthlyProfitReports(DateTime start, DateTime end)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            DataTable data = new DataTable();
+            try
+            {
+                connection.Open();
+                string query = $"SELECT   YEAR(o.[orderTime]) as سال,    MONTH(o.[orderTime]) as ماه,   DATENAME(MONTH, o.[orderTime]) as نام_ماه,    COUNT(DISTINCT o.[CustomerFullName]) as تعداد_مشتریان,   COUNT(*) as تعداد_سفارشات,   SUM(o.[Quntity]) as تعداد_اقلام_فروخته_شده,   SUM(o.[TotalAmunt]) as کل_فروش,   SUM(m.[PriceBuy] * o.[Quntity]) as کل_هزینه,   SUM(o.[TotalAmunt] - (m.[PriceBuy] * o.[Quntity])) as سود_خالص,   ROUND(SUM(o.[TotalAmunt] - (m.[PriceBuy] * o.[Quntity])) / NULLIF(SUM(m.[PriceBuy] * o.[Quntity]), 0) * 100, 2) as درصد_سود\r\nFROM [Order] o\r\nINNER JOIN [Medecines_DB_Table] m ON o.[MedincineName] = m.[NameMedecines]\r\nWHERE CONVERT(DATE, o.[orderTime]) BETWEEN '{start.Date}' AND '{end.Date}'\r\nGROUP BY YEAR(o.[orderTime]), MONTH(o.[orderTime]), DATENAME(MONTH, o.[orderTime])\r\nORDER BY سال DESC, ماه DESC;";
+                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+
+                adapter.Fill(data);
+                connection.Close();
+
+            }
+
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+
+            }
+            return data;
+
+        }
+
+        //گزارش سود سالانه
+
+        public DataTable GetYearlyProfitReports(DateTime start, DateTime end)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            DataTable data = new DataTable();
+            try
+            {
+                connection.Open();
+                string query = $"SELECT \r\n    YEAR(o.[orderTime]) as سال,\r\n    COUNT(DISTINCT o.[CustomerFullName]) as تعداد_مشتریان,\r\n    COUNT(*) as تعداد_سفارشات,\r\n    SUM(o.[Quntity]) as تعداد_اقلام_فروخته_شده,\r\n    SUM(o.[TotalAmunt]) as کل_فروش,\r\n    SUM(m.[PriceBuy] * o.[Quntity]) as کل_هزینه,\r\n    SUM(o.[TotalAmunt] - (m.[PriceBuy] * o.[Quntity])) as سود_خالص,\r\n    ROUND(SUM(o.[TotalAmunt] - (m.[PriceBuy] * o.[Quntity])) / NULLIF(SUM(m.[PriceBuy] * o.[Quntity]), 0) * 100, 2) as درصد_سود\r\nFROM [Order] o\r\nINNER JOIN [Medecines_DB_Table] m ON o.[MedincineName] = m.[NameMedecines]\r\nWHERE YEAR(o.[orderTime]) BETWEEN '{start.Date.Year}' AND '{end.Date.Year}'\r\nGROUP BY YEAR(o.[orderTime])\r\nORDER BY سال DESC;";
+                SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+
+                adapter.Fill(data);
+                connection.Close();
+
+            }
+
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+
+            }
+            return data;
+
+        }
+
     }
 }
